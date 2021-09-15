@@ -34,6 +34,17 @@ const ContainerForms = styled.div `
             color: white;
             background-color: #1877F2;
         }
+        
+        div {
+            color: white;
+            background-color: #1877F2;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            opacity: 0.5;
+        }
     }
 
     span {

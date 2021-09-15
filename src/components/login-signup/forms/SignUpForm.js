@@ -13,7 +13,7 @@ export default function SignUpForm() {
         pictureUrl: ''
     });
 
-    const [buttonToggle, setButtonToggle] = useState('submit');
+    const [buttonToggle, setButtonToggle] = useState(<button type='submit'>Sign Up</button>);
 
     let history = useHistory();
 
@@ -23,37 +23,35 @@ export default function SignUpForm() {
         history.push('/');
     }
 
-    function errorSignUp (error) {
-        const errorStatus = error.response.status;
+    function errorSignUp () {
+        alert('this email is already registered');
 
-        if (errorStatus == 400) {
-            alert('this email is already registered');
-        }
+        setButtonToggle(<button type='submit'>Sign Up</button>);
     } 
 
     function registerNewUser(event) {
         event.preventDefault();
-        setButtonToggle('button')
+        setButtonToggle(<div>Sign Up</div>);
 
-        const userDataValues = [userData.email, userData.password, userData.username, userData.pictureUrl]
+        const userDataValues = [userData.email, userData.password, userData.username, userData.pictureUrl];
 
 
 
         for(let i=0; i < userDataValues.length; i++) {
             if (userDataValues[i] === '') {
 
-                alert('Please complete all required fields')
-                setButtonToggle('submit')
-                return
+                alert('Please complete all required fields');
+                setButtonToggle(<button type='submit'>Sign Up</button>);
+                return;
             }
         }
         
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up", userData)
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up", userData);
 
-        promise.then(goLogin)
-        promise.catch(errorSignUp)
+        promise.then(goLogin);
+        promise.catch(errorSignUp);
 
-        setButtonToggle('submit')
+        
     }
 
     return (
@@ -63,7 +61,7 @@ export default function SignUpForm() {
                 <input placeholder="password" type="password" onChange={e => setUserData({...userData, password: e.target.value})} />
                 <input placeholder="username" type="text" onChange={e => setUserData({...userData, username: e.target.value})} />
                 <input placeholder="picture url" type="url" onChange={e => setUserData({...userData, pictureUrl: e.target.value})} />
-                <button type={buttonToggle}>Sign Up</button>
+                {buttonToggle}
             </form>
             <Link to="/">
                 <span>Switch back to log in</span>

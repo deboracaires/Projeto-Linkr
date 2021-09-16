@@ -46,7 +46,7 @@ export default function LoginForm() {
             }
         }
         
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in", userData)
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/sign-in", userData)
 
         promise.then(goTimeline)
         promise.catch(errorLogIn)

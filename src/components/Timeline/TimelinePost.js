@@ -1,25 +1,44 @@
 import React from "react";
 import styled from "styled-components";
-import { BsHeart } from "react-icons/bs"
+import { BsHeart } from "react-icons/bs";
+import { useHistory } from "react-router";
+import ReactHashtag from "react-hashtag";
 
-export default function TimelinePost({posts}){
+export default function TimelinePost({post}){
+    
+    const history = useHistory();
+
+    function redirecionar(){
+        history.push(`/user/${post.user.id}`)
+    }
+
+    function directToHashtag(val){
+        const hash = val.replace(/#/, "");
+        history.push(`/hashtag/${hash}`)
+    }
+    
     return (
         <ContainerPost>
             <EsquerdaPost>
-                <img src={posts.user.avatar} alt=""/>
+              
+                <img onClick={redirecionar} src={post.user.avatar} alt=""/>
                 <div>
                     <BsHeart size='20px' color="#fff"/>
                 </div>
                 
             </EsquerdaPost>
             <DireitaPost>
-                <h1>{posts.user.username}</h1>
-                <p>{posts.text}</p>
+                <h1 onClick={redirecionar}>{post.user.username}</h1>
+                <p>
+                    <ReactHashtag onHashtagClick={val => directToHashtag(val)}>
+                        {post.text}
+                    </ReactHashtag>
+                </p>
                 <ContainerLink>
-                    <h1>{posts.linkTitle}</h1>
-                    <p>{posts.linkDescription}</p>
-                    <a href={posts.link} rel="noreferrer" target="_blank">{posts.link}</a>
-                    <img src ={posts.linkImage} alt=""/>
+                    <h1>{post.linkTitle}</h1>
+                    <p> {post.linkDescription}</p>
+                    <a href={post.link} rel="noreferrer" target="_blank">{post.link}</a>
+                    <img src ={post.linkImage} alt=""/>
                 </ContainerLink>
             </DireitaPost>
         </ContainerPost>
@@ -34,6 +53,7 @@ const ContainerPost = styled.div `
     display: flex;
     padding: 17px 0 20px 0;
     font-family: 'Lato', sans-serif;
+    margin-top: 16px;
 
 `;
 
@@ -73,11 +93,16 @@ const DireitaPost = styled.div `
         font-weight: 400;
         color: #b7b7b7;
        
+    } 
+    
+    span {
+        color: #fff;
+        font-weight: 700;
     }
     
-    
-    
 `;
+
+
 
 const ContainerLink = styled.div `
     width: 503px;

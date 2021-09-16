@@ -10,7 +10,7 @@ import { useHistory } from "react-router";
 export default function Timeline(){
     
     const [posts, setPosts] = useState([]);
-    const [texto, setTexto] = useState(<h1>Loading...</h1>);
+    const [texto, setTexto] = useState("Loading...");
     const {user} = useContext(UserContext);
 
     const history = useHistory();

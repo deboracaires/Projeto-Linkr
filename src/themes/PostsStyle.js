@@ -43,12 +43,12 @@ const Posts = styled.div`
 
 const PostStyle = styled.div`
     width: 45vw;
-    height: 22vw;
+    height: ${(props) => props.type === "post" ? "22vw" : "13vw" };
 
     border-radius: 16px;
     margin: 30px auto 30px 0;
 
-    background-color: #171717;
+    background-color: ${(props) => props.type === "post" ? "#171717" : "#ffffff" };
     
     position: relative;
 `
@@ -104,22 +104,21 @@ const PostInfo = styled.div`
 `
 
 const Description = styled.div`
-    height: 7vw;
+    height: ${(props) => props.type === "post" ? "7vw" : "3vw"};
     
     font-family: 'Lato', sans-serif;
 
     border-radius: 0 16px 16px 0;
 
-    padding: 10px 20px;
+    padding: ${(props) => props.type === "post" ? "10px 20px" : "20px"};
+    margin: 0 auto 10px 0;
 
     overflow: hidden;
 
-    margin: 0 auto 10px 0;
-
     h3 {
-        color: #ffffff;
+        color: ${(props) => props.type === "post" ? "#ffffff" : "#707070"};
         font-size: 21px;
-
+        font-weight: ${(props) => props.type === "post" ? "400" : "300"};
         margin: 0 auto 10px 0;
     }
 
@@ -156,9 +155,10 @@ const DescriptionLink = styled.div`
 
     border-radius: 0 16px 16px 0;
 
-    padding: 20px;
+    padding: ${(props) => props.type === "post" ? "20px" : "0 20px"};
 
     line-height: 22px;
+    text-align: right;
 
     h3 {
         color: #ffffff;
@@ -173,6 +173,28 @@ const DescriptionLink = styled.div`
 
         margin: 0 auto 10px 0;
     }
+
+    input {
+        width: 100%;
+        font-weight: 400;
+        margin: 10px 0;
+        padding: 0 15px;
+        border-radius: 5px;
+        background-color: #efefef;
+        outline: 0;
+    }
+
+    input:first-child {
+        height: 35px;
+    }
+
+    input:nth-child(2) {
+        height: 55px;
+    }
+
+    input::placeholder {
+        color: #949494;
+    }
 `
 
 const ImageLink = styled.img`
@@ -180,6 +202,18 @@ const ImageLink = styled.img`
     height: 13vw;
 
     border-radius: 0 12px 12px 0;
+`
+
+const Button = styled.button`
+    width: 7vw;
+    height: 31px;
+
+    color: #ffffff;
+    font-weight: bold;
+    
+    cursor: pointer;
+    background: #1877f2;
+    border-radius: 5px;
 `
 
 export {
@@ -193,5 +227,6 @@ export {
     Description,
     Links,
     DescriptionLink,
-    ImageLink
+    ImageLink,
+    Button
 }

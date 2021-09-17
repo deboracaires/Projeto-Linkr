@@ -20,7 +20,7 @@ export default function LoginForm({ setUser, setToken }) {
         setUser(response.data.user)
         setToken(response.data.token)
 
-        history.push('/my-posts');
+        history.push('/timeline');
     };
 
     function errorLogIn () {

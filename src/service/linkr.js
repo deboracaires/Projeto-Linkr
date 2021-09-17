@@ -13,6 +13,17 @@ function getUserPosts(userId, token) {
     return promise;
 }
 
+function publish(body, token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const promise = axios.post(`${BASE_URL}/posts`, body, config);
+    return promise;
+}
+
 export {
-    getUserPosts
+    getUserPosts,
+    publish
 }

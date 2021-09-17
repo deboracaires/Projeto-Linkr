@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
 
-import ContainerForms from "../../../themes/ContainerForms"
+import ContainerForms from "../../../themes/ContainerForms";
+
+import UserContext from "../../../contexts/UserContext";
 
 export default function LoginForm() {
     const [userData, setUserData] = useState({
@@ -11,12 +13,14 @@ export default function LoginForm() {
         username: ''
     });
 
+    const {setUser} = useContext(UserContext);
+
     const [buttonToggle, setButtonToggle] = useState(<button type='submit'>Log In</button>);
 
     let history = useHistory();
 
     function goTimeline(response) {
-        console.log(response.data);
+        setUser(response.data);
 
         history.push('/timeline');
     };
@@ -42,7 +46,7 @@ export default function LoginForm() {
             }
         }
         
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in", userData)
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/sign-in", userData)
 
         promise.then(goTimeline)
         promise.catch(errorLogIn)

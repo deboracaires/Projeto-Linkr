@@ -22,7 +22,7 @@ export default function SelectedHashtag(){
             .then(res => {setPosts(res.data.posts)
                             loading()})
             .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
-    }, []);
+    }, [nomeHashtag.hashtag, user.token]);
 
     function loading(){
         setTexto("Nenhum post encontrado");

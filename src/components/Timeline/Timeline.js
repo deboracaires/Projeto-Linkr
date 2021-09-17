@@ -12,19 +12,16 @@ export default function Timeline(){
     const user = JSON.parse(sessionStorage.getItem("user"));
 
     useEffect(()=> {
-        getPosts();
-    }, []);
+        const config = { headers: { "Authorization": `Bearer ${user.token}` } };
 
-    const config = { headers: { "Authorization": `Bearer ${user.token}` } };
-
-    function getPosts(){
         const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts", config);
 
         requisicao
             .then(res => {setPosts(res.data)
                             loading()})
             .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
-    }
+
+    }, [user.token]);
 
     function loading(){
         setTexto("Nenhum post encontrado");

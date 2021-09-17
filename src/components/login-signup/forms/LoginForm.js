@@ -7,20 +7,19 @@ import ContainerForms from "../../../themes/ContainerForms";
 
 import UserContext from "../../../contexts/UserContext";
 
-export default function LoginForm({ setUser, setToken }) {
+export default function LoginForm() {
     const [userData, setUserData] = useState({
         email: '',
         username: ''
     });
 
-    const {setUser} = useContext(UserContext);
+    const { setUser, setToken } = useContext(UserContext);
 
     const [buttonToggle, setButtonToggle] = useState(<button type='submit'>Log In</button>);
 
     let history = useHistory();
 
     function goTimeline(response) {
-        console.log(response.data);
         setUser(response.data.user)
         setToken(response.data.token)
 

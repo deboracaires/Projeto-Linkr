@@ -21,7 +21,7 @@ export default function App() {
         <GlobalStyle />
         <Switch>
           <Route path="/" exact>
-            <Login />
+            <Login setUser={setUser} setToken={setToken} />
           </Route>
           <Route path="/sign-up" exact>
             <SignUp />

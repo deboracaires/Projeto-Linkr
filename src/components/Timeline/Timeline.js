@@ -5,7 +5,7 @@ import axios from "axios";
 import UserContext from "../../contexts/UserContext";
 import { useHistory } from "react-router";
 
-
+import Publish from "../Publish/Publish"
 
 export default function Timeline(){
     
@@ -40,7 +40,7 @@ export default function Timeline(){
     
     return (
         <ContainerTimeline>
-
+            <Publish />
             <ContainerPosts>
                 
                 {posts.length === 0 ?

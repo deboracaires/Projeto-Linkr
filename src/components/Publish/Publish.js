@@ -6,7 +6,9 @@ import Trending from "../Trending/Trending";
 import { publish } from "../../service/linkr";
 
 export default function Publish() {
-    const { user, token } = useContext(UserContext);
+    const { user } = useContext(UserContext);
+
+    const { token } = user
 
     const [text, setText] = useState("");
     const [link, setLink] = useState("");

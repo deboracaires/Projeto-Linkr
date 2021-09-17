@@ -1,54 +1,45 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import TimelinePost from "./TimelinePost";
+import { useParams } from "react-router";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import TimelinePost from "../Timeline/TimelinePost";
 
-
-
-export default function Timeline(){
+export default function SelectedHashtag(){
     
+    const  nomeHashtag  = useParams();
     const [posts, setPosts] = useState([]);
     const [texto, setTexto] = useState("Loading...");
     const user = JSON.parse(sessionStorage.getItem("user"));
 
     useEffect(()=> {
-        getPosts();
-    }, []);
+        const config = {
+             headers: { "Authorization": `Bearer ${user.token}` } 
+        };
 
-    const config = { headers: { "Authorization": `Bearer ${user.token}` } };
-
-    function getPosts(){
-        const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts", config);
+        const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/hashtags/${nomeHashtag.hashtag}/posts`, config);
 
         requisicao
-            .then(res => {setPosts(res.data)
+            .then(res => {setPosts(res.data.posts)
                             loading()})
             .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
-    }
+    }, []);
 
     function loading(){
         setTexto("Nenhum post encontrado");
     }
-
-   
-    
-    
-    return (
-        <ContainerTimeline>
+    return(
+        <ContainerHashtag>
             <Esquerda>
-                <Titulo>timeline</Titulo>
-                <NewPost>
-                    a
-                </NewPost>
+                <Titulo>#{nomeHashtag.hashtag}</Titulo>
                 <ContainerPosts>
                     
                     {posts.length === 0 ?
                         (
-                            <h2>{texto}</h2>
+                            <h1>{texto}</h1>
                         )
                         :
                         (
-                            posts.posts.map((post, index) => <TimelinePost key = {index} post={post}/>)
+                            posts.map((post, index) => <TimelinePost key = {index} post={post}/>)
                         )
                     }
                 </ContainerPosts>
@@ -56,15 +47,16 @@ export default function Timeline(){
             <MenuHashtag>
                 a
             </MenuHashtag>
-        </ContainerTimeline>
-        
+        </ContainerHashtag>
     );
 }
 
-const ContainerTimeline = styled.div `
+const ContainerHashtag = styled.div `
+
     box-sizing: border-box;
     width: 100vw;
     
+
     display: flex;
     justify-content: center;    
 `;
@@ -79,16 +71,8 @@ const Titulo = styled.h1 `
     font-size: 43px;
     color: #fff;
     line-height: 64px;
-    margin: 125px 0 43px 0;
-    
-`;
-const NewPost = styled.div `
-    width: 611px;
-    height: 209px;
-    border: 1px solid #fff;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 16px;
+    margin: 125px 0 41px 0;
+
 `;
 
 const ContainerPosts = styled.div `
@@ -101,12 +85,12 @@ const ContainerPosts = styled.div `
         margin-top: 80px;
         color: #fff;
     }
-    
+
 `;
 const MenuHashtag = styled.div `
     width: 301px;
     height: 406px;
-    margin: 232px 0 0 25px;
+    margin: 248px 0 0 25px;
     background-color: #171717;
     border: 1px solid #171717;
     border-radius: 16px;

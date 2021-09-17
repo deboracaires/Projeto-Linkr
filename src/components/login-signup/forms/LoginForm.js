@@ -7,7 +7,7 @@ import ContainerForms from "../../../themes/ContainerForms";
 
 import UserContext from "../../../contexts/UserContext";
 
-export default function LoginForm() {
+export default function LoginForm({ setUser, setToken }) {
     const [userData, setUserData] = useState({
         email: '',
         username: ''
@@ -20,7 +20,9 @@ export default function LoginForm() {
     let history = useHistory();
 
     function goTimeline(response) {
-        setUser(response.data);
+        console.log(response.data);
+        setUser(response.data.user)
+        setToken(response.data.token)
 
         history.push('/timeline');
     };

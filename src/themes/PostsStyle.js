@@ -73,8 +73,8 @@ const UserInfo = styled.div`
     align-items: center;
 
     img {
-        width: 5vw;
-        height: 5vw;
+        width: 4vw;
+        height: 4vw;
 
         border-radius: 50%;
     }

@@ -2,7 +2,7 @@ import { DescriptionLink, Description, ImageLink, PostInfo, Like, Links, UserInf
 
 export default function Post({ post }) {
     let text = "likes"
-    const {user, likes } = post
+    const { user, likes } = post
 
     console.log(post)
 

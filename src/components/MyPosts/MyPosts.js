@@ -10,10 +10,9 @@ export default function MyPosts() {
 
     const { user, token } = useContext(UserContext);
     const [posts, setPosts] = useState([]);
-    const [myPosts, setMyPosts] = useState([]);
 
     useEffect(() => {
-        getUserPosts(user.id, token).then((res) => setPosts(res.data)).catch((err) => console.error);
+        getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
     }, []);
 
     return (
@@ -22,9 +21,9 @@ export default function MyPosts() {
     
             <Title>my posts</Title>
             <Page>
-                {(myPosts === []) ?
+                {(posts !== []) ?
                     (<Posts>
-                        {myPosts.map((post, index) => <Post key={index} post={post} />)}
+                        {posts.map((post, index) => (console.log(post), <Post key={index} post={post} />))}
                     </Posts>)
 
                     : (<h4>Você ainda não fez nenhuma  publicação</h4>)

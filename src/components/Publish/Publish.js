@@ -15,7 +15,6 @@ export default function Publish() {
 
     function publishPost(event) {
         event.preventDefault();
-        console.log({text, link})
 
         if(text && link) {
             body = {

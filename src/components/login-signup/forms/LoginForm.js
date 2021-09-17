@@ -21,7 +21,8 @@ export default function LoginForm() {
 
     function goTimeline(response) {
         setUser(response.data);
-
+        const user = JSON.stringify(response.data);
+        sessionStorage.setItem("user", user);
         history.push('/timeline');
     };
 

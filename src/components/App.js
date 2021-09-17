@@ -3,11 +3,13 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./login-signup/Login";
 import SignUp from "./login-signup/SignUp";
 import Timeline from "./Timeline/Timeline";
+import SelectedHashtag from "./Hashtags/SelectedHashtag";
 
 import UserContext from "../contexts/UserContext";
 
 import GlobalStyle from "../themes/globalStyles";
 import { useState } from "react";
+
 
 export default function App() {
   
@@ -26,6 +28,9 @@ export default function App() {
           </Route>
           <Route path="/timeline" exact>
             <Timeline />
+          </Route>
+          <Route path = "/hashtag/:hashtag">
+            <SelectedHashtag />
           </Route>
         </Switch>
       </UserContext.Provider>

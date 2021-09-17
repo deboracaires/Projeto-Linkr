@@ -46,7 +46,7 @@ export default function SignUpForm() {
             }
         }
         
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up", userData);
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/sign-up", userData);
 
         promise.then(goLogin);
         promise.catch(errorSignUp);

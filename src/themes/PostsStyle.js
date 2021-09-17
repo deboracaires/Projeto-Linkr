@@ -22,6 +22,12 @@ const Page = styled.div`
 
     position: relative;
 
+    h4 {
+        color: #b7b7b7;
+        font-size: 19px;
+        text-align: start;
+    }
+
     strong {
         color: #ffffff;
         font-weight: bold;
@@ -112,14 +118,14 @@ const Description = styled.div`
 
     h3 {
         color: #ffffff;
-        font-size: 19px;
+        font-size: 21px;
 
         margin: 0 auto 10px 0;
     }
 
     h4 {
         color: #b7b7b7;
-        font-size: 17px;
+        font-size: 19px;
     }
 `
 

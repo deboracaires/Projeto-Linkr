@@ -54,7 +54,7 @@ const PostStyle = styled.div`
 `
 
 const UserInfo = styled.div`
-    width: 8vw;
+    width: 7vw;
     height: 100%;
 
     color: #ffffff;
@@ -73,8 +73,8 @@ const UserInfo = styled.div`
     align-items: center;
 
     img {
-        width: 4vw;
-        height: 4vw;
+        width: 3vw;
+        height: 3vw;
 
         border-radius: 50%;
     }
@@ -214,6 +214,8 @@ const Button = styled.button`
 
     color: #ffffff;
     font-weight: bold;
+
+    cursor: pointer;
 
     background: #1877f2;
     border-radius: 5px;

@@ -2,13 +2,15 @@ import Header from "../Header/Header";
 import Post from "./Post"
 import Trending from "../Trending/Trending";
 import { Page, Title, Posts } from "../../themes/PostsStyle";
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../contexts/UserContext";
+import { useEffect, useState } from "react";
+
 import { getUserPosts } from "../../service/linkr";
 
 export default function MyPosts() {
 
-    const { user, token } = useContext(UserContext);
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+    
+    const { token, user } = userData;
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -16,7 +18,7 @@ export default function MyPosts() {
     }, []);
 
     return (
-        <>
+        <div>
             <Header />
     
             <Title>my posts</Title>
@@ -30,6 +32,6 @@ export default function MyPosts() {
                 }
                 <Trending />
             </Page>
-        </>
+        </div>
     );
 }

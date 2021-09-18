@@ -35,7 +35,7 @@ export default function Timeline(){
             <Esquerda>
                 <Titulo>timeline</Titulo>
                 <NewPost>
-                    a
+                    <Publish />
                 </NewPost>
                 <ContainerPosts>
                     
@@ -81,11 +81,13 @@ const Titulo = styled.h1 `
 `;
 const NewPost = styled.div `
     width: 611px;
-    height: 209px;
+    height: 250px;
     border: 1px solid #fff;
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
+
+    position: relative;
 `;
 
 const ContainerPosts = styled.div `

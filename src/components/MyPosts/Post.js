@@ -13,7 +13,7 @@ export default function Post({ post }) {
     return (
         <PostStyle type="post">
             {(user && likes) ?
-                <>
+                <div>
                 <UserInfo>
                     <img src={user.avatar} alt="" />
                     <Like />
@@ -33,7 +33,7 @@ export default function Post({ post }) {
                         <ImageLink src={post.linkImage} alt="" ></ImageLink>
                     </Links>
                 </PostInfo>
-                </>
+                </div>
                 : ""
             }
             

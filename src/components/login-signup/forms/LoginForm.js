@@ -20,9 +20,9 @@ export default function LoginForm() {
     let history = useHistory();
 
     function goTimeline(response) {
-        setUser(response.data.user)
-        setToken(response.data.token)
-
+        setUser(response.data);
+        const user = JSON.stringify(response.data);
+        sessionStorage.setItem("user", user);
         history.push('/timeline');
     };
 

@@ -16,7 +16,7 @@ export default function MyPosts() {
     }, []);
 
     return (
-        <>
+        <div>
             <Header />
     
             <Title>my posts</Title>
@@ -30,6 +30,6 @@ export default function MyPosts() {
                 }
                 <Trending />
             </Page>
-        </>
+        </div>
     );
 }

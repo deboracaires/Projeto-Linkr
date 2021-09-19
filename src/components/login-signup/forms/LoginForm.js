@@ -24,7 +24,7 @@ export default function LoginForm() {
         setUser(response.data);
         const user = JSON.stringify(response.data);
         sessionStorage.setItem("user", user);
-        history.push('/my-posts');
+        history.push('/timeline');
     };
 
     function errorLogIn () {

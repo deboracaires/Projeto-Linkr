@@ -13,7 +13,7 @@ export default function LoginForm() {
         username: ''
     });
 
-    const { setUser, setToken } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const [buttonToggle, setButtonToggle] = useState(<button type='submit'>Log In</button>);
 

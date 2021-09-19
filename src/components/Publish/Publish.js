@@ -13,6 +13,11 @@ export default function Publish() {
 
     let body;
 
+    function clearInputs() {
+        setText("");
+        setLink("")
+    }
+
     function publishPost(event) {
         event.preventDefault();
 
@@ -22,7 +27,7 @@ export default function Publish() {
                 link
             }
 
-            publish(body, token).then((res) => (setText(""), setLink(""), console.log(body))).catch((err) => console.error)
+            publish(body, token).then((res) => clearInputs).catch((err) => console.error)
         } else {
             alert("Preencha corretamente os campos")
         }

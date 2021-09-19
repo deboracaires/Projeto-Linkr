@@ -23,7 +23,19 @@ function publish(body, token) {
     return promise;
 }
 
+function getUserLiked(token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const promise = axios.get(`${BASE_URL}/posts/liked`, config);
+    return promise;
+}
+
 export {
     getUserPosts,
-    publish
+    publish,
+    getUserLiked
 }

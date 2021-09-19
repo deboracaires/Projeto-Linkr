@@ -10,6 +10,7 @@ import UserContext from "../contexts/UserContext";
 
 import GlobalStyle from "../themes/globalStyles";
 import { useState } from "react";
+import MyLikes from "./MyLikes.js/MyLikes";
 
 
 export default function App() {
@@ -36,6 +37,9 @@ export default function App() {
 						</Route>
 						<Route path = "/hashtag/:hashtag">
 							<SelectedHashtag />
+						</Route>
+						<Route path="/my-likes" exact>
+							<MyLikes />
 						</Route>
 				</Switch>
 			</UserContext.Provider>

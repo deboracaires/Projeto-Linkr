@@ -17,7 +17,7 @@ export default function Timeline(){
 
     useEffect(()=> {
         getPosts();
-    });
+    }, []);
 
     const config = { headers: { "Authorization": `Bearer ${user.token}` } };
 

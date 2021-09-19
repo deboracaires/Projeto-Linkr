@@ -27,7 +27,7 @@ export default function UserPosts() {
     return (
         <div>
             <Header />
-            {posts[0].user ?
+            {posts[0] ?
                 <Title>{posts[0].user.username}</Title>
                 : <Title>fulano</Title>
             }

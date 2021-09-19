@@ -6,10 +6,6 @@ export default function Post({ post }) {
 
     console.log(post)
 
-    // if(likes.length === 1) {
-    //     text = "like"
-    // }
-
     return (
         <PostStyle type="post">
             {(user && likes) ?

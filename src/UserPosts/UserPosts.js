@@ -22,11 +22,12 @@ export default function UserPosts() {
         const { token } = userData;
 
         getUserPosts(id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
-    }, []);
+    }, [id]);
+    console.log(posts)
     return (
         <div>
             <Header />
-            {posts[0].user.username ?
+            {posts[0].user ?
                 <Title>{posts[0].user.username}</Title>
                 : <Title>fulano</Title>
             }

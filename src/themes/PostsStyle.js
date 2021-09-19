@@ -114,8 +114,6 @@ const Description = styled.div`
 
     overflow: hidden;
 
-    margin: 0 auto 10px 0;
-
     h3 {
         color: ${(props) => props.type === "post" ? "#ffffff" : "#707070"};
         font-size: 21px;
@@ -220,7 +218,6 @@ const Button = styled.button`
     background: #1877f2;
     border-radius: 5px;
 `
-
 
 export {
     Title,

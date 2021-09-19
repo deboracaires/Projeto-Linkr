@@ -1,29 +1,30 @@
-import React from 'react';
 import Header from "../Header/Header";
-import Post from "./Post"
+
 import Trending from "../Trending/Trending";
 import { Page, Title, Posts } from "../../themes/PostsStyle";
 import { useEffect, useState } from "react";
 
-import { getUserPosts } from "../../service/linkr";
+import { getUserLiked } from "../../service/linkr";
+import Post from "../MyPosts/Post";
 
-export default function MyPosts() {
+export default function MyLikes() {
 
+    
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const userData = JSON.parse(sessionStorage.getItem("user"));
+    
+        const { token } = userData;
 
-        const { token, user } = userData;
-  
-        getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
+        getUserLiked(token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
     }, []);
 
     return (
         <div>
             <Header />
     
-            <Title>my posts</Title>
+            <Title>my likes</Title>
             <Page>
                 {(posts !== []) ?
                     (<Posts>

@@ -1,25 +1,28 @@
 import { Link } from "react-router-dom"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
 
-import ContainerForms from "../../../themes/ContainerForms"
+import ContainerForms from "../../../themes/ContainerForms";
 
-export default function LoginForm({ setUser, setToken }) {
+import UserContext from "../../../contexts/UserContext";
+
+export default function LoginForm() {
     const [userData, setUserData] = useState({
         email: '',
         username: ''
     });
+
+    const { setUser, setToken } = useContext(UserContext);
 
     const [buttonToggle, setButtonToggle] = useState(<button type='submit'>Log In</button>);
 
     let history = useHistory();
 
     function goTimeline(response) {
-        console.log(response.data);
-        setUser(response.data.user)
-        setToken(response.data.token)
-
+        setUser(response.data);
+        const user = JSON.stringify(response.data);
+        sessionStorage.setItem("user", user);
         history.push('/timeline');
     };
 

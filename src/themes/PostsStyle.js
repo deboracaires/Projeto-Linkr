@@ -54,7 +54,7 @@ const PostStyle = styled.div`
 `
 
 const UserInfo = styled.div`
-    width: 8vw;
+    width: 7vw;
     height: 100%;
 
     color: #ffffff;
@@ -73,8 +73,8 @@ const UserInfo = styled.div`
     align-items: center;
 
     img {
-        width: 5vw;
-        height: 5vw;
+        width: 3vw;
+        height: 3vw;
 
         border-radius: 50%;
     }
@@ -111,7 +111,6 @@ const Description = styled.div`
     border-radius: 0 16px 16px 0;
 
     padding: ${(props) => props.type === "post" ? "10px 20px" : "20px"};
-    margin: 0 auto 10px 0;
 
     overflow: hidden;
 
@@ -149,7 +148,6 @@ const Links = styled.div`
 `
 
 const DescriptionLink = styled.div`
-    height: 100%;
     
     font-family: 'Lato', sans-serif;
 
@@ -176,11 +174,15 @@ const DescriptionLink = styled.div`
 
     input {
         width: 100%;
+
         font-weight: 400;
+
         margin: 10px 0;
         padding: 0 15px;
+
         border-radius: 5px;
         background-color: #efefef;
+
         outline: 0;
     }
 
@@ -205,13 +207,14 @@ const ImageLink = styled.img`
 `
 
 const Button = styled.button`
-    width: 7vw;
+    width: 5vw;
     height: 31px;
 
     color: #ffffff;
     font-weight: bold;
-    
+
     cursor: pointer;
+
     background: #1877f2;
     border-radius: 5px;
 `

@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     border: none;
 
-    font-family: 'Oswald', sans-serif;
+    /* font-family: 'Oswald', sans-serif; */
   }
 
   body {

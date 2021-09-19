@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from "../Header/Header";
 import Post from "./Post"
 import Trending from "../Trending/Trending";
@@ -8,14 +9,13 @@ import { getUserPosts } from "../../service/linkr";
 
 export default function MyPosts() {
 
-    
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const userData = JSON.parse(sessionStorage.getItem("user"));
-    
-        const { token, user } = userData;
 
+        const { token, user } = userData;
+  
         getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
     }, []);
 

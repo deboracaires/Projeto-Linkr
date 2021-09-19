@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 
 import { UserInfo, Description, PostInfo, DescriptionLink, Button } from "../../themes/PostsStyle";
@@ -7,7 +8,6 @@ export default function Publish() {
     const user = JSON.parse(sessionStorage.getItem("user"));
     
     const { token } = user
-    console.log({user, token})
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
 

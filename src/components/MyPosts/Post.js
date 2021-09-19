@@ -1,10 +1,10 @@
+import React from 'react';
 import { DescriptionLink, Description, ImageLink, PostInfo, Like, Links, UserInfo, PostStyle } from "../../themes/PostsStyle";
 
 export default function Post({ post }) {
-    let text = "likes"
-    const { user, likes } = post
 
-    console.log(post)
+    let text = "likes";
+    const { user, likes } = post;
 
     return (
         <PostStyle type="post">

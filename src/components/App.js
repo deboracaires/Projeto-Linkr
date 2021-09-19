@@ -12,6 +12,7 @@ import UserContext from "../contexts/UserContext";
 import GlobalStyle from "../themes/globalStyles";
 import { useState } from "react";
 import MyLikes from "./MyLikes.js/MyLikes";
+import UserPosts from "../UserPosts/UserPosts";
 
 
 export default function App() {
@@ -41,6 +42,9 @@ export default function App() {
 						</Route>
 						<Route path="/my-likes" exact>
 							<MyLikes />
+						</Route>
+						<Route path="/user/:idUser" exact>
+							<UserPosts />
 						</Route>
 				</Switch>
 			</UserContext.Provider>

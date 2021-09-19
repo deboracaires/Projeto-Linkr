@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from "react-router-dom"
 import { useContext, useState } from "react";
 import { useHistory } from "react-router";
@@ -13,7 +14,7 @@ export default function LoginForm() {
         username: ''
     });
 
-    const { setUser, setToken } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const [buttonToggle, setButtonToggle] = useState(<button type='submit'>Log In</button>);
 
@@ -23,7 +24,7 @@ export default function LoginForm() {
         setUser(response.data);
         const user = JSON.stringify(response.data);
         sessionStorage.setItem("user", user);
-        history.push('/timeline');
+        history.push('/my-posts');
     };
 
     function errorLogIn () {

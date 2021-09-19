@@ -1,3 +1,4 @@
+import React from 'react';
 import { Line, Trends } from "./TrendingStyle";
 
 export default function Trending() {

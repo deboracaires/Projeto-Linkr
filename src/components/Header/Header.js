@@ -1,3 +1,4 @@
+import React from 'react';
 import { Arrow, Nav, Top, User } from "./HeaderStyle"
 
 export default function Header() {

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 
 import { UserInfo, Description, PostInfo, DescriptionLink, Button } from "../../themes/PostsStyle";
@@ -7,11 +8,15 @@ export default function Publish() {
     const user = JSON.parse(sessionStorage.getItem("user"));
     
     const { token } = user
-    console.log({user, token})
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
 
     let body;
+
+    function clearInputs() {
+        setText("");
+        setLink("")
+    }
 
     function publishPost(event) {
         event.preventDefault();
@@ -22,7 +27,7 @@ export default function Publish() {
                 link
             }
 
-            publish(body, token).then((res) => (setText(""), setLink(""), console.log(body))).catch((err) => console.error)
+            publish(body, token).then((res) => clearInputs).catch((err) => console.error)
         } else {
             alert("Preencha corretamente os campos")
         }

@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from "../Header/Header";
 import Post from "./Post"
 import Trending from "../Trending/Trending";
@@ -7,13 +8,12 @@ import { useEffect, useState } from "react";
 import { getUserPosts } from "../../service/linkr";
 
 export default function MyPosts() {
-
-    const userData = JSON.parse(sessionStorage.getItem("user"));
-    
-    const { token, user } = userData;
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
+        const userData = JSON.parse(sessionStorage.getItem("user"));
+        const { token, user } = userData;
+        
         getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
     }, []);
 
@@ -25,7 +25,7 @@ export default function MyPosts() {
             <Page>
                 {(posts !== []) ?
                     (<Posts>
-                        {posts.map((post, index) => (console.log(post), <Post key={index} post={post} />))}
+                        {posts.map((post, index) => <Post key={index} post={post} />)}
                     </Posts>)
 
                     : (<h4>Você ainda não fez nenhuma  publicação</h4>)

@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { BsHeart, BsFillTrashFill, BsPencil } from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import Modal from "./Modal";
+import axios from "axios";
 
 
 export default function TimelinePost({post}){
@@ -22,18 +23,45 @@ export default function TimelinePost({post}){
     }
 
 
-    const inputEl = useRef(null);
+    const inputRef = useRef(null);
     const [isInEdit, setIsInEdit] = useState(false);
     const [postTextValue, setPostTextValue] = useState(post.text)
 
-    function editPost() {
-        console.log('edit')
+    useEffect(() => {
+        if (isInEdit) {
+          inputRef.current.focus();
+        }
+      }, [isInEdit]);
 
-        console.log(isInEdit)
-
-
+    function editPost() {   
         setIsInEdit(!isInEdit)
+        
+    };
+
+    function escOrEnter(event){
+        const config = { headers: { "Authorization": `Bearer ${user.token}` } };
+        const body = {
+            "text": postTextValue
+        }
+
+		if(event.key === 'Escape') {
+			setIsInEdit(false)
+	    }
+        if(event.key === 'Enter') {
+			console.log('enviar edição');
+            const promise = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts/${post.id}`, body, config);
+            setIsInEdit(false)
+
+            promise
+                .then(setTimeout(()=>window.location.reload(), 500))
+                .catch(() => {
+                    alert('unable to save changes');
+                    setIsInEdit(true)
+                })
+	    }
     }
+
+    
     
     return (
         <ContainerPost>
@@ -52,7 +80,7 @@ export default function TimelinePost({post}){
                     {
                         isInEdit ?
                         (
-                            <input value={postTextValue} type='text' onChange={e => setPostTextValue(e.target.value)}></input>
+                            <input value={postTextValue} ref={inputRef} type='text' onChange={e => setPostTextValue(e.target.value)} onKeyDown={escOrEnter}></input>
                         )
                         :
                         (
@@ -180,8 +208,8 @@ const DireitaPost = styled.div `
         text-overflow: ellipsis;
 
         input {
-            width: 503px;
-            
+            width: inherit;
+            height: inherit;
         }
        
     } 

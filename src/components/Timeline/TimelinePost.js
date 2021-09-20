@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { BsHeart, BsFillTrashFill, BsPencil } from "react-icons/bs";
 import { useHistory } from "react-router";
@@ -21,7 +21,19 @@ export default function TimelinePost({post}){
         history.push(`/hashtag/${hash}`)
     }
 
-    
+
+    const inputEl = useRef(null);
+    const [isInEdit, setIsInEdit] = useState(false);
+    const [postTextValue, setPostTextValue] = useState(post.text)
+
+    function editPost() {
+        console.log('edit')
+
+        console.log(isInEdit)
+
+
+        setIsInEdit(!isInEdit)
+    }
     
     return (
         <ContainerPost>
@@ -37,9 +49,19 @@ export default function TimelinePost({post}){
             <DireitaPost>
                 <h4 onClick={redirecionar}>{post.user.username}</h4>
                 <h5>
-                    <ReactHashtag onHashtagClick={val => directToHashtag(val)}>
-                        {post.text}
-                    </ReactHashtag>
+                    {
+                        isInEdit ?
+                        (
+                            <input value={postTextValue} type='text' onChange={e => setPostTextValue(e.target.value)}></input>
+                        )
+                        :
+                        (
+                            <ReactHashtag onHashtagClick={val => directToHashtag(val)} >
+                                {post.text}
+                            </ReactHashtag>
+                        )
+                    }
+                    
                 </h5>
                 <ContainerLink>
                     <h4>{post.linkTitle}</h4>
@@ -54,7 +76,7 @@ export default function TimelinePost({post}){
                 (
                     <ContainerIcons>
                         <IconeEditar>
-                            <BsPencil size='20px' color="#fff" onClick = {() => alert('editou')}/>
+                            <BsPencil size='20px' color="#fff" onClick = {editPost}/>
                         </IconeEditar>
                         <IconeDeletar onClick = {() => setIsOpen(true)}>
                             <BsFillTrashFill size='20px' color="#fff" />
@@ -156,6 +178,11 @@ const DireitaPost = styled.div `
         white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        input {
+            width: 503px;
+            
+        }
        
     } 
     

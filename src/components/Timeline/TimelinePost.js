@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { BsHeart, BsFillTrashFill } from "react-icons/bs";
+import { BsHeart, BsFillTrashFill, BsPencil } from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import Modal from "./Modal";
@@ -20,6 +20,8 @@ export default function TimelinePost({post}){
         const hash = val.replace(/#/, "");
         history.push(`/hashtag/${hash}`)
     }
+
+    
     
     return (
         <ContainerPost>
@@ -50,9 +52,15 @@ export default function TimelinePost({post}){
                 post.user.username === user.user.username ?
 
                 (
-                    <IconeDeletar onClick = {() => setIsOpen(true)}>
-                        <BsFillTrashFill size='20px' color="#fff" />
-                    </IconeDeletar>
+                    <ContainerIcons>
+                        <IconeEditar>
+                            <BsPencil size='20px' color="#fff" onClick = {() => alert('editou')}/>
+                        </IconeEditar>
+                        <IconeDeletar onClick = {() => setIsOpen(true)}>
+                            <BsFillTrashFill size='20px' color="#fff" />
+                        </IconeDeletar>
+                        
+                    </ ContainerIcons>
                 )
                 :
                 (
@@ -231,8 +239,18 @@ const ContainerLink = styled.div `
 
 const IconeDeletar = styled.div `
     position: absolute;
-    top: 22px;
-    right: 23px;
+        top: 22px;
+        right: 23px;
 `;
 
+const IconeEditar = styled.div `
+    position: absolute;
+        top: 22px;
+        right: 53px;
+`;
 
+const ContainerIcons = styled.div `
+    
+    background-color: yellow;
+    
+`

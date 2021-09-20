@@ -4,6 +4,7 @@ import TimelinePost from "./TimelinePost";
 import axios from "axios";
 
 import Publish from "../Publish/Publish"
+import Header from "../Header/Header";
 
 export default function Timeline(){
     
@@ -32,6 +33,9 @@ export default function Timeline(){
     
     return (
         <ContainerTimeline>
+            
+            <Header />
+            
             <Esquerda>
                 <Titulo>timeline</Titulo>
                 <NewPost>

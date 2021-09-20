@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { BsHeart } from "react-icons/bs";
+import { BsHeart, BsFillTrashFill } from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
+import Modal from "./Modal";
+
 
 export default function TimelinePost({post}){
     
     const history = useHistory();
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const [modalIsOpen, setIsOpen] = useState(false);
 
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
@@ -16,6 +20,12 @@ export default function TimelinePost({post}){
         const hash = val.replace(/#/, "");
         history.push(`/hashtag/${hash}`)
     }
+
+    function deletarPost(){
+        console.log("to aqui")
+        setIsOpen(false);
+    }
+
     
     return (
         <ContainerPost>
@@ -42,6 +52,30 @@ export default function TimelinePost({post}){
                     <img src ={post.linkImage} alt=""/>
                 </ContainerLink>
             </DireitaPost>
+            {
+                post.user.username === user.user.username ?
+
+                (
+                    <IconeDeletar onClick = {() => setIsOpen(true)}>
+                        <BsFillTrashFill size='20px' color="#fff" />
+                    </IconeDeletar>
+                )
+                :
+                (
+                    ""
+                )
+            }
+            {
+                modalIsOpen ?
+                (
+                    <Modal setIsOpen={setIsOpen} deletarPost={deletarPost}/>
+                )
+                :
+                (
+                    ""
+                )
+            }
+            
         </ContainerPost>
     );
 }
@@ -55,6 +89,7 @@ const ContainerPost = styled.div `
     padding: 17px 0 20px 0;
     font-family: 'Lato', sans-serif;
     margin-top: 16px;
+    position: relative;
    
 
 `;
@@ -142,7 +177,7 @@ const ContainerLink = styled.div `
     flex-direction: column;
     justify-content: space-around; 
     background-color: #171717;
-    z-index: 1000;
+    z-index: 0;
 
 
     img{
@@ -199,3 +234,11 @@ const ContainerLink = styled.div `
         
     }
 `;
+
+const IconeDeletar = styled.div `
+    position: absolute;
+    top: 22px;
+    right: 23px;
+`;
+
+

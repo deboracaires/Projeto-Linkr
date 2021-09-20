@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { BsHeart } from "react-icons/bs";
+import { BsHeart, BsFillTrashFill, BsPencil } from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
+import Modal from "./Modal";
+import axios from "axios";
+
 
 export default function TimelinePost({post}){
     
     const history = useHistory();
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const [modalIsOpen, setIsOpen] = useState(false);
 
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
@@ -16,6 +21,47 @@ export default function TimelinePost({post}){
         const hash = val.replace(/#/, "");
         history.push(`/hashtag/${hash}`)
     }
+
+
+    const inputRef = useRef(null);
+    const [isInEdit, setIsInEdit] = useState(false);
+    const [postTextValue, setPostTextValue] = useState(post.text)
+
+    useEffect(() => {
+        if (isInEdit) {
+          inputRef.current.focus();
+        }
+      }, [isInEdit]);
+
+    function editPost() {   
+        setIsInEdit(!isInEdit)
+        
+    };
+
+    function escOrEnter(event){
+        const config = { headers: { "Authorization": `Bearer ${user.token}` } };
+        const body = {
+            "text": postTextValue
+        }
+
+		if(event.key === 'Escape') {
+			setIsInEdit(false)
+	    }
+        if(event.key === 'Enter') {
+			console.log('enviar edição');
+            const promise = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts/${post.id}`, body, config);
+            setIsInEdit(false)
+
+            promise
+                .then(setTimeout(()=>window.location.reload(), 500))
+                .catch(() => {
+                    alert('unable to save changes');
+                    setIsInEdit(true)
+                })
+	    }
+    }
+
+    
     
     return (
         <ContainerPost>
@@ -31,9 +77,19 @@ export default function TimelinePost({post}){
             <DireitaPost>
                 <h4 onClick={redirecionar}>{post.user.username}</h4>
                 <h5>
-                    <ReactHashtag onHashtagClick={val => directToHashtag(val)}>
-                        {post.text}
-                    </ReactHashtag>
+                    {
+                        isInEdit ?
+                        (
+                            <input value={postTextValue} ref={inputRef} type='text' onChange={e => setPostTextValue(e.target.value)} onKeyDown={escOrEnter}></input>
+                        )
+                        :
+                        (
+                            <ReactHashtag onHashtagClick={val => directToHashtag(val)} >
+                                {post.text}
+                            </ReactHashtag>
+                        )
+                    }
+                    
                 </h5>
                 <ContainerLink>
                     <h4>{post.linkTitle}</h4>
@@ -42,6 +98,36 @@ export default function TimelinePost({post}){
                     <img src ={post.linkImage} alt=""/>
                 </ContainerLink>
             </DireitaPost>
+            {
+                post.user.username === user.user.username ?
+
+                (
+                    <ContainerIcons>
+                        <IconeEditar>
+                            <BsPencil size='20px' color="#fff" onClick = {editPost}/>
+                        </IconeEditar>
+                        <IconeDeletar onClick = {() => setIsOpen(true)}>
+                            <BsFillTrashFill size='20px' color="#fff" />
+                        </IconeDeletar>
+                        
+                    </ ContainerIcons>
+                )
+                :
+                (
+                    ""
+                )
+            }
+            {
+                modalIsOpen ?
+                (
+                    <Modal key = {23} setIsOpen={setIsOpen} post={post} />
+                )
+                :
+                (
+                    ""
+                )
+            }
+            
         </ContainerPost>
     );
 }
@@ -55,6 +141,7 @@ const ContainerPost = styled.div `
     padding: 17px 0 20px 0;
     font-family: 'Lato', sans-serif;
     margin-top: 16px;
+    position: relative;
    
 
 `;
@@ -119,6 +206,11 @@ const DireitaPost = styled.div `
         white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        input {
+            width: inherit;
+            height: inherit;
+        }
        
     } 
     
@@ -142,7 +234,7 @@ const ContainerLink = styled.div `
     flex-direction: column;
     justify-content: space-around; 
     background-color: #171717;
-    z-index: 1000;
+    z-index: 0;
 
 
     img{
@@ -199,3 +291,21 @@ const ContainerLink = styled.div `
         
     }
 `;
+
+const IconeDeletar = styled.div `
+    position: absolute;
+        top: 22px;
+        right: 23px;
+`;
+
+const IconeEditar = styled.div `
+    position: absolute;
+        top: 22px;
+        right: 53px;
+`;
+
+const ContainerIcons = styled.div `
+    
+    background-color: yellow;
+    
+`

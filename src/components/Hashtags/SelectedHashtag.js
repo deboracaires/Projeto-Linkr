@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import TimelinePost from "../Timeline/TimelinePost";
+import Trending from '../Trending/Trending.js';
 
 export default function SelectedHashtag(){
     
@@ -45,9 +46,9 @@ export default function SelectedHashtag(){
                     }
                 </ContainerPosts>
             </Esquerda>
-            <MenuHashtag>
-                a
-            </MenuHashtag>
+            <Direita>
+                <Trending />
+            </Direita>
         </ContainerHashtag>
     );
 }
@@ -88,8 +89,7 @@ const ContainerPosts = styled.div `
     }
 
 `;
-const MenuHashtag = styled.div `
-    width: 301px;
+const Direita = styled.div `
     height: 406px;
     margin: 248px 0 0 25px;
     background-color: #171717;

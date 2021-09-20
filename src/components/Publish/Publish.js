@@ -37,7 +37,7 @@ export default function Publish() {
     return (
         <div>
             <UserInfo>
-                <img src="https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/users/1/avatar" alt="" />
+                <img src={user.user.avatar} alt="" />
             </UserInfo>
             <PostInfo>
                 <Description>

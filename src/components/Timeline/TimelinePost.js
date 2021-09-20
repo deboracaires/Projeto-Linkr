@@ -20,12 +20,6 @@ export default function TimelinePost({post}){
         const hash = val.replace(/#/, "");
         history.push(`/hashtag/${hash}`)
     }
-
-    function deletarPost(){
-        console.log("to aqui")
-        setIsOpen(false);
-    }
-
     
     return (
         <ContainerPost>
@@ -68,7 +62,7 @@ export default function TimelinePost({post}){
             {
                 modalIsOpen ?
                 (
-                    <Modal setIsOpen={setIsOpen} deletarPost={deletarPost}/>
+                    <Modal key = {23} setIsOpen={setIsOpen} post={post} />
                 )
                 :
                 (

@@ -1,21 +1,45 @@
 import styled from "styled-components";
+import axios from "axios";
+import { useState } from "react";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
-export default function Modal ({setIsOpen, deletarPost}) {
+export default function Modal ({setIsOpen, post}) {
     
+    const [textoExcluir, setTextoExcluir] = useState("Sim, excluir");
+    const [textoCancelar, setTextoCancelar] = useState("Não, voltar");
+    const user = JSON.parse(sessionStorage.getItem("user"));
+
     function cancelar (){
         setIsOpen(false);
     }
 
     function excluir (){
-        deletarPost();
+        
+        setTextoExcluir(<Loader type="ThreeDots" color="#fff" height={45} width={45} />);
+        setTextoCancelar(<Loader type="ThreeDots" color="#1877f2" height={45} width={45} />);
+
+        const config = { headers: { "Authorization": `Bearer ${user.token}` } };
+
+        const requisicao = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts/${post.id}`, config);
+
+        requisicao
+            .then(res => {
+                        setIsOpen(false)
+                        window.location.reload()})
+            .catch(err => { setIsOpen(false)
+                            alert("Houve uma falha ao excluir o post, por favor atualize a pagina")
+                           });
+        
+        
     }
     
     return (
         <ModalContainer>
             <h1>Tem certeza que deseja excluir essa publicação?</h1>
             <div>
-                <button className="cancelar" onClick={cancelar}>Não, voltar</button>
-                <button className="excluir" onClick={excluir}>Sim, excluir</button>
+                <button className="cancelar" onClick={cancelar}>{textoCancelar}</button>
+                <button className="excluir" onClick={excluir}>{textoExcluir}</button>
             </div>
         </ModalContainer>
     );

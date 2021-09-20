@@ -34,8 +34,45 @@ function getUserLiked(token) {
     return promise;
 }
 
+function getLikes(id ,token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const promise = axios.get(`${BASE_URL}/users/${id}`, config);
+    console.log(promise)
+    return promise;
+}
+
+function postLike(id, token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const promise = axios.post(`${BASE_URL}/posts/${id}/like`, {post:true}, config);
+    console.log(promise)
+    return promise;
+}
+
+function getTrending(token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const promise = axios.get(`${BASE_URL}/hashtags/trending`, config);
+    return promise;
+}
+
 export {
     getUserPosts,
     publish,
-    getUserLiked
+    getUserLiked,
+    getLikes,
+    postLike,
+    getTrending
 }

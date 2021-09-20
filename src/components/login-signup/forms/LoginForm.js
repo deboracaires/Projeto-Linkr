@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from "react-router-dom"
 import { useContext, useState } from "react";
 import { useHistory } from "react-router";
@@ -13,7 +14,7 @@ export default function LoginForm() {
         username: ''
     });
 
-    const {setUser} = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const [buttonToggle, setButtonToggle] = useState(<button type='submit'>Log In</button>);
 

@@ -1,13 +1,14 @@
+import React from 'react';
 import LoginBackground from "./LoginBackground"
 import LoginForm from "./forms/LoginForm"
 
 import FlexContainer from "../../themes/FlexContainer"
 
-export default function Login() {
+export default function Login({ setUser, setToken }) {
     return (
         <FlexContainer>
             <LoginBackground />
-            <LoginForm />
+            <LoginForm setUser={setUser} setToken={setToken} />
         </FlexContainer>
     )
 }

@@ -5,6 +5,7 @@ import axios from "axios";
 
 import Publish from "../Publish/Publish"
 import Header from "../Header/Header";
+import Trending from "../Trending/Trending.js";
 
 export default function Timeline(){
     
@@ -54,9 +55,9 @@ export default function Timeline(){
                     }
                 </ContainerPosts>
             </Esquerda>
-            <MenuHashtag>
-                a
-            </MenuHashtag>
+            <Direita>
+                <Trending />
+            </Direita>
         </ContainerTimeline>
         
     );
@@ -106,8 +107,7 @@ const ContainerPosts = styled.div `
     }
     
 `;
-const MenuHashtag = styled.div `
-    width: 301px;
+const Direita = styled.div `
     height: 406px;
     margin: 232px 0 0 25px;
     background-color: #171717;

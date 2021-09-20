@@ -35,32 +35,46 @@ export default function Modal ({setIsOpen, post}) {
     }
     
     return (
-        <ModalContainer>
-            <h1>Tem certeza que deseja excluir essa publicação?</h1>
-            <div>
-                <button className="cancelar" onClick={cancelar}>{textoCancelar}</button>
-                <button className="excluir" onClick={excluir}>{textoExcluir}</button>
-            </div>
-        </ModalContainer>
+        <ModalBack>
+            -
+            <ModalContainer>
+                <h1>Tem certeza que deseja excluir essa publicação?</h1>
+                <div>
+                    <button className="cancelar" onClick={cancelar}>{textoCancelar}</button>
+                    <button className="excluir" onClick={excluir}>{textoExcluir}</button>
+                </div>
+            </ModalContainer>
+        </ModalBack>
     );
 }
 
+const ModalBack = styled.div `
+    width: 100000px;
+    height: 1000000px;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    opacity: 1;
+`;
 const ModalContainer = styled.div `
     position: fixed;
     z-index: 50;
     top: 50%;
     bottom: auto;
-    left: 18.5%;
+    left: 30%;
     right: auto;
     width: 597px;
     height: 262px;
-    background: #333333;
+    background-color: #333333;
     border-radius: 50px;
     font-family: 'Lato', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 38px;
+    opacity: 1;
 
     h1 {
         font-weight: 700;

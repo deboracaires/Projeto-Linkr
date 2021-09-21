@@ -91,7 +91,7 @@ export default function TimelinePost({post}){
                     }
                     
                 </h5>
-                <ContainerLink>
+                <ContainerLink onClick={() => window.open(`${post.link}`, '_blank')}>
                     <h4>{post.linkTitle}</h4>
                     <h5> {post.linkDescription}</h5>
                     <a href={post.link} rel="noreferrer" target="_blank">{post.link}</a>
@@ -158,6 +158,9 @@ const EsquerdaPost = styled.div `
         height: 50px;
         border-radius: 26px;
     }
+    img:hover{
+        cursor: pointer;
+    }
     div {
         margin-top: 19px;
     }
@@ -167,6 +170,10 @@ const EsquerdaPost = styled.div `
         font-weight: 400;
         color: #fff;
     }
+    div:hover{
+        cursor: pointer;
+    }
+    
 `;
 
 const DireitaPost = styled.div `
@@ -193,6 +200,9 @@ const DireitaPost = styled.div `
         
         
     }
+    h4:hover{
+        cursor: pointer;
+    }
 
     h5 {
         font-size: 17px;
@@ -218,6 +228,10 @@ const DireitaPost = styled.div `
         color: #fff;
         font-weight: 700;
     }
+
+    span:hover{
+        cursor: pointer;
+    }
     
 `;
 
@@ -235,6 +249,10 @@ const ContainerLink = styled.div `
     justify-content: space-around; 
     background-color: #171717;
     z-index: 0;
+
+    :hover{
+        cursor : pointer;
+    }
 
 
     img{

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Trends = styled.div`
     width: 20vw;
-    height: 450px;
+    height: 550px;
 
     color: #ffffff;
 
@@ -35,6 +35,10 @@ const Trends = styled.div`
         font-family: 'Lato', sans-serif;
         font-size: 19px;
         margin: 20px 0 0 20px;
+    }
+    
+    h4:hover {
+        cursor: pointer;
     }
 
     strong {

@@ -40,8 +40,6 @@ export default function Timeline(){
         <Header/>
         <ContainerTimeline>
             
-            <Header />
-            
             <Esquerda>
                 <Titulo>timeline</Titulo>
                 <NewPost>

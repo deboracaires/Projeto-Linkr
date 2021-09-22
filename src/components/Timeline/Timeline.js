@@ -6,6 +6,7 @@ import axios from "axios";
 import Publish from "../Publish/Publish"
 import { LoginValidation } from "../../login";
 import Header from "../Header/Header";
+import Trending from "../Trending/Trending";
 
 export default function Timeline(){
     

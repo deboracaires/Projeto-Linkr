@@ -16,8 +16,6 @@ export default function MyPosts() {
     useEffect(() => {
         const user = LoginValidation()
         const { token } = user;
-
-        const { token, user } = userData;
   
         getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
     }, []);

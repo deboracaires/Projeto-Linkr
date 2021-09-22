@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 
 import { UserInfo, Description, PostInfo, DescriptionLink, Button } from "../../themes/PostsStyle";
@@ -15,7 +16,8 @@ export default function Publish() {
 
     function clearInputs() {
         setText("");
-        setLink("")
+        setLink("");
+        window.location.reload();
     }
 
     function publishPost(event) {
@@ -27,7 +29,7 @@ export default function Publish() {
                 link
             }
 
-            publish(body, token).then((res) => clearInputs).catch((err) => console.error)
+            publish(body, token).then((res) => clearInputs()).catch((err) => console.error)
         } else {
             alert("Preencha corretamente os campos")
         }
@@ -36,7 +38,7 @@ export default function Publish() {
     return (
         <div>
             <UserInfo>
-                <img src="https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/users/1/avatar" alt="" />
+                <img src={user.user.avatar} alt="" />
             </UserInfo>
             <PostInfo>
                 <Description>

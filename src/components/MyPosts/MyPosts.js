@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from "../Header/Header";
 import Post from "./Post"
 import Trending from "../Trending/Trending";
@@ -10,13 +11,14 @@ import { LoginValidation } from "../../login";
 
 export default function MyPosts() {
 
-    
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const user = LoginValidation()
         const { token } = user;
 
+        const { token, user } = userData;
+  
         getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
     }, []);
 

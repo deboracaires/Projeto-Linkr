@@ -38,6 +38,9 @@ export default function Timeline(){
         <>
         <Header/>
         <ContainerTimeline>
+            
+            <Header />
+            
             <Esquerda>
                 <Titulo>timeline</Titulo>
                 <NewPost>
@@ -56,9 +59,9 @@ export default function Timeline(){
                     }
                 </ContainerPosts>
             </Esquerda>
-            <MenuHashtag>
-                a
-            </MenuHashtag>
+            <Direita>
+                <Trending />
+            </Direita>
         </ContainerTimeline>
         </>
     );
@@ -108,8 +111,7 @@ const ContainerPosts = styled.div `
     }
     
 `;
-const MenuHashtag = styled.div `
-    width: 301px;
+const Direita = styled.div `
     height: 406px;
     margin: 232px 0 0 25px;
     background-color: #171717;

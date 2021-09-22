@@ -6,21 +6,15 @@ import { Like, EsquerdaPost, ContainerPost, DireitaPost, ContainerLink, Liked } 
 import ReactHashtag from "react-hashtag";
 
 export default function Post({ post, token }) {
-    // const userData = LoginValidation();
-    // const { token } = userData;
-
     const history = useHistory()
     
     let text = "likes"
-    // let pessoas = "0 curtidas";
+
     let { user, likes } = post
     const [list, setList] = useState([])
     const [like, setLike] = useState(false)
-    // const [liked, setLiked] = useState(false)
 
-    console.log(token)
     function likePost() {
-        console.log("likePost")
         if(like === false) {
             setLike(true)
             postLike(post.id, token).then((res) => console.log(res.data)).catch((err) => console.error)
@@ -28,7 +22,6 @@ export default function Post({ post, token }) {
     }
 
     function dislikePost() {
-        console.log("likePost")
         if(like === true) {
             setLike(false);
             postDislike(post.id, token).then((res) => console.log(res.data))
@@ -37,41 +30,9 @@ export default function Post({ post, token }) {
     useEffect(() => {
 
         if (likes.find((usr) => usr.user === user.username )) {
-            // setLiked(true)
             setList("list")
         }
-        // likes.map((like, index) => getLikes(like.userId, token).then((res) => 
-        //     (index < 2 ? 
-        //         setList(`${list}, ${res.data.user.username}`)
-        //         : setList(list + " e outros participantes"))))
-        // getLikes(post.likes, token).then((res) => console.log(res.data))
-
-        // if(list.length > 0) {
-        //     if (!(list.find((name) => (name === userLog.username)))){
-        //         if(list.length > 2) {
-        //             pessoas = `Você, ${list[0] + ", " + list[1]} e outras ${list.length - 3} pessoas curtiram esse post`
-        //         } else if(list.length === 2 ) {
-        //             pessoas = `Você e ${ list[0] } curtiram esse post`
-        //         } else {
-        //             pessoas = "Você curtiu esse post"
-        //         }
-        //     } else {
-        //         if(list.length > 1) {
-        //             pessoas = `${list[0] + ", " + list[1]} e outras ${list.length - 2} pessoas curtiram esse post`
-        //         } else if(list.length === 2 ) {
-        //             pessoas = `${ list[0] + ", " + list[1] } curtiram esse post`
-        //         } else {
-        //             pessoas = `${ list[0] } curtiu esse post`
-        //         }
-        //         console.log("entrou")
-        //     }
-        // }
-    }, [post.likes, user, token, likes, like])
-
-    // if (likes.includes(userLog)) {
-    //     console.log(userLog)
-    //     setLike(true)
-    // }
+    }, [ user, likes ])
     
     function redirecionar(){
         history.push(`/user/${post.user.id}`)

@@ -14,7 +14,6 @@ export default function MyPosts() {
     const [posts, setPosts] = useState([]);
     const user = LoginValidation();
     const { token } = user;
-    console.log(user)
 
     useEffect(() => {
         getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
@@ -37,7 +36,6 @@ export default function MyPosts() {
                     }
                     <Trending />
                 </Esquerda>
-                {/* <Trending /> */}
             </ContainerMyPosts>
         </> 
     );

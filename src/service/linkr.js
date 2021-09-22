@@ -42,7 +42,6 @@ function getLikes(id ,token) {
     }
 
     const promise = axios.get(`${BASE_URL}/users/${id}`, config);
-    console.log(promise)
     return promise;
 }
 
@@ -53,7 +52,6 @@ function postLike(id, token) {
         }
     }
     const promise = axios.post(`${BASE_URL}/posts/${id}/like`, {post:true}, config);
-    console.log(promise)
     return promise;
 }
 
@@ -64,7 +62,6 @@ function postDislike(id, token) {
         }
     }
     const promise = axios.post(`${BASE_URL}/posts/${id}/dislike`, {post:true}, config);
-    console.log(promise)
     return promise;
 }
 

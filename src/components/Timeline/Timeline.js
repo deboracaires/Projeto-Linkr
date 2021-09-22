@@ -30,10 +30,7 @@ export default function Timeline(){
 
     function loading(){
         setTexto("Nenhum post encontrado");
-    }
-
-   
-    
+    }    
     
     return (
         <>

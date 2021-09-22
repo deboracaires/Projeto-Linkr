@@ -9,10 +9,8 @@ export default function Header() {
     const [navbar, setNavbar] = useState(false);
 
     function navbarCard() {
-        console.log("entrou")
         if (navbar === false) {
             setNavbar(true)
-            console.log("entrou2")
         }
     }
 
@@ -41,7 +39,6 @@ function Modal({setNavbar}) {
     }
 
     function logout() {
-        // history.push("/")
         sessionStorage.clear()
         window.location.reload()
     }
@@ -54,13 +51,6 @@ function Modal({setNavbar}) {
                 <Link to="/my-likes">My likes</Link>
                 <Link to="/" onClick={logout}>Logout</Link>
             </MenuBar>
-            {/* <ModalContainer>
-                <h1>Tem certeza que deseja excluir essa publicação?</h1>
-                <div>
-                    <button className="cancelar" onClick={cancelar}>{textoCancelar}</button>
-                    <button className="excluir" onClick={excluir}>{textoExcluir}</button>
-                </div>
-            </ModalContainer> */}
         </ModalBack>
     )
 }

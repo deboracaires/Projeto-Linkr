@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Arrow, MenuBar, Nav, Top, User } from "./HeaderStyle"
 import styled from "styled-components";
 
@@ -35,14 +35,13 @@ export default function Header() {
 }
 
 function Modal({setNavbar}) {
-    const history = useHistory();
 
     function closeNavbar() {
         setNavbar(false)
     }
 
     function logout() {
-        history.push("/")
+        // history.push("/")
         sessionStorage.clear()
         window.location.reload()
     }
@@ -53,7 +52,7 @@ function Modal({setNavbar}) {
             <MenuBar>
                 <Link to="/my-posts">My posts</Link>
                 <Link to="/my-likes">My likes</Link>
-                <Link onClick={logout}>Logout</Link>
+                <Link to="/" onClick={logout}>Logout</Link>
             </MenuBar>
             {/* <ModalContainer>
                 <h1>Tem certeza que deseja excluir essa publicação?</h1>

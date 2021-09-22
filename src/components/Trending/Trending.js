@@ -1,19 +1,7 @@
-import { useEffect, useState } from "react";
-import { LoginValidation } from "../../login";
-import { getTrending } from "../../service/linkr";
 import { Line, Trends } from "./TrendingStyle";
 
 export default function Trending() {
 
-    const user = LoginValidation()
-    const { token } = user;
-
-    const [list, setList] = useState([])
-
-    useEffect(() => {
-        getTrending(token).then((res) => setList([...list, res.data]))
-    }, [list, token])
-    console.log(list)
     return (
         <Trends>
             <h3>trending</h3>

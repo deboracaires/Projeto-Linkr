@@ -1,41 +1,50 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import ReactTooltip from "react-tooltip";
-import { getLikes, postLike } from "../../service/linkr";
-import { Like, EsquerdaPost, ContainerPost, DireitaPost, ContainerLink } from "../../themes/PostsStyle";
+import { postDislike, postLike } from "../../service/linkr";
+import { Like, EsquerdaPost, ContainerPost, DireitaPost, ContainerLink, Liked } from "../../themes/PostsStyle";
 import ReactHashtag from "react-hashtag";
 
-export default function Post({ post }) {
-    const userData = JSON.parse(sessionStorage.getItem("user"));
-    const { userLog, token } = userData;
+export default function Post({ post, token }) {
+    // const userData = LoginValidation();
+    // const { token } = userData;
 
     const history = useHistory()
     
     let text = "likes"
-    let pessoas = "0 curtidas";
-    const { user, likes } = post
+    // let pessoas = "0 curtidas";
+    let { user, likes } = post
     const [list, setList] = useState([])
     const [like, setLike] = useState(false)
+    // const [liked, setLiked] = useState(false)
 
-    console.log(userLog)
+    console.log(token)
     function likePost() {
         console.log("likePost")
         if(like === false) {
             setLike(true)
             postLike(post.id, token).then((res) => console.log(res.data)).catch((err) => console.error)
-        } else {
-            setLike(false)
-            setList(true)
         }
     }
 
+    function dislikePost() {
+        console.log("likePost")
+        if(like === true) {
+            setLike(false);
+            postDislike(post.id, token).then((res) => console.log(res.data))
+        }
+    }
     useEffect(() => {
-        likes.map((like, index) => getLikes(like.userId, token).then((res) => 
-            (index < 2 ? 
-                setList(list + ", " + res.data.user.username)
-                : setList(list + " e outros participantes"))))
-        // getLikes(post.likes[0].userId, token).then((res) => console.log(res.data))
-        console.log(list)
+
+        if (likes.find((usr) => usr.user === user.username )) {
+            // setLiked(true)
+            setList("list")
+        }
+        // likes.map((like, index) => getLikes(like.userId, token).then((res) => 
+        //     (index < 2 ? 
+        //         setList(`${list}, ${res.data.user.username}`)
+        //         : setList(list + " e outros participantes"))))
+        // getLikes(post.likes, token).then((res) => console.log(res.data))
 
         // if(list.length > 0) {
         //     if (!(list.find((name) => (name === userLog.username)))){
@@ -57,7 +66,12 @@ export default function Post({ post }) {
         //         console.log("entrou")
         //     }
         // }
-    }, [likes, list, token])
+    }, [post.likes, user, token, likes, like])
+
+    // if (likes.includes(userLog)) {
+    //     console.log(userLog)
+    //     setLike(true)
+    // }
     
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
@@ -70,13 +84,16 @@ export default function Post({ post }) {
 
     return (
         <ContainerPost>
-            {(user && likes) ?
+            {((user && likes)) ?
                 <>
                 <EsquerdaPost>
                     <img src={user.avatar} alt="" />
-                    <Like selected={like} onClick={likePost} />
+                    {like ?
+                        <Liked onClick={dislikePost} />
+                        : <Like onClick={likePost} />
+                    }
                     <ReactTooltip />
-                    <h3 data-tip={pessoas}>{likes.length} {text}</h3>
+                    <h3 data-tip={list}>{likes.length} {text}</h3>
                 </EsquerdaPost>
                 <DireitaPost>
                     <h4 onClick={redirecionar}>{post.user.username}</h4>

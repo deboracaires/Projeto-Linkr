@@ -76,10 +76,10 @@ const User = styled.div`
     }
 `
 const MenuBar = styled.div`
-    width: 10vw;
-    height: 9vw;
+    width: 180px;
+    height: 156px;
 
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 0 20px;
 
     display: flex;
     flex-direction: column;
@@ -100,8 +100,13 @@ const MenuBar = styled.div`
         font-weight: bold;
         font-family: 'Lato', sans-serif;
         text-align: center;
-        line-height: 20px;
+        line-height: 50px;
         text-decoration: none;
+    }
+
+    a:hover {
+        background-color: #1877F2;
+        border-radius: 0 0 0 20px;
     }
 `
 

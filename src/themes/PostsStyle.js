@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FaRegHeart } from "react-icons/fa"
+import { FaHeart, FaRegHeart } from "react-icons/fa"
 
 const Title = styled.h2` 
     width: 70vw;
@@ -84,8 +84,19 @@ const Like = styled(FaRegHeart)`
     width: 16px;
     height: 16px;
 
-    color: ${(props) => props.seleted ? "#171717" : "#AC0000" };
-    /* background-color: #AC0000; */
+    color: #ffffff;
+
+
+    cursor: pointer;
+
+    margin: 15px 10px 3px;
+`
+
+const Liked = styled(FaHeart)`
+    width: 16px;
+    height: 16px;
+
+    color: #AC0000;
 
 
     cursor: pointer;
@@ -249,6 +260,8 @@ const EsquerdaPost = styled.div `
         width: 50px;
         height: 50px;
         border-radius: 26px;
+
+        cursor: pointer;
     }
     div {
         margin-top: 19px;
@@ -258,6 +271,7 @@ const EsquerdaPost = styled.div `
         font-size: 11px;
         font-weight: 400;
         color: #fff;
+        cursor: alias;
     }
 `;
 
@@ -282,7 +296,7 @@ const DireitaPost = styled.div `
         white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
-        
+        cursor: pointer;
         
     }
 
@@ -322,7 +336,7 @@ const ContainerLink = styled.div `
     justify-content: space-around; 
     background-color: #171717;
     z-index: 1000;
-
+    cursor: pointer;
 
     img{
         width: 153.44px;
@@ -379,6 +393,19 @@ const ContainerLink = styled.div `
     }
 `;
 
+const ContainerPosts = styled.div `
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+        font-family: 'Lato', sans-serif;
+        font-size: 30px;
+        margin-top: 80px;
+        color: #fff;
+    }
+    
+`;
+
 export {
     Title,
     Page,
@@ -386,6 +413,7 @@ export {
     PostStyle,
     UserInfo,
     Like,
+    Liked,
     PostInfo,
     Description,
     Links,
@@ -395,5 +423,6 @@ export {
     ContainerPost,
     EsquerdaPost,
     DireitaPost,
-    ContainerLink
+    ContainerLink,
+    ContainerPosts
 }

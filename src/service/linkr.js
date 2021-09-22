@@ -57,6 +57,17 @@ function postLike(id, token) {
     return promise;
 }
 
+function postDislike(id, token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const promise = axios.post(`${BASE_URL}/posts/${id}/dislike`, {post:true}, config);
+    console.log(promise)
+    return promise;
+}
+
 function getTrending(token) {
     const config  = {
         headers: {
@@ -74,5 +85,6 @@ export {
     getUserLiked,
     getLikes,
     postLike,
+    postDislike,
     getTrending
 }

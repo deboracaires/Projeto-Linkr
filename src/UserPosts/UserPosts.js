@@ -5,11 +5,12 @@ import Header from "../components/Header/Header";
 
 import Post from "../components/MyPosts/Post";
 import Trending from "../components/Trending/Trending";
+import { LoginValidation } from "../login";
 import { getUserPosts } from "../service/linkr";
 import { Page, Posts, Title } from "../themes/PostsStyle";
 
 export default function UserPosts() {
-
+    const user = LoginValidation()
     const params = useParams();
     
     const id = params.idUser;
@@ -17,12 +18,11 @@ export default function UserPosts() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const userData = JSON.parse(sessionStorage.getItem("user"));
-    
-        const { token } = userData;
+        
+        const { token } = user;
 
         getUserPosts(id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
-    }, [id]);
+    }, [id, user]);
     console.log(posts)
     return (
         <div>

@@ -3,13 +3,14 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import TimelinePost from "../Timeline/TimelinePost";
+import { LoginValidation } from "../../login";
 
 export default function SelectedHashtag(){
     
     const  nomeHashtag  = useParams();
     const [posts, setPosts] = useState([]);
     const [texto, setTexto] = useState("Loading...");
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const user = LoginValidation()
 
     useEffect(()=> {
         const config = {

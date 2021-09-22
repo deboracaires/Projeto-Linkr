@@ -5,31 +5,47 @@ const Nav = styled.header`
     width: 100vw;
     height: 72px;
 
-    background-color: #151515;
-
+    /* background-color: #151515; */
+    
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
 
-    position: fixed;
+    position: relative;
     left: 0;
     top: 0;
     z-index: 10;
 `
 
 const Top = styled.div`
-    width: 90vw;
+    width: 100vw;
     height: 72px;
 
+    background-color: #151515;
+    
     color: #ffffff;
     font-size: 36px;
     font-family: 'Passion One', cursive;
 
+    padding: 0 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    position: absolute;
+    top: 0;
+    left: 0;
     margin: 0 auto;
+
+    box-sizing: border-box;
+
+    a {
+        text-decoration: none;
+        color: #ffffff;
+
+        font-size: 60px;
+    }
 `
 
 const Arrow = styled(FaChevronDown)`
@@ -37,7 +53,11 @@ const Arrow = styled(FaChevronDown)`
     height: 16px;
     color: #ffffff;
 
-    margin: 0 10px;
+    transform: ${(props) => props.navbar ? "rotate(180deg)" : ""};
+
+    cursor: pointer;
+
+    margin: 0 15px;
 `
 
 const User = styled.div`
@@ -52,6 +72,36 @@ const User = styled.div`
         height: 53px;
 
         border-radius: 50%;
+        cursor: pointer;
+    }
+`
+const MenuBar = styled.div`
+    width: 10vw;
+    height: 9vw;
+
+    border-radius: 0 0 20px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    
+    background-color: #171717;
+
+    position: fixed;
+    top: 72px;
+    right: 0;
+
+    a {
+        width: 10vw;
+
+        color: #ffffff;
+        font-size: 17px;
+        font-weight: bold;
+        font-family: 'Lato', sans-serif;
+        text-align: center;
+        line-height: 20px;
+        text-decoration: none;
     }
 `
 
@@ -59,5 +109,6 @@ export {
     Nav,
     Top,
     Arrow,
-    User
+    User,
+    MenuBar
 }

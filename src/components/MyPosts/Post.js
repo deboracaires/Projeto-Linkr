@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import ReactTooltip from "react-tooltip";
 import { getLikes, postLike } from "../../service/linkr";
-import { Like, Links, EsquerdaPost, ContainerPost, DireitaPost, ContainerLink } from "../../themes/PostsStyle";
+import { Like, EsquerdaPost, ContainerPost, DireitaPost, ContainerLink } from "../../themes/PostsStyle";
 import ReactHashtag from "react-hashtag";
 
 export default function Post({ post }) {
@@ -57,7 +57,7 @@ export default function Post({ post }) {
         //         console.log("entrou")
         //     }
         // }
-    }, [])
+    }, [likes, list, token])
     
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
@@ -88,7 +88,7 @@ export default function Post({ post }) {
                     <ContainerLink onClick={() => window.open(`${post.link}`,"_blank")}>
                         <h4>{post.linkTitle}</h4>
                         <h5>{post.linkDescription}</h5>
-                        <a>{post.link}</a>
+                        <a href={post.link}>{post.link}</a>
                         <img src={post.linkImage} alt="" />
                     </ContainerLink>
                 </DireitaPost>

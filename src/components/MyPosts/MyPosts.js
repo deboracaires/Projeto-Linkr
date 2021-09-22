@@ -1,11 +1,12 @@
 import Header from "../Header/Header";
 import Post from "./Post"
 import Trending from "../Trending/Trending";
-import { Page, Title, Posts } from "../../themes/PostsStyle";
+import { Title } from "../../themes/PostsStyle";
 import { useEffect, useState } from "react";
 
 import { getUserPosts } from "../../service/linkr";
 import styled from "styled-components";
+import { LoginValidation } from "../../login";
 
 export default function MyPosts() {
 
@@ -13,9 +14,8 @@ export default function MyPosts() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const userData = JSON.parse(sessionStorage.getItem("user"));
-    
-        const { token, user } = userData;
+        const user = LoginValidation()
+        const { token } = user;
 
         getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
     }, []);
@@ -56,26 +56,6 @@ const Esquerda = styled.div `
     flex-direction: column; 
 `;
 
-const Titulo = styled.h1 `
-    font-family: 'Oswald', sans-serif;
-    font-weight: bold;
-    font-size: 43px;
-    color: #fff;
-    line-height: 64px;
-    margin: 125px 0 43px 0;
-    
-`;
-const NewPost = styled.div `
-    width: 611px;
-    height: 250px;
-    border: 1px solid #fff;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 16px;
-
-    position: relative;
-`;
-
 const ContainerPosts = styled.div `
     display: flex;
     flex-direction: column;
@@ -87,12 +67,4 @@ const ContainerPosts = styled.div `
         color: #fff;
     }
     
-`;
-const MenuHashtag = styled.div `
-    width: 301px;
-    height: 406px;
-    margin: 232px 0 0 25px;
-    background-color: #171717;
-    border: 1px solid #171717;
-    border-radius: 16px;
 `;

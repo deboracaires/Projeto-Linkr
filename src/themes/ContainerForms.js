@@ -33,6 +33,7 @@ const ContainerForms = styled.div `
         button {
             color: white;
             background-color: #1877F2;
+            cursor: pointer;
         }
         
         div {
@@ -47,12 +48,17 @@ const ContainerForms = styled.div `
         }
     }
 
-    span {
+    p {
         font-family: 'Lato', sans-serif;
         font-size: 14px;
         color: white;
 
         text-decoration: underline;
+    }
+
+    span {
+        color: red;
+        font-size: 20px;
     }
     
 `

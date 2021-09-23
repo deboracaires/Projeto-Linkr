@@ -4,17 +4,20 @@ import TimelinePost from "./TimelinePost";
 import axios from "axios";
 
 import Publish from "../Publish/Publish"
+import { LoginValidation } from "../../login";
 import Header from "../Header/Header";
-import Trending from "../Trending/Trending.js";
+import Trending from "../Trending/Trending";
 
 export default function Timeline(){
     
     const [posts, setPosts] = useState([]);
     const [texto, setTexto] = useState("Loading...");
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    
+    const user = LoginValidation()
+    const { token } = user;
 
     useEffect(()=> {
-        const config = { headers: { "Authorization": `Bearer ${user.token}` } };
+        const config = { headers: { "Authorization": `Bearer ${token}` } };
 
         const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts", config);
 
@@ -23,19 +26,16 @@ export default function Timeline(){
                             loading()})
             .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
 
-    }, [user.token]);
+    }, [token]);
 
     function loading(){
         setTexto("Nenhum post encontrado");
-    }
-
-   
-    
+    }    
     
     return (
+        <>
+        <Header/>
         <ContainerTimeline>
-            
-            <Header />
             
             <Esquerda>
                 <Titulo>timeline</Titulo>
@@ -59,7 +59,7 @@ export default function Timeline(){
                 <Trending />
             </Direita>
         </ContainerTimeline>
-        
+        </>
     );
 }
 

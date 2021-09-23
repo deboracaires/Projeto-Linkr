@@ -6,19 +6,17 @@ import { useEffect, useState } from "react";
 
 import { getUserLiked } from "../../service/linkr";
 import Post from "../MyPosts/Post";
+import { LoginValidation } from "../../login";
 
 export default function MyLikes() {
-
+    const user = LoginValidation()
+    const { token } = user;
     
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const userData = JSON.parse(sessionStorage.getItem("user"));
-    
-        const { token } = userData;
-
         getUserLiked(token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
-    }, []);
+    }, [token]);
 
     return (
         <div>

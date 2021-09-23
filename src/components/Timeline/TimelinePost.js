@@ -48,7 +48,6 @@ export default function TimelinePost({post}){
 			setIsInEdit(false)
 	    }
         if(event.key === 'Enter') {
-			console.log('enviar edição');
             const promise = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts/${post.id}`, body, config);
             setIsInEdit(false)
 

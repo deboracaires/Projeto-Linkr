@@ -21,7 +21,6 @@ export default function Trending() {
 
     }, [user.token]);
 
-    
     return (
         <Trends>
             <h3>trending</h3>

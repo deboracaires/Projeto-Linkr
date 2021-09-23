@@ -93,7 +93,7 @@ const MenuBar = styled.div`
     right: 0;
 
     a {
-        width: 10vw;
+        width: 180px;
 
         color: #ffffff;
         font-size: 17px;

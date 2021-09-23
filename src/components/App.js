@@ -11,8 +11,8 @@ import UserContext from "../contexts/UserContext";
 
 import GlobalStyle from "../themes/globalStyles";
 import { useState } from "react";
-import MyLikes from "./MyLikes.js/MyLikes";
-import UserPosts from "../UserPosts/UserPosts";
+import MyLikes from "./MyLikes/MyLikes";
+import UserPosts from "./UserPosts/UserPosts";
 
 
 export default function App() {

@@ -14,6 +14,7 @@ export default function Publish() {
 
     let body;
 
+
     function clearInputs() {
         setText("");
         setLink("");
@@ -23,7 +24,7 @@ export default function Publish() {
     function publishPost(event) {
         event.preventDefault();
 
-        if(text && link) {
+        if((text || text === "") && link) {
             body = {
                 text,
                 link
@@ -31,7 +32,7 @@ export default function Publish() {
 
             publish(body, token).then((res) => clearInputs()).catch((err) => console.error)
         } else {
-            alert("Preencha corretamente os campos")
+            alert("The link field is mandatory")
         }
     }
 
@@ -46,7 +47,7 @@ export default function Publish() {
                 </Description>
                 <DescriptionLink>
                     <form onSubmit={publishPost}>
-                        <input type="url" placeholder="http://..." value={link} onChange={(event) => setLink(event.target.value)} />
+                        <input type="url" placeholder="http://..." value={link} required onChange={(event) => setLink(event.target.value)} />
 
                         <input type="text" placeholder="Muito irado esse link falando de #javascript" value={text} onChange={(event) => setText(event.target.value)} />
                         <Button type="submit" >Publicar</Button>

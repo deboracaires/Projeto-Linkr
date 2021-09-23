@@ -5,7 +5,7 @@ function LoginValidation() {
     const history = useHistory();
     if (user === null) {
         history.push("/")
-        if (user.token) {
+        if (user) {
             user.token = "";
         }
         window.location.reload()

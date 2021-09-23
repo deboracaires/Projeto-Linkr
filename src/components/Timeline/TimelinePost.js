@@ -89,7 +89,9 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                     }
                     
                 </h5>
+
                 <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
+
                     <h4>{post.linkTitle}</h4>
                     <h5> {post.linkDescription}</h5>
                     <h6>{post.link}</h6>

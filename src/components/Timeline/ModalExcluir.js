@@ -4,7 +4,7 @@ import { useState } from "react";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
-export default function Modal ({setIsOpen, post}) {
+export default function ModalExcluir ({setIsOpen, post}) {
     
     const [textoExcluir, setTextoExcluir] = useState("Sim, excluir");
     const [textoCancelar, setTextoCancelar] = useState("Não, voltar");
@@ -25,7 +25,6 @@ export default function Modal ({setIsOpen, post}) {
 
         requisicao
             .then(res => {
-                        setIsOpen(false)
                         window.location.reload()})
             .catch(err => { setIsOpen(false)
                             alert("Houve uma falha ao excluir o post, por favor atualize a pagina")
@@ -35,8 +34,8 @@ export default function Modal ({setIsOpen, post}) {
     }
     
     return (
-        <ModalBack>
-            -
+        <div>
+            <ModalBack></ModalBack>
             <ModalContainer>
                 <h1>Tem certeza que deseja excluir essa publicação?</h1>
                 <div>
@@ -44,7 +43,7 @@ export default function Modal ({setIsOpen, post}) {
                     <button className="excluir" onClick={excluir}>{textoExcluir}</button>
                 </div>
             </ModalContainer>
-        </ModalBack>
+        </div>
     );
 }
 
@@ -56,11 +55,11 @@ const ModalBack = styled.div `
     top: 0;
     left: 0;
     z-index: 1000;
-    opacity: 1;
+    opacity: 0.7;
 `;
 const ModalContainer = styled.div `
     position: fixed;
-    z-index: 50;
+    z-index: 5000;
     top: 50%;
     bottom: auto;
     left: 30%;

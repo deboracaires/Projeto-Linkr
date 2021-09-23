@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { BsHeart, BsFillTrashFill, BsPencil } from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
-import Modal from "./Modal";
+import ModalExcluir from "./ModalExcluir";
 import axios from "axios";
 
 
@@ -120,7 +120,7 @@ export default function TimelinePost({post}){
             {
                 modalIsOpen ?
                 (
-                    <Modal key = {23} setIsOpen={setIsOpen} post={post} />
+                    <ModalExcluir key = {23} setIsOpen={setIsOpen} post={post} />
                 )
                 :
                 (

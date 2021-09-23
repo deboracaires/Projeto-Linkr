@@ -71,7 +71,8 @@ const ContainerTimeline = styled.div `
     width: 100vw;
     
     display: flex;
-    justify-content: center;    
+    justify-content: center; 
+       
 `;
 const Esquerda = styled.div `
     display: flex;
@@ -111,9 +112,7 @@ const ContainerPosts = styled.div `
     
 `;
 const Direita = styled.div `
-    height: 406px;
-    margin: 232px 0 0 25px;
-    background-color: #171717;
-    border: 1px solid #171717;
-    border-radius: 16px;
+    
+    margin: 205px 0 0 25px;
+   
 `;

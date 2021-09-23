@@ -5,11 +5,13 @@ import Header from "../components/Header/Header";
 
 import Post from "../components/MyPosts/Post";
 import Trending from "../components/Trending/Trending";
+import { LoginValidation } from "../login";
 import { getUserPosts } from "../service/linkr";
-import { Page, Posts, Title } from "../themes/PostsStyle";
+import { ContainerPosts, Page, Title } from "../themes/PostsStyle";
 
 export default function UserPosts() {
-
+    const user = LoginValidation()
+    const { token } = user;
     const params = useParams();
     
     const id = params.idUser;
@@ -17,13 +19,8 @@ export default function UserPosts() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const userData = JSON.parse(sessionStorage.getItem("user"));
-    
-        const { token } = userData;
-
         getUserPosts(id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
-    }, [id]);
-    console.log(posts)
+    }, [id, token]);
     return (
         <div>
             <Header />
@@ -33,9 +30,9 @@ export default function UserPosts() {
             }
             <Page>
                 {(posts !== []) ?
-                    (<Posts>
+                    (<ContainerPosts>
                         {posts.map((post, index) => <Post key={index} post={post} />)}
-                    </Posts>)
+                    </ContainerPosts>)
 
                     : (<h4>{posts[0].user.username} ainda não fez nenhuma  publicação</h4>)
                 }

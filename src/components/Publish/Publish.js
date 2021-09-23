@@ -3,11 +3,12 @@ import { useState } from "react";
 
 import { UserInfo, Description, PostInfo, DescriptionLink, Button } from "../../themes/PostsStyle";
 import { publish } from "../../service/linkr";
+import { LoginValidation } from "../../login";
 
 export default function Publish() {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    
-    const { token } = user
+    const user = LoginValidation()
+    const { token } = user;
+
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
 

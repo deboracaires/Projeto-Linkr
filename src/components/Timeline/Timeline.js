@@ -30,8 +30,10 @@ export default function Timeline(){
 
     function loading(){
         setTexto("Nenhum post encontrado");
-    }    
-    
+    }
+
+    const [linkPreviewToggle, setLinkPreviewToggle] = useState('')
+
     return (
         <>
         <Header/>
@@ -50,7 +52,7 @@ export default function Timeline(){
                         )
                         :
                         (
-                            posts.posts.map((post, index) => <TimelinePost key = {index} post={post}/>)
+                            posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>)
                         )
                     }
                 </ContainerPosts>
@@ -59,6 +61,7 @@ export default function Timeline(){
                 <Trending />
             </Direita>
         </ContainerTimeline>
+        {linkPreviewToggle}
         </>
     );
 }

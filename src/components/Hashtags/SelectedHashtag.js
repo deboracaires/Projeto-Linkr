@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import TimelinePost from "../Timeline/TimelinePost";
 import Trending from '../Trending/Trending.js';
+
+import Header from '../Header/Header';
+
 import { LoginValidation } from '../../login';
+
 
 export default function SelectedHashtag(){
     
@@ -32,6 +36,7 @@ export default function SelectedHashtag(){
     }
     return(
         <ContainerHashtag>
+            <Header />
             <Esquerda>
                 <Titulo>#{nomeHashtag.hashtag}</Titulo>
                 <ContainerPosts>
@@ -91,9 +96,5 @@ const ContainerPosts = styled.div `
 
 `;
 const Direita = styled.div `
-    height: 406px;
-    margin: 248px 0 0 25px;
-    background-color: #171717;
-    border: 1px solid #171717;
-    border-radius: 16px;
+    margin: 215px 0 0 25px;
 `;

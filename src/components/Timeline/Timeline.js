@@ -8,8 +8,6 @@ import { LoginValidation } from "../../login";
 import Header from "../Header/Header";
 import Trending from "../Trending/Trending";
 
-import LinkPreview from "./LinkPreview";
-
 export default function Timeline(){
     
     const [posts, setPosts] = useState([]);

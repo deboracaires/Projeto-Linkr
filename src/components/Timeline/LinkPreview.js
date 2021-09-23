@@ -3,8 +3,6 @@ import styled from "styled-components"
 import { MdClose } from "react-icons/md";
 
 export default function LinkPreview({ link, setLinkPreviewToggle }) {
-    console.log('foi?' + setLinkPreviewToggle)
-
     return (
         <>
             <BackgroundFilter />
@@ -13,7 +11,7 @@ export default function LinkPreview({ link, setLinkPreviewToggle }) {
                     <button onClick = {() => window.open(link, '_blank')}>Open in new tab</button>
                     <MdClose size='40px' color='white' cursor='pointer' onClick={() => setLinkPreviewToggle('')}/>
                 </header>
-                <iframe src={link} width = "100%" height = "100%" />
+                <iframe src={link} width = "100%" height = "100%" title='#' href='#'/>
             </ContainerLinkPreview>
         </>
     )
@@ -29,7 +27,7 @@ const BackgroundFilter = styled.div `
     z-index: 2;
 
     background-color: white;
-    opacity: 0.7;
+    opacity: 0.5;
 `;
 
 const ContainerLinkPreview = styled.div `

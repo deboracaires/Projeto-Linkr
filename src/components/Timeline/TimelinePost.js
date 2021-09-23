@@ -92,7 +92,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                 <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
                     <h4>{post.linkTitle}</h4>
                     <h5> {post.linkDescription}</h5>
-                    <a>{post.link}</a>
+                    <h6>{post.link}</h6>
                     <img src ={post.linkImage} alt=""/>
                 </ContainerLink>
             </DireitaPost>
@@ -292,7 +292,7 @@ const ContainerLink = styled.div `
         
     }
     
-    a {
+    h6 {
         color: #cecece;
         font-size: 11px;
         font-weight: 400;

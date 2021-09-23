@@ -59,8 +59,6 @@ export default function TimelinePost({post}){
                 })
 	    }
     }
-
-    
     
     return (
         <ContainerPost>
@@ -295,12 +293,17 @@ const IconeDeletar = styled.div `
     position: absolute;
         top: 22px;
         right: 23px;
+
+    cursor: pointer;
 `;
 
 const IconeEditar = styled.div `
     position: absolute;
         top: 22px;
         right: 53px;
+
+    cursor: pointer;
+    
 `;
 
 const ContainerIcons = styled.div `

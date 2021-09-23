@@ -15,7 +15,7 @@ const Nav = styled.header`
     position: relative;
     left: 0;
     top: 0;
-    z-index: 1000000;
+    z-index: 1;
 `
 
 const Top = styled.div`

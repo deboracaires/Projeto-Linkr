@@ -34,6 +34,7 @@ export default function Timeline(){
         setTexto("Nenhum post encontrado");
     }
 
+    const [linkPreviewToggle, setLinkPreviewToggle] = useState('')
 
     return (
         <>
@@ -53,7 +54,7 @@ export default function Timeline(){
                         )
                         :
                         (
-                            posts.posts.map((post, index) => <TimelinePost key = {index} post={post}/>)
+                            posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>)
                         )
                     }
                 </ContainerPosts>
@@ -62,6 +63,7 @@ export default function Timeline(){
                 <Trending />
             </Direita>
         </ContainerTimeline>
+        {linkPreviewToggle}
         </>
     );
 }

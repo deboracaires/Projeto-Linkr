@@ -5,9 +5,10 @@ import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import ModalExcluir from "./ModalExcluir";
 import axios from "axios";
+import LinkPreview from "./LinkPreview";
 
 
-export default function TimelinePost({post}){
+export default function TimelinePost({post, setLinkPreviewToggle}){
     
     const history = useHistory();
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -88,10 +89,10 @@ export default function TimelinePost({post}){
                     }
                     
                 </h5>
-                <ContainerLink onClick={() => window.open(`${post.link}`, '_blank')}>
+                <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
                     <h4>{post.linkTitle}</h4>
                     <h5> {post.linkDescription}</h5>
-                    <a href={post.link} rel="noreferrer" target="_blank">{post.link}</a>
+                    <a>{post.link}</a>
                     <img src ={post.linkImage} alt=""/>
                 </ContainerLink>
             </DireitaPost>

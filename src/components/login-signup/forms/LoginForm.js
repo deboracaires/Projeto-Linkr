@@ -27,22 +27,24 @@ export default function LoginForm() {
         history.push('/timeline');
     };
 
+    const [errorAlert, setErrorAlert] = useState('')
+
     function errorLogIn () {
-        alert('incorrect email/password');
+        setErrorAlert(<span>incorrect email/password</span>);
         
         setButtonToggle(<button type='submit'>Log In</button>)
     };
 
     function signIn(event) {
         event.preventDefault();
-        setButtonToggle(<div>Sign Up</div>)
+        setButtonToggle(<div>Log In</div>)
 
         const userDataValues = [userData.email, userData.password]
 
         for(let i=0; i < userDataValues.length; i++) {
             if (userDataValues[i] === '') {
 
-                alert('Please complete all required fields')
+                setErrorAlert(<span>Please complete all required fields</span>);
                 setButtonToggle(<button type='submit'>Log In</button>)
                 return
             }
@@ -56,13 +58,14 @@ export default function LoginForm() {
 
     return (
         <ContainerForms>
+            {errorAlert}
             <form onSubmit={signIn}>
             <input placeholder="e-mail" type="email" onChange={e => setUserData({...userData, email: e.target.value})} />
                 <input placeholder="password" type="password" onChange={e => setUserData({...userData, password: e.target.value})} />
                 {buttonToggle}
             </form>
             <Link to="/sign-up">
-                <span>First time? Create an account!</span>
+                <p>First time? Create an account!</p>
             </Link>
         </ContainerForms>
     )

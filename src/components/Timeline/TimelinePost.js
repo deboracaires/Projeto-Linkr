@@ -202,7 +202,7 @@ const DireitaPost = styled.div `
         height: 23px;
         line-height: 19px;
         border: 1px solid #171717;
-        width: 34vw;
+        width: 32vw;
         margin-bottom: 5px;
         word-wrap: break-word;
         white-space: nowrap;

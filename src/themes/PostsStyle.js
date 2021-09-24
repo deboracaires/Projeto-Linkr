@@ -2,18 +2,24 @@ import styled from "styled-components";
 import { FaHeart, FaRegHeart } from "react-icons/fa"
 
 const Title = styled.h2` 
-    width: 70vw;
-
+    width: 65vw;
+    line-height: 46px;
+    height: 46px;
     color: #ffffff;
     font-size: 46px;
     text-align: start;
     font-family: 'Oswald', sans-serif;
+    border: 1px solid #333333;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     
     margin: 100px auto 0;
 `
 
 const Page = styled.div`
-    width: 70vw;
+    width: 65vw;
 
     margin: 0 auto;
     display: flex;
@@ -395,6 +401,8 @@ const ContainerLink = styled.div `
 `;
 
 const ContainerPosts = styled.div `
+    
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
 

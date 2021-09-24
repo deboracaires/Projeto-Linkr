@@ -108,7 +108,7 @@ const Titulo = styled.h1 `
     
 `;
 const NewPost = styled.div `
-    width: 611px;
+    width: 42vw;
     height: 250px;
     border: 1px solid #fff;
     background: #FFFFFF;

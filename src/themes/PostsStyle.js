@@ -135,6 +135,7 @@ const Description = styled.div`
         font-size: 21px;
         font-weight: ${(props) => props.type === "post" ? "400" : "300"};
         margin: 0 auto 10px 0;
+        line-height: 21px;
     }
 
     h4 {

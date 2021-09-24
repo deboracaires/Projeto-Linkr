@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 const Trends = styled.div`
     width: 20vw;
-    height: 550px;
+    min-height: 550px;
+    padding-bottom: 15px;
 
     color: #ffffff;
 

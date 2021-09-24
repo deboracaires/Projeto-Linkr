@@ -4,6 +4,7 @@ import TimelinePost from "./TimelinePost";
 import axios from "axios";
 import useInterval from "react-useinterval";
 
+
 import Publish from "../Publish/Publish"
 import { LoginValidation } from "../../login";
 import Header from "../Header/Header";
@@ -23,6 +24,7 @@ export default function Timeline(){
     }, []);
     
     function renderPosts(){
+
         const config = { headers: { "Authorization": `Bearer ${token}` } };
     
             const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts", config);
@@ -63,6 +65,7 @@ export default function Timeline(){
                             posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>)
                         )
                     }
+                    
                 </ContainerPosts>
             </Esquerda>
             <Direita>

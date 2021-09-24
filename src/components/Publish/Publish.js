@@ -50,7 +50,7 @@ export default function Publish() {
                         <input type="url" placeholder="http://..." value={link} required onChange={(event) => setLink(event.target.value)} />
 
                         <input type="text" placeholder="Muito irado esse link falando de #javascript" value={text} onChange={(event) => setText(event.target.value)} />
-                        <Button type="submit" >Publicar</Button>
+                        <Button type="submit" >Publish</Button>
                     </form>
                 </DescriptionLink>
             </PostInfo>

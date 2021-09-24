@@ -2,6 +2,17 @@ import axios from "axios";
 
 const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr";
 
+function getUserInfo(userId, token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const promise = axios.get(`${BASE_URL}/users/${userId}`, config);
+    return promise;
+}
+
 function getUserPosts(userId, token) {
     const config  = {
         headers: {
@@ -115,5 +126,6 @@ export {
     getTrending,
     postFollow,
     postUnfollow,
-    getFollowing
+    getFollowing,
+    getUserInfo
 }

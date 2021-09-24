@@ -1,25 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import Loader from "react-loader-spinner";
 
 export default function Modal ({ cancelar, followUser }) {
-    
-    const [textoExcluir, setTextoExcluir] = useState("Sim, excluir");
-    const [textoCancelar, setTextoCancelar] = useState("Não, voltar");
-
-
-    function excluir (){
-        
-        setTextoExcluir(<Loader type="ThreeDots" color="#fff" height={45} width={45} />);
-        setTextoCancelar(<Loader type="ThreeDots" color="#1877f2" height={45} width={45} />);
-
-        // const config = { headers: { "Authorization": `Bearer ${user.token}` } };
-
-        // const requisicao = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts/${post.id}`, config);
-        
-        
-    }
     
     return (
         <ModalBack>
@@ -79,7 +61,9 @@ const ModalContainer = styled.div `
         font-weight: 700;
         font-size: 18px;
         line-height: 22px;
-        margin: 40px 27px 0 0 ; 
+        margin: 40px 27px 0 0;
+        
+        cursor: pointer;
     }
 
     .cancelar {

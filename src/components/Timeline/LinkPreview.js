@@ -11,7 +11,7 @@ export default function LinkPreview({ link, setLinkPreviewToggle }) {
                     <button onClick = {() => window.open(link, '_blank')}>Open in new tab</button>
                     <MdClose size='40px' color='white' cursor='pointer' onClick={() => setLinkPreviewToggle('')}/>
                 </header>
-                <iframe src={link} width = "100%" height = "100%" title='#' href='#'/>
+                <iframe src={link} width = "100%" height = "90%" title='#' href='#'/>
             </ContainerLinkPreview>
         </>
     )
@@ -37,8 +37,8 @@ const ContainerLinkPreview = styled.div `
     transform: translate(-50%, -50%);
     z-index: 2;
 
-    width: 966px;
-    height: 800px;
+    width: 60vw;
+    height: 80vh;
     
     
     border-radius: 20px;

@@ -1,12 +1,39 @@
 import styled from "styled-components";
 
 import {DebounceInput} from 'react-debounce-input';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoSearch } from 'react-icons/go'
 
+import axios from "axios";
+
 export default function SearchBar() {
-    const [searchValue, setSearchValue] = useState('')
-    console.log(searchValue)
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    
+
+    const [searchValue, setSearchValue] = useState('...');
+
+    const [searchUsersList, setSearchUsersList] = useState([]);
+    const requestURL = `https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/users/search?username=${searchValue}`;
+
+    console.log(requestURL)
+    console.log(searchUsersList)
+    
+
+    useEffect(() => {
+        const config = { headers: { "Authorization": `Bearer ${user.token}` } };
+        
+        
+        const promise = axios.get(requestURL, config);
+
+        promise
+            .then(res => {
+            setSearchUsersList(res.data.users);
+            })
+            .catch(err => console.log(err))
+        
+    }, [requestURL, user.token]);
+    
+     
 
     return (
         <ContainerSearch>
@@ -34,7 +61,7 @@ const ContainerSearch = styled.div`
         justify-content: space-between;
         align-items: center;
 
-
+        border-radius: 8px;
         background-color: white;
 
         input {

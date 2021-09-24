@@ -24,9 +24,22 @@ export default function SignUpForm() {
         history.push('/');
     }
 
-    function errorSignUp () {
-        alert('this email is already registered');
+    const [errorAlert, setErrorAlert] = useState('')
 
+    function errorSignUp (error) {
+        const errorStatus = error.response.status;
+        if(errorStatus === 400) {
+            setErrorAlert(<span>invalid picture URL</span>);
+        };
+
+        if(errorStatus === 403) {
+            setErrorAlert(<span>this email is already registered</span>);
+        };
+
+        if(errorStatus === 500) {
+            setErrorAlert(<span>An error occurred, please try again later</span>);
+        };
+        
         setButtonToggle(<button type='submit'>Sign Up</button>);
     } 
 
@@ -41,7 +54,8 @@ export default function SignUpForm() {
         for(let i=0; i < userDataValues.length; i++) {
             if (userDataValues[i] === '') {
 
-                alert('Please complete all required fields');
+                setErrorAlert(<span>Please complete all required fields</span>);
+
                 setButtonToggle(<button type='submit'>Sign Up</button>);
                 return;
             }
@@ -57,6 +71,7 @@ export default function SignUpForm() {
 
     return (
         <ContainerForms>
+            {errorAlert}
             <form onSubmit={registerNewUser}>
                 <input placeholder="e-mail" type="email" onChange={e => setUserData({...userData, email: e.target.value})} />
                 <input placeholder="password" type="password" onChange={e => setUserData({...userData, password: e.target.value})} />
@@ -65,7 +80,7 @@ export default function SignUpForm() {
                 {buttonToggle}
             </form>
             <Link to="/">
-                <span>Switch back to log in</span>
+                <p>Switch back to log in</p>
             </Link>
         </ContainerForms>
     )

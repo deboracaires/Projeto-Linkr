@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { BsHeart, BsFillTrashFill, BsPencil } from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
-import Modal from "./Modal";
+import ModalExcluir from "./ModalExcluir";
 import axios from "axios";
+import LinkPreview from "./LinkPreview";
 
 
-export default function TimelinePost({post}){
+export default function TimelinePost({post, setLinkPreviewToggle}){
     
     const history = useHistory();
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -59,8 +60,6 @@ export default function TimelinePost({post}){
                 })
 	    }
     }
-
-    
     
     return (
         <ContainerPost>
@@ -90,10 +89,12 @@ export default function TimelinePost({post}){
                     }
                     
                 </h5>
-                <ContainerLink>
+
+                <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
+
                     <h4>{post.linkTitle}</h4>
                     <h5> {post.linkDescription}</h5>
-                    <a href={post.link} rel="noreferrer" target="_blank">{post.link}</a>
+                    <h6>{post.link}</h6>
                     <img src ={post.linkImage} alt=""/>
                 </ContainerLink>
             </DireitaPost>
@@ -119,7 +120,7 @@ export default function TimelinePost({post}){
             {
                 modalIsOpen ?
                 (
-                    <Modal key = {23} setIsOpen={setIsOpen} post={post} />
+                    <ModalExcluir key = {23} setIsOpen={setIsOpen} post={post} />
                 )
                 :
                 (
@@ -157,6 +158,9 @@ const EsquerdaPost = styled.div `
         height: 50px;
         border-radius: 26px;
     }
+    img:hover{
+        cursor: pointer;
+    }
     div {
         margin-top: 19px;
     }
@@ -166,6 +170,10 @@ const EsquerdaPost = styled.div `
         font-weight: 400;
         color: #fff;
     }
+    div:hover{
+        cursor: pointer;
+    }
+    
 `;
 
 const DireitaPost = styled.div `
@@ -192,6 +200,9 @@ const DireitaPost = styled.div `
         
         
     }
+    h4:hover{
+        cursor: pointer;
+    }
 
     h5 {
         font-size: 17px;
@@ -217,6 +228,10 @@ const DireitaPost = styled.div `
         color: #fff;
         font-weight: 700;
     }
+
+    span:hover{
+        cursor: pointer;
+    }
     
 `;
 
@@ -234,6 +249,10 @@ const ContainerLink = styled.div `
     justify-content: space-around; 
     background-color: #171717;
     z-index: 0;
+
+    :hover{
+        cursor : pointer;
+    }
 
 
     img{
@@ -275,7 +294,7 @@ const ContainerLink = styled.div `
         
     }
     
-    a {
+    h6 {
         color: #cecece;
         font-size: 11px;
         font-weight: 400;
@@ -295,12 +314,17 @@ const IconeDeletar = styled.div `
     position: absolute;
         top: 22px;
         right: 23px;
+
+    cursor: pointer;
 `;
 
 const IconeEditar = styled.div `
     position: absolute;
         top: 22px;
         right: 53px;
+
+    cursor: pointer;
+    
 `;
 
 const ContainerIcons = styled.div `

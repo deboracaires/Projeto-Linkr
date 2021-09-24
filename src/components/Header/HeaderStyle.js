@@ -4,8 +4,6 @@ import { FaChevronDown } from "react-icons/fa"
 const Nav = styled.header`
     width: 100vw;
     height: 72px;
-
-    /* background-color: #151515; */
     
     display: flex;
     flex-direction: column;
@@ -15,7 +13,7 @@ const Nav = styled.header`
     position: relative;
     left: 0;
     top: 0;
-    z-index: 1000000;
+    z-index: 1;
 `
 
 const Top = styled.div`
@@ -53,7 +51,7 @@ const Arrow = styled(FaChevronDown)`
     height: 16px;
     color: #ffffff;
 
-    transform: ${(props) => props.navbar ? "rotate(180deg)" : ""};
+    transform: ${(props) => props.navbar === "true" ? "rotate(180deg)" : ""};
 
     cursor: pointer;
 
@@ -93,7 +91,7 @@ const MenuBar = styled.div`
     right: 0;
 
     a {
-        width: 10vw;
+        width: 180px;
 
         color: #ffffff;
         font-size: 17px;

@@ -6,11 +6,11 @@ import styled from "styled-components";
 export default function Header() {
     const userData = JSON.parse(sessionStorage.getItem("user"));
     const { user } = userData
-    const [navbar, setNavbar] = useState(false);
+    const [navbar, setNavbar] = useState("false");
 
     function navbarCard() {
-        if (navbar === false) {
-            setNavbar(true)
+        if (navbar === "false") {
+            setNavbar("true")
         }
     }
 
@@ -23,7 +23,7 @@ export default function Header() {
                     <img src={user.avatar} alt="" />
                 </User>
             </Top>
-            {navbar ?
+            {navbar === "true" ?
                 <Modal setNavbar={setNavbar} />
                 : ""
             }
@@ -35,7 +35,7 @@ export default function Header() {
 function Modal({setNavbar}) {
 
     function closeNavbar() {
-        setNavbar(false)
+        setNavbar("false")
     }
 
     function logout() {

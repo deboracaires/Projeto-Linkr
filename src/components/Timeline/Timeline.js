@@ -46,7 +46,10 @@ export default function Timeline(){
 
     return (
         <>
-        <Header/>
+        <Topo>
+            <Header/>
+        </Topo>
+        
         <ContainerTimeline>
             
             <Esquerda>
@@ -76,6 +79,11 @@ export default function Timeline(){
         </>
     );
 }
+
+const Topo = styled.div `
+    position: fixed;
+    z-index: 100;
+`;
 
 const ContainerTimeline = styled.div `
     box-sizing: border-box;

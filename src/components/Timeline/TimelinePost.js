@@ -221,7 +221,7 @@ const DireitaPost = styled.div `
         max-height: 80px;
         line-height: 20px;
         border: 1px solid #171717;
-        width: 37vw;
+        width: 35vw;
         margin-bottom: 8px;
         display: inline-block;
         word-wrap: break-word;
@@ -260,6 +260,7 @@ const ContainerLink = styled.div `
     justify-content: space-around; 
     background-color: #171717;
     z-index: 0;
+    margin-right: 13px;
 
     :hover{
         cursor : pointer;

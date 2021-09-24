@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TimelinePost from "../Timeline/TimelinePost";
+import TimelinePost from "../Timeline/TimelinePost.js";
 import Trending from '../Trending/Trending.js';
 
 import Header from '../Header/Header';
@@ -90,6 +90,11 @@ const Titulo = styled.h1 `
     color: #fff;
     line-height: 64px;
     margin: 125px 0 41px 0;
+    border: 1px solid #333333;
+    max-width: 30vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 `;
 

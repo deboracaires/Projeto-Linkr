@@ -36,7 +36,10 @@ export default function SelectedHashtag(){
     }
     return(
         <ContainerHashtag>
-            <Header />
+            <Topo>
+                <Header />
+            </Topo>
+            
             <Esquerda>
                 <Titulo>#{nomeHashtag.hashtag}</Titulo>
                 <ContainerPosts>
@@ -59,6 +62,7 @@ export default function SelectedHashtag(){
     );
 }
 
+
 const ContainerHashtag = styled.div `
 
     box-sizing: border-box;
@@ -68,6 +72,12 @@ const ContainerHashtag = styled.div `
     display: flex;
     justify-content: center;    
 `;
+
+const Topo = styled.div `
+    position: fixed;
+    z-index: 100;
+`;
+
 const Esquerda = styled.div `
     display: flex;
     flex-direction: column; 

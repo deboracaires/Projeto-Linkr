@@ -4,6 +4,7 @@ import TimelinePost from "./TimelinePost";
 import axios from "axios";
 import useInterval from "react-useinterval";
 
+
 import Publish from "../Publish/Publish"
 import { LoginValidation } from "../../login";
 import Header from "../Header/Header";
@@ -23,6 +24,7 @@ export default function Timeline(){
     }, []);
     
     function renderPosts(){
+
         const config = { headers: { "Authorization": `Bearer ${token}` } };
     
             const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts", config);
@@ -44,7 +46,10 @@ export default function Timeline(){
 
     return (
         <>
-        <Header/>
+        <Topo>
+            <Header/>
+        </Topo>
+        
         <ContainerTimeline>
             
             <Esquerda>
@@ -63,6 +68,7 @@ export default function Timeline(){
                             posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>)
                         )
                     }
+                    
                 </ContainerPosts>
             </Esquerda>
             <Direita>
@@ -73,6 +79,11 @@ export default function Timeline(){
         </>
     );
 }
+
+const Topo = styled.div `
+    position: fixed;
+    z-index: 100;
+`;
 
 const ContainerTimeline = styled.div `
     box-sizing: border-box;
@@ -97,7 +108,7 @@ const Titulo = styled.h1 `
     
 `;
 const NewPost = styled.div `
-    width: 611px;
+    width: 42vw;
     height: 250px;
     border: 1px solid #fff;
     background: #FFFFFF;
@@ -122,5 +133,6 @@ const ContainerPosts = styled.div `
 const Direita = styled.div `
     
     margin: 205px 0 0 25px;
-   
+
+    
 `;

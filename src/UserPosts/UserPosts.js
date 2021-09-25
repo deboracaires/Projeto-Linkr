@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Header from "../components/Header/Header";
 
-import Post from "../components/MyPosts/Post";
+import TimelinePost from "../components/Timeline/TimelinePost";
 import Trending from "../components/Trending/Trending";
 import { LoginValidation } from "../login";
 import { getUserPosts } from "../service/linkr";
@@ -31,7 +31,7 @@ export default function UserPosts() {
             <Page>
                 {(posts !== []) ?
                     (<ContainerPosts>
-                        {posts.map((post, index) => <Post key={index} post={post} />)}
+                        {posts.map((post, index) => <TimelinePost key={index} post={post} />)}
                     </ContainerPosts>)
 
                     : (<h4>{posts[0].user.username} ainda não fez nenhuma  publicação</h4>)

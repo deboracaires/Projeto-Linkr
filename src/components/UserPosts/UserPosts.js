@@ -1,4 +1,4 @@
-// import { Page, Title, Posts } from "../../themes/PostsStyle";
+/*eslint-disable*/
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
@@ -20,35 +20,41 @@ export default function UserPosts() {
     const [userInfo, setUserInfo] = useState(null)
 
     const [posts, setPosts] = useState([]);
-    const [following, setFollowing] = useState(false)
+    const [following, setFollowing] = useState(0)
     const [follow, setFollow] = useState([])
     const [modal, setModal] = useState(false)
     const [click, setClick] = useState(false)
 
     useEffect(() => {
-        setFollowing(false)
+        setFollowing(0)
         setModal(false)
         setClick(false)
         setFollow([])
-        setUserInfo(null)
-        setPosts([])
+        // setPosts([])
         getUserInfo(id, token).then((res) => setUserInfo(res.data)).catch((err) => console.error);
         getUserPosts(id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
         getFollowing(token).then((res) => setFollow(res.data.users)).catch((err) => console.error);
-
-        if(userInfo && follow !== [] && follow.find((userData) => userData.id === userInfo.user.id)) {
-            setFollowing(true)
+        
+        
+        // console.log(!!(follow.find((userData) => console.log(userData))))
+        if(userInfo && follow !== [] && (follow.find((userData) => userData.id == id))) {
+            console.log(!!(follow.find((userData) => console.log(userData))))
+            
+            setFollowing(1)
+            console.log(following)
         }
     }, []);
+    console.log(follow)
+    // (follow.find((userData) => userData.id == id))
 
-
+    // changeState(true),
     function changeState(change) {
         if (change === true) {
-            setFollowing(true);
+            setFollowing(1);
             setModal(false);
             setClick(false);
         } else {
-            setFollowing(false);
+            setFollowing(0);
             setModal(false);
             setClick(false);
         }
@@ -56,11 +62,14 @@ export default function UserPosts() {
 
     function followUser() {
         setClick(true)
-        if(!following) {
-            postFollow(id, token).then(changeState(true)).catch(() => setModal(true));
-        } else {
-            postUnfollow(id, token).then(changeState(false)).catch(() => setModal(true));
-        }
+        setFollowing(0)
+        postFollow(id, token).then(changeState(true)).catch(() => setModal(true));
+    }
+
+    function unfollowUser() {
+        setClick(true)
+        setFollowing(1)
+        postUnfollow(id, token).then(changeState(false)).catch(() => setModal(true));
     }
 
     function cancelar() {
@@ -76,9 +85,16 @@ export default function UserPosts() {
                     : <Title>fulano <span>Home</span></Title>
                 }
                 {userInfo && userInfo.user.username !== user.user.username ?
-                        (<Button type={following} disabled={click} onClick={() => followUser()}>
-                        {following ? "Unfollow" : "Follow"}</Button>)
-                        : ""
+                    (follow.find((userData) => userData.id == id)) ?
+                        (
+                        <Button type={!following} disabled={click} onClick={() => unfollowUser()}>
+                        Unfollow</Button>)
+                        
+                        : (
+                        <Button type={following} disabled={click} onClick={() => followUser()}>
+                        Follow</Button>)
+
+                    : ""
                 }
                 
             </User>
@@ -112,15 +128,15 @@ const User = styled.div`
 `
 
 const Button = styled.button`
-    width: ${(props) => !props.type ? "7vw" : "9vw"};
+    width: ${(props) => props.type === 0 ? "7vw" : "9vw"};
     height: 35px;
 
-    color: ${(props) => !props.type ? "#ffffff" : "#1877f2"};
+    color: ${(props) => props.type === 0 ? "#ffffff" : "#1877f2"};
     font-weight: bold;
     font-size: 18px;
 
     cursor: pointer;
 
-    background: ${(props) => !props.type ? "#1877f2" : "#ffffff"};
+    background: ${(props) => props.type === 0 ? "#1877f2" : "#ffffff"};
     border-radius: 5px;
 `

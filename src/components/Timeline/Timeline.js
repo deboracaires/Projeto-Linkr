@@ -133,5 +133,6 @@ const ContainerPosts = styled.div `
 const Direita = styled.div `
     
     margin: 205px 0 0 25px;
-   
+
+    
 `;

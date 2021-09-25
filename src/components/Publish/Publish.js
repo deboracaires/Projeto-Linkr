@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState } from "react";
+import { BsGeoAlt } from "react-icons/bs"
 
 import { UserInfo, Description, PostInfo, DescriptionLink, Button } from "../../themes/PostsStyle";
 import { publish } from "../../service/linkr";
 import { LoginValidation } from "../../login";
+import styled from 'styled-components';
 
 export default function Publish() {
     const user = LoginValidation()
@@ -51,8 +53,29 @@ export default function Publish() {
                         <input type="text" placeholder="Muito irado esse link falando de #javascript" value={text} onChange={(event) => setText(event.target.value)} />
                         <Button type="submit" >Publicar</Button>
                     </form>
+                    <Location>
+                        <BsGeoAlt size='15px' color="#238700"/>
+                        <h1>Localização ativada</h1>
+                    </Location>
                 </DescriptionLink>
+                
             </PostInfo>
         </div>
     );
 }
+
+const Location = styled.div `
+    position: absolute;
+    top: 135px;
+    display: flex;
+    
+    h1 {
+        color: #238700;
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+        font-size: 13px;
+        line-height: 16px;
+        margin-left: 3px;
+    }
+    
+`;

@@ -181,6 +181,8 @@ const DescriptionLink = styled.div`
     line-height: 22px;
     text-align: right;
 
+    position: relative;
+
     h3 {
         color: #ffffff;
         font-size: 19px;

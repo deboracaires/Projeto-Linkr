@@ -2,6 +2,17 @@ import axios from "axios";
 
 const BASE_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr";
 
+function getUserInfo(userId, token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const promise = axios.get(`${BASE_URL}/users/${userId}`, config);
+    return promise;
+}
+
 function getUserPosts(userId, token) {
     const config  = {
         headers: {
@@ -71,8 +82,37 @@ function getTrending(token) {
             Authorization: `Bearer ${token}`
         }
     }
-
     const promise = axios.get(`${BASE_URL}/hashtags/trending`, config);
+    return promise;
+}
+
+function postFollow(id, token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const promise = axios.post(`${BASE_URL}/users/${id}/follow`, {post:true}, config);
+    return promise;
+}
+
+function postUnfollow(id, token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const promise = axios.post(`${BASE_URL}/users/${id}/unfollow`, {post:true}, config);
+    return promise;
+}
+
+function getFollowing(token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const promise = axios.get(`${BASE_URL}/users/follows`, config);
     return promise;
 }
 
@@ -83,5 +123,9 @@ export {
     getLikes,
     postLike,
     postDislike,
-    getTrending
+    getTrending,
+    postFollow,
+    postUnfollow,
+    getFollowing,
+    getUserInfo
 }

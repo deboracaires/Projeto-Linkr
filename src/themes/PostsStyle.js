@@ -2,14 +2,14 @@ import styled from "styled-components";
 import { FaHeart, FaRegHeart } from "react-icons/fa"
 
 const Title = styled.h2` 
-    width: 70vw;
+    width: 60vw;
 
     color: #ffffff;
     font-size: 46px;
     text-align: start;
     font-family: 'Oswald', sans-serif;
     
-    margin: 100px auto 0;
+    overflow: hidden;
 `
 
 const Page = styled.div`

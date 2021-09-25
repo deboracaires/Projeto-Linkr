@@ -20,7 +20,7 @@ export default function UserPosts() {
     const [userInfo, setUserInfo] = useState(null)
 
     const [posts, setPosts] = useState([]);
-    const [following, setFollowing] = useState(0)
+    let [following, setFollowing] = useState(0)
     const [follow, setFollow] = useState([])
     const [modal, setModal] = useState(false)
     const [click, setClick] = useState(false)
@@ -30,24 +30,15 @@ export default function UserPosts() {
         setModal(false)
         setClick(false)
         setFollow([])
-        // setPosts([])
+        
         getUserInfo(id, token).then((res) => setUserInfo(res.data)).catch((err) => console.error);
         getUserPosts(id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
         getFollowing(token).then((res) => setFollow(res.data.users)).catch((err) => console.error);
         
-        
-        // console.log(!!(follow.find((userData) => console.log(userData))))
         if(userInfo && follow !== [] && (follow.find((userData) => userData.id == id))) {
-            console.log(!!(follow.find((userData) => console.log(userData))))
-            
             setFollowing(1)
-            console.log(following)
         }
-    }, []);
-    console.log(follow)
-    // (follow.find((userData) => userData.id == id))
-
-    // changeState(true),
+    }, [following]);
     function changeState(change) {
         if (change === true) {
             setFollowing(1);
@@ -62,20 +53,23 @@ export default function UserPosts() {
 
     function followUser() {
         setClick(true)
-        setFollowing(0)
+        setFollowing(1)
         postFollow(id, token).then(changeState(true)).catch(() => setModal(true));
+        getFollowing(token).then((res) => setFollow(res.data.users)).catch((err) => console.error);
     }
 
     function unfollowUser() {
         setClick(true)
-        setFollowing(1)
+        following=0
         postUnfollow(id, token).then(changeState(false)).catch(() => setModal(true));
+        getFollowing(token).then((res) => setFollow(res.data.users)).catch((err) => console.error);
     }
 
     function cancelar() {
         setModal(false)
     }
-
+    {(follow.find((userData) => userData.id == id)) ?
+        following = 1 : following = 0}
     return (
         <div>
             <Header />
@@ -84,14 +78,14 @@ export default function UserPosts() {
                     <Title>{userInfo.user.username}'s posts </Title> 
                     : <Title>fulano <span>Home</span></Title>
                 }
+                
                 {userInfo && userInfo.user.username !== user.user.username ?
-                    (follow.find((userData) => userData.id == id)) ?
-                        (
-                        <Button type={!following} disabled={click} onClick={() => unfollowUser()}>
+                    
+                    (following === 1) ?
+                        (<Button type={following} disabled={click} onClick={() => unfollowUser()}>
                         Unfollow</Button>)
                         
-                        : (
-                        <Button type={following} disabled={click} onClick={() => followUser()}>
+                        : (<Button type={following} disabled={click} onClick={() => followUser()}>
                         Follow</Button>)
 
                     : ""

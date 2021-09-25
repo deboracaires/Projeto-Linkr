@@ -13,10 +13,12 @@ export default function Post({post}) {
     const history = useHistory()
     console.log(user)
     let { likes } = post
-    const [list, setList] = useState([])
+    const [list, setList] = useState("")
     let [like, setLike] = useState(0)
     const [quantLikes, setQuantLike] = useState(0)
     const [likesInPost, setLikesInPost] = useState(likes)
+    const [name1, setName1] = useState("")
+    const [name2, setName2] = useState("")
     console.log(post.likes)
     let text = "likes";
 
@@ -25,6 +27,9 @@ export default function Post({post}) {
         // if (likes.find((usr) => usr.userId === user.id )) {
         //     setLike(true)
         // }
+        // setName1("")
+        // setName2("")
+        console.log(list)
 
         // getLikes(post.user.id, token).then((res) => console.log(res.data))
 
@@ -32,11 +37,35 @@ export default function Post({post}) {
 
         if(post && likesInPost !== [] && (likesInPost.find((us) => us.userId === user.id))) {
             setLike(1)
+            // setList(`Você e mais ${likesInPost.length - 1} pessoas curtiram`)
+        }
+
+        if (like === 1) {
+            let text = likesInPost.filter((nameUser) => nameUser.userId !== user.id)
+            console.log(text)
+            let nameList = getNames(text[0].userId, text[1].userId)
+            // console.log(nameList)
+            if (likesInPost.length > 2) {
+                setList(`Você, ${name1}, ${name2} e mais ${likesInPost.length - 3} pessoas curtiram`)
+            } else if (likesInPost.length === 2) {
+                setList(`Você e ${name1} curtiram`)
+            } else if (likesInPost.length === 1) {
+                setList(`Você curtiu esse post`)
+            }
         }
 
         setLike((likes.find((us) => us.userId == user.id)) ?
         like = 1 : like = 0)
     }, [])
+
+    function getNames(idUser, idUser2) {
+        console.log(idUser)
+        getLikes(idUser, token).then((res) => setName1(res.data.user.username));
+        getLikes(idUser2, token).then((res) => setName2(res.data.user.username));
+        console.log(name1)
+        let names = [name1, name2];
+        return names;
+    }
 
     function likePost() {
         if(like === 0) {
@@ -76,7 +105,7 @@ console.log(like)
                             : <Like onClick={() => likePost()} />
                         }
                         <ReactTooltip />
-                        <h3 data-tip={3}>{quantLikes} {text}</h3>
+                        <h3 data-tip={list}>{quantLikes} {text}</h3>
                     </EsquerdaPost>
                     <DireitaPost>
                         <h4 onClick={redirecionar}>{post.user.username}</h4>

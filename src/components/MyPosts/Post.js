@@ -24,27 +24,18 @@ export default function Post({post}) {
 
     useEffect(() => {
         setQuantLike(0)
-        // if (likes.find((usr) => usr.userId === user.id )) {
-        //     setLike(true)
-        // }
-        // setName1("")
-        // setName2("")
-        console.log(list)
-
-        // getLikes(post.user.id, token).then((res) => console.log(res.data))
 
         setQuantLike(likes.length)
 
         if(post && likesInPost !== [] && (likesInPost.find((us) => us.userId === user.id))) {
             setLike(1)
-            // setList(`Você e mais ${likesInPost.length - 1} pessoas curtiram`)
         }
 
         if (like === 1) {
             let text = likesInPost.filter((nameUser) => nameUser.userId !== user.id)
-            console.log(text)
+            
             let nameList = getNames(text[0].userId, text[1].userId)
-            // console.log(nameList)
+            
             if (likesInPost.length > 2) {
                 setList(`Você, ${name1}, ${name2} e mais ${likesInPost.length - 3} pessoas curtiram`)
             } else if (likesInPost.length === 2) {
@@ -59,10 +50,10 @@ export default function Post({post}) {
     }, [])
 
     function getNames(idUser, idUser2) {
-        console.log(idUser)
+        
         getLikes(idUser, token).then((res) => setName1(res.data.user.username));
         getLikes(idUser2, token).then((res) => setName2(res.data.user.username));
-        console.log(name1)
+        
         let names = [name1, name2];
         return names;
     }

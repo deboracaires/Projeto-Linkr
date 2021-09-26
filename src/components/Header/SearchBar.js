@@ -51,7 +51,11 @@ export default function SearchBar() {
                 
             <GoSearch color='#C6C6C6' size='25px' />
             </div>
-            {searchUsersList.map(user => <SearchedUser username={user.username} avatar={user.avatar}/>)}
+            {searchUsersList.map(user => <SearchedUser 
+                username={user.username} 
+                avatar={user.avatar}
+                id={user.id}
+            />)}
         </ContainerSearch>
     )
 }
@@ -64,6 +68,7 @@ const ContainerSearch = styled.div`
 
     background-color: #E7E7E7;
     border-radius: 8px;
+
     div {
         width: 563px;
         height: 45px;
@@ -76,6 +81,8 @@ const ContainerSearch = styled.div`
 
         border-radius: 8px;
         background-color: white;
+
+
 
         input {
             width: 100%;

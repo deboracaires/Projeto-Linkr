@@ -1,11 +1,14 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SearchedUser({username, avatar}) {
+export default function SearchedUser({username, avatar, id}) {
     return (
-        <ContainerSearchedUser>
-            <img src={avatar}></img>
-            <h2>{username}</h2>
-        </ContainerSearchedUser>
+        <Link to={'/user/' + id}>
+            <ContainerSearchedUser>
+                <img src={avatar}></img>
+                <h2>{username}</h2>
+            </ContainerSearchedUser>
+        </Link>
     )
 }
 
@@ -19,6 +22,8 @@ const ContainerSearchedUser = styled.section `
     :hover {
         background-color: #B7B7AD;
     }
+    
+   
 
     img {
         width: 40px;

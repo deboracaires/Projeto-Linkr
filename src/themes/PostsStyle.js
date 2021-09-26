@@ -8,12 +8,17 @@ const Title = styled.h2`
     font-size: 46px;
     text-align: start;
     font-family: 'Oswald', sans-serif;
+    border: 1px solid #333333;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     
     overflow: hidden;
 `
 
 const Page = styled.div`
-    width: 70vw;
+    width: 65vw;
 
     margin: 0 auto;
     display: flex;
@@ -135,6 +140,7 @@ const Description = styled.div`
         font-size: 21px;
         font-weight: ${(props) => props.type === "post" ? "400" : "300"};
         margin: 0 auto 10px 0;
+        line-height: 21px;
     }
 
     h4 {
@@ -173,6 +179,8 @@ const DescriptionLink = styled.div`
 
     line-height: 22px;
     text-align: right;
+
+    position: relative;
 
     h3 {
         color: #ffffff;
@@ -394,6 +402,8 @@ const ContainerLink = styled.div `
 `;
 
 const ContainerPosts = styled.div `
+    
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
 

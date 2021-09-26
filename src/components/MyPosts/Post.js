@@ -66,7 +66,6 @@ export default function Post({post}) {
             setList("Nenhuma curtida")
         }
 
-        console.log(validationURL)
     }, [like, list, name1, name2])
 
     function getNames(idUser, idUser2) {

@@ -9,6 +9,7 @@ import axios from "axios";
 import LinkPreview from "./LinkPreview";
 import { republish } from "../../service/linkr";
 import ModalRepost from "../ModalAlert/ModalRepost";
+import ReactPlayer from "react-player";
 
 
 export default function TimelinePost({post, setLinkPreviewToggle}){
@@ -17,6 +18,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     const user = JSON.parse(sessionStorage.getItem("user"));
     const [modalIsOpen, setIsOpen] = useState(false);
     const [modalRepublish, setModalRepublish] = useState(false);
+    let validationURL = post.link.match(/(http(s)?:\/\/.)?(www\.)?(youtube\.)?(com\/watch)([-a-zA-Z0-9@:%_.~#?&//=]*)/g)
     
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
@@ -73,7 +75,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     }
     
     return (
-        <ContainerPost>
+        <ContainerPost video={validationURL}>
             <EsquerdaPost>
               
                 <img onClick={redirecionar} src={post.user.avatar} alt=""/>
@@ -109,14 +111,23 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                     }
                     
                 </h5>
+                {
+                    (validationURL === null) ?
+                        <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
 
-                <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
-
-                    <h4>{post.linkTitle}</h4>
-                    <h5> {post.linkDescription}</h5>
-                    <h6>{post.link}</h6>
-                    <img src ={post.linkImage} alt=""/>
-                </ContainerLink>
+                            <h4>{post.linkTitle}</h4>
+                            <h5> {post.linkDescription}</h5>
+                            <h6>{post.link}</h6>
+                            <img src ={post.linkImage} alt=""/>
+                        </ContainerLink>
+                        
+                        :
+                        <ContainerVideo>
+                            <ReactPlayer url={validationURL} controls={true} width="32vw" height="18vw" />
+                            <h6>{post.link}</h6>
+                        </ContainerVideo>
+                }
+                
             </DireitaPost>
             {
                 post.user.username === user.user.username ?
@@ -358,3 +369,74 @@ const ContainerIcons = styled.div `
     background-color: yellow;
     
 `
+
+const ContainerVideo = styled.div `
+    width: 36vw;
+    height: 350px;
+    /* border: 1px solid #4d4d4d; */
+    border-radius: 11px;
+    position: relative;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; 
+    background-color: #171717;
+    z-index: 0;
+    /* margin-right: 13px; */
+
+    :hover{
+        cursor : pointer;
+    }
+
+
+    img{
+        width: 153.44px;
+        height: 155px;
+        border-radius: 0px 12px 13px 0px;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    h4 {
+        font-size: 16px;
+        font-weight: 400;
+        color: #cecece;
+        width: 25vw;
+        height: 40px;
+        line-height: 19px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+    }
+
+    h5 {
+        width: 24vw;
+        height: 39px;
+        font-size: 11px;
+        color: #9b9595;
+        line-height: 13px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    h6 {
+        color: #cecece;
+        font-size: 16px;
+        font-weight: 400;
+        width: 32vw;
+        line-height: 20px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+    }
+`;

@@ -13,6 +13,7 @@ import Trending from "../Trending/Trending";
 export default function Timeline(){
     
     const [posts, setPosts] = useState([]);
+    const [qtdFollow, setQtdFollow] = useState(0);
     const [texto, setTexto] = useState("Loading...");
     
     const user = LoginValidation()
@@ -27,19 +28,41 @@ export default function Timeline(){
 
         const config = { headers: { "Authorization": `Bearer ${token}` } };
     
-            const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts", config);
+            const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/following/posts", config);
     
             requisicao
                 .then(res => {setPosts(res.data)
-                                loading()})
+                                verificaSeguir()})
                 .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
+        
+                
     }
+
+    function verificaSeguir(){
+        const config = { headers: { "Authorization": `Bearer ${token}` } };
+    
+            const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/users/follows", config);
+    
+            requisicao
+                .then(res => {setQtdFollow(res.data.users.length)
+                                {res.data.users.length === 0 ? setTexto("Você não segue ninguém ainda, procure por perfis na busca."): ""}
+                            })
+                .catch();
+        
+    }
+
+    
 
     useInterval(renderPosts, 15000, 5);
     
 
-    function loading(){
-        setTexto("Nenhum post encontrado");
+    function verificaPost(){
+        
+        if(posts.posts.length === 0){
+            setTexto('Nenhuma publicação encontrada');
+        }else{
+            return posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>);
+        }
     }
 
     const [linkPreviewToggle, setLinkPreviewToggle] = useState('')
@@ -59,15 +82,19 @@ export default function Timeline(){
                 </NewPost>
                 <ContainerPosts>
                     
-                    {posts.length === 0 ?
+                    {
+                        qtdFollow === 0?
                         (
                             <h2>{texto}</h2>
                         )
                         :
                         (
-                            posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>)
+                            verificaPost()
                         )
                     }
+
+
+                    
                     
                 </ContainerPosts>
             </Esquerda>
@@ -127,6 +154,7 @@ const ContainerPosts = styled.div `
         font-size: 30px;
         margin-top: 80px;
         color: #fff;
+        width: 42vw;
     }
     
 `;

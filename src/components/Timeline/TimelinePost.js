@@ -7,6 +7,7 @@ import ReactHashtag from "react-hashtag";
 import ModalExcluir from "./ModalExcluir";
 import axios from "axios";
 import LinkPreview from "./LinkPreview";
+import { republish } from "../../service/linkr";
 
 
 export default function TimelinePost({post, setLinkPreviewToggle}){
@@ -14,7 +15,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     const history = useHistory();
     const user = JSON.parse(sessionStorage.getItem("user"));
     const [modalIsOpen, setIsOpen] = useState(false);
-
+    
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
     }
@@ -24,6 +25,9 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
         history.push(`/hashtag/${hash}`)
     }
 
+    function republishPost() {
+        republish(post.id, user.token).then((res) => console.log(res.data))
+    }
 
     const inputRef = useRef(null);
     const [isInEdit, setIsInEdit] = useState(false);
@@ -75,7 +79,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                     <AiOutlineComment size='20px' color="#fff"/>
                 </div>
                 <h3>{post.commentCount} comments</h3>
-                <div>
+                <div onClick={() => republishPost()}>
                     <AiOutlineRetweet size='20px' color="#fff"/>
                 </div>
                 <h3>{post.repostCount} re-posts</h3>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TimelinePost from "../Timeline/TimelinePost";
+import TimelinePost from "../Timeline/TimelinePost.js";
 import Trending from '../Trending/Trending.js';
 
 import Header from '../Header/Header';
@@ -36,7 +36,10 @@ export default function SelectedHashtag(){
     }
     return(
         <ContainerHashtag>
-            <Header />
+            <Topo>
+                <Header />
+            </Topo>
+            
             <Esquerda>
                 <Titulo>#{nomeHashtag.hashtag}</Titulo>
                 <ContainerPosts>
@@ -59,6 +62,7 @@ export default function SelectedHashtag(){
     );
 }
 
+
 const ContainerHashtag = styled.div `
 
     box-sizing: border-box;
@@ -68,6 +72,12 @@ const ContainerHashtag = styled.div `
     display: flex;
     justify-content: center;    
 `;
+
+const Topo = styled.div `
+    position: fixed;
+    z-index: 100;
+`;
+
 const Esquerda = styled.div `
     display: flex;
     flex-direction: column; 
@@ -80,6 +90,11 @@ const Titulo = styled.h1 `
     color: #fff;
     line-height: 64px;
     margin: 125px 0 41px 0;
+    border: 1px solid #333333;
+    max-width: 30vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 `;
 

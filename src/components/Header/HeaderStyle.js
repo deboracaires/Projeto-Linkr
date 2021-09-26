@@ -10,7 +10,7 @@ const Nav = styled.header`
     align-items: flex-end;
     justify-content: flex-end;
 
-    position: relative;
+    position: fixed;
     left: 0;
     top: 0;
     z-index: 1;
@@ -31,9 +31,6 @@ const Top = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    position: absolute;
-    top: 0;
-    left: 0;
     margin: 0 auto;
 
     box-sizing: border-box;

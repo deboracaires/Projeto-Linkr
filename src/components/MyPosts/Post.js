@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import ReactTooltip from "react-tooltip";
+import ReactPlayer from "react-player";
+
 import { getLikes, postDislike, postLike } from "../../service/linkr";
 import { Like, EsquerdaPost, ContainerPost, DireitaPost, ContainerLink, Liked } from "../../themes/PostsStyle";
 import ReactHashtag from "react-hashtag";
 import { LoginValidation } from "../../login";
+import styled from "styled-components";
+import { AiOutlineComment, AiOutlineRetweet } from "react-icons/ai";
 /*eslint-disable*/
 export default function Post({post}) {
     const userData = LoginValidation()
@@ -13,6 +17,7 @@ export default function Post({post}) {
     const history = useHistory()
     
     let { likes } = post
+
     const [list, setList] = useState("")
     let [like, setLike] = useState(0)
     const [quantLikes, setQuantLike] = useState(0)
@@ -22,7 +27,7 @@ export default function Post({post}) {
     let nomeList = "Outro nome"
 
     let text = "likes";
-
+    let validationURL = post.link.match(/(http(s)?:\/\/.)?(www\.)?(youtube\.)?(com\/watch)([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
     useEffect(() => {
         setList(text)
 
@@ -61,7 +66,6 @@ export default function Post({post}) {
             setList("Nenhuma curtida")
         }
 
-        let validationURL = post.link.match(/(http(s)?:\/\/.)?(www\.)?(youtube\.)?(com\/watch)([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
         console.log(validationURL)
     }, [like, list, name1, name2])
 
@@ -101,17 +105,28 @@ export default function Post({post}) {
 
     
     return (
-        <ContainerPost>
+        <ContainerPost video={validationURL}>
             {((user)) ?
                 <>
                     <EsquerdaPost>
                         <img src={post.user.avatar} alt="" />
-                        {(like === 1) ?
-                            <Liked onClick={() => dislikePost()} />
-                            : <Like onClick={() => likePost()} />
-                        }
+                        <div>
+                            {(like === 1) ?
+                                <Liked onClick={() => dislikePost()} />
+                                : <Like onClick={() => likePost()} />
+                            }
+                        </div>
                         <ReactTooltip />
                         <h3 data-tip={list}>{quantLikes} {text}</h3>
+
+                        <div>
+                            <AiOutlineComment size='20px' color="#ffffff"/>
+                        </div>
+                        <h3>{post.commentCount} comments</h3>
+                        <div onClick={() => setModalRepublish(true)}>
+                            <AiOutlineRetweet size='20px' color="#ffffff"/>
+                        </div>
+                        <h3>{post.repostCount} re-posts</h3>
                     </EsquerdaPost>
                     <DireitaPost>
                         <h4 onClick={redirecionar}>{post.user.username}</h4>
@@ -120,13 +135,24 @@ export default function Post({post}) {
                                 {post.text}
                             </ReactHashtag>
                         </h5>
-                        <ContainerLink onClick={() => window.open(`${post.link}`,"_blank")}>
-                            <h4>{post.linkTitle}</h4>
-                            <h5>{post.linkDescription}</h5>
-                            <a href={post.link}>{post.link}</a>
-                            <img src={post.linkImage} alt="" />
-                        </ContainerLink>
+                        {
+                            (validationURL === null) ?
+                                <ContainerLink onClick={() => window.open(`${post.link}`,"_blank")}>
+                                    <h4>{post.linkTitle}</h4>
+                                    <h5>{post.linkDescription}</h5>
+                                    <a href={post.link}>{post.link}</a>
+                                    <img src={post.linkImage} alt="" />
+                                </ContainerLink>
+                                
+                                : 
+                                <ContainerVideo>
+                                    <ReactPlayer url={validationURL} controls={true} width="32vw" height="18vw" />
+                                    <h6>{post.link}</h6>
+                                </ContainerVideo>
+                        }
+                        
                     </DireitaPost>
+                    
                 </>
                 : ""
             }
@@ -136,9 +162,9 @@ export default function Post({post}) {
 }
 
 const ContainerVideo = styled.div `
-    width: 503px;
-    height: 155px;
-    border: 1px solid #4d4d4d;
+    width: 36vw;
+    height: 350px;
+    /* border: 1px solid #4d4d4d; */
     border-radius: 11px;
     position: relative;
     padding-left: 18px;
@@ -146,8 +172,13 @@ const ContainerVideo = styled.div `
     flex-direction: column;
     justify-content: space-around; 
     background-color: #171717;
-    z-index: 1000;
-    cursor: pointer;
+    z-index: 0;
+    /* margin-right: 13px; */
+
+    :hover{
+        cursor : pointer;
+    }
+
 
     img{
         width: 153.44px;
@@ -162,8 +193,8 @@ const ContainerVideo = styled.div `
         font-size: 16px;
         font-weight: 400;
         color: #cecece;
-        width: 250px;
-        height: 38px;
+        width: 25vw;
+        height: 40px;
         line-height: 19px;
         border: 1px solid #171717;
         word-wrap: break-word;
@@ -174,7 +205,7 @@ const ContainerVideo = styled.div `
     }
 
     h5 {
-        width: 302.82px;
+        width: 24vw;
         height: 39px;
         font-size: 11px;
         color: #9b9595;
@@ -184,17 +215,14 @@ const ContainerVideo = styled.div `
         white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
-        
-        
     }
     
-    a {
+    h6 {
         color: #cecece;
-        font-size: 11px;
+        font-size: 16px;
         font-weight: 400;
-        width: 260px;
-        height: 13px;
-        line-height: 13px;
+        width: 32vw;
+        line-height: 20px;
         border: 1px solid #171717;
         word-wrap: break-word;
         white-space: pre-line;

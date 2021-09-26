@@ -11,7 +11,7 @@ export default function Post({post}) {
     const { user, token } = userData;
     
     const history = useHistory()
-
+    
     let { likes } = post
     const [list, setList] = useState("")
     let [like, setLike] = useState(0)
@@ -38,7 +38,7 @@ export default function Post({post}) {
         if (like === 1 && likesInPost.length > 0 && likesInPost.find((us) => us.userId === user.id) ) {
             let text = likesInPost.filter((nameUser) => nameUser.userId !== user.id)
             
-            nomeList = getNames(text[0].userId, text[1].userId)
+            nomeList = getNames(text[0].userId, ((likesInPost.length > 1) ? text[1].userId : text[0].userId))
             
             if (likesInPost.length > 2) {
                 setList(`Você, ${nomeList.name1}, ${nomeList.name2} e mais ${likesInPost.length - 3} pessoas curtiram`)
@@ -61,6 +61,8 @@ export default function Post({post}) {
             setList("Nenhuma curtida")
         }
 
+        let validationURL = post.link.match(/(http(s)?:\/\/.)?(www\.)?(youtube\.)?(com\/watch)([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
+        console.log(validationURL)
     }, [like, list, name1, name2])
 
     function getNames(idUser, idUser2) {
@@ -132,3 +134,72 @@ export default function Post({post}) {
         </ContainerPost>
     );
 }
+
+const ContainerVideo = styled.div `
+    width: 503px;
+    height: 155px;
+    border: 1px solid #4d4d4d;
+    border-radius: 11px;
+    position: relative;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; 
+    background-color: #171717;
+    z-index: 1000;
+    cursor: pointer;
+
+    img{
+        width: 153.44px;
+        height: 155px;
+        border-radius: 0px 12px 13px 0px;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    h4 {
+        font-size: 16px;
+        font-weight: 400;
+        color: #cecece;
+        width: 250px;
+        height: 38px;
+        line-height: 19px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+    }
+
+    h5 {
+        width: 302.82px;
+        height: 39px;
+        font-size: 11px;
+        color: #9b9595;
+        line-height: 13px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+        
+    }
+    
+    a {
+        color: #cecece;
+        font-size: 11px;
+        font-weight: 400;
+        width: 260px;
+        height: 13px;
+        line-height: 13px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+    }
+`;

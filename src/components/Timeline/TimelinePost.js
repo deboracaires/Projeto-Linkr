@@ -191,7 +191,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
 
 const Container = styled.div `
     position: relative;
-    margin-top: 45px;
+    margin-top: 60px;
 `;
 
 const Reposted = styled.div `

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Arrow, MenuBar, Nav, Top, User } from "./HeaderStyle"
 import styled from "styled-components";
 
+import SearchBar from "./SearchBar";
+
 export default function Header() {
     const userData = JSON.parse(sessionStorage.getItem("user"));
     const { user } = userData
@@ -18,6 +20,7 @@ export default function Header() {
         <Nav>
             <Top>
                 <Link to="/timeline">Linkr</Link>
+                <SearchBar />
                 <User>
                     <Arrow navbar={navbar} onClick={navbarCard}/>
                     <img src={user.avatar} alt="" />

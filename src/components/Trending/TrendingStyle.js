@@ -2,8 +2,9 @@ import styled from "styled-components";
 
 const Trends = styled.div`
     width: 20vw;
-    min-height: 550px;
-    padding-bottom: 15px;
+    
+    height: 620px;
+
 
     color: #ffffff;
 
@@ -12,6 +13,8 @@ const Trends = styled.div`
     background-color: #171717;
 
     margin: 30px 0 30px auto;
+
+    padding-bottom: 30px;
 
     /* position: fixed;
     top: 130px;
@@ -45,6 +48,46 @@ const Trends = styled.div`
     strong {
         font-weight: bold;
     }
+
+    section {
+        width: auto;
+        height: 35px;
+
+        margin: 15px 20px 0;
+
+        display: flex;
+        align-items: center;
+        
+        border-radius: 8px;
+
+        background-color: #252525;
+
+        input {
+            all: unset;
+            width: 100%;
+            height: 100%;
+
+            text-indent: 6px;
+            
+            
+            border-radius: 8px;
+            
+            color: white;
+            background-color: #252525;
+            ::placeholder {
+                font-size: 15px;
+                font-family: Lato;
+            }
+        };
+
+        span {
+            margin: 6px;
+        }
+    }
+
+    
+
+    
 `
 
 const Line = styled.div`

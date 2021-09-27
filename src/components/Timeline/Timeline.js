@@ -52,18 +52,20 @@ export default function Timeline(){
                                 {res.data.users.length === 0 ? setTexto("Você não segue ninguém ainda, procure por perfis na busca."): ""}
                             })
                 .catch();
+                
         
     }
    
     function loadOlderPosts(){
-        url = url + `?olderThan${posts[posts.length - 1].id}`;
+        url = url + `?olderThan=${posts[posts.length - 1].id}`;
         const config = { headers: { "Authorization": `Bearer ${token}` } };
         
         const requisicao = axios.get(url, config);
     
         requisicao
-            .then(res => {  setPosts(res.data.posts)
-                                verificaSeguir()})
+            .then(res => {  
+                                verificaSeguir()
+                            verificaPost(res.data.posts)})
             .catch(err => {console.log(err)});
         
     }
@@ -73,14 +75,22 @@ export default function Timeline(){
     useInterval(renderPosts, 15000, 5);
     
 
-    function verificaPost(){
+    function verificaPost(teste){
         
-        if(posts.posts.length === 0){
-            setTexto('Nenhuma publicação encontrada');
-        }else{
-            return posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>);
-        }
+        let newPosts = [...posts];
+
+        teste.map(post => newPosts = [...newPosts, post])
+
+        setPosts(newPosts)
+        
+        // if(posts.posts.length === 0){
+        //     setTexto('Nenhuma publicação encontrada');
+        // }else{
+        //     return posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>);
+        // }
     }
+
+    
 
     const [linkPreviewToggle, setLinkPreviewToggle] = useState('')
 
@@ -109,9 +119,9 @@ export default function Timeline(){
                             <InfiniteScroll 
                                 dataLength={10}
                                 next={loadOlderPosts}
-                                hasMore={true }
+                                hasMore={true || false}
                                 loader={<h1 key={3201}> Loading... </h1>}
-                                endMessage={<h1 key={320211}> Loading... </h1>}
+                                endMessage={<h1 key={320211}>Terminou </h1>}
                             >
                                 {posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>)}
                             </InfiniteScroll>

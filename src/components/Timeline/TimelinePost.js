@@ -33,7 +33,8 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     }
 
     function republishPost() {
-        republish(post.id, user.token).then((res) => setModalRepublish(false))
+        republish(post.id, user.token).then((res) => {setModalRepublish(false) 
+                                                        window.location.reload()});
     }
 
     function cancelar() {
@@ -78,112 +79,134 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     }
     
     return (
-        <ContainerPost video={validationURL}>
-            <EsquerdaPost>
-              
-                <img onClick={redirecionar} src={post.user.avatar} alt=""/>
-                <div>
-                    <BsHeart size='20px' color="#fff"/>
-                </div>
-                <h3>{post.likes.length} likes</h3>
-                <div>
-                    <AiOutlineComment size='20px' color="#fff"/>
-                </div>
-                <h3>{post.commentCount} comments</h3>
-                <div onClick={() => setModalRepublish(true)}>
-                    <AiOutlineRetweet size='20px' color="#fff"/>
-                </div>
-                <h3>{post.repostCount} re-posts</h3>
-
+        <Container>
+            {post.repostedBy !== undefined ? <Reposted><AiOutlineRetweet size='11px' color="#fff"/> Re-posted by {post.repostedBy.username}</Reposted> : ""}
+            <ContainerPost video={validationURL}>
+                <EsquerdaPost>
                 
-            </EsquerdaPost>
-            <DireitaPost>
-                <div>
-                    <h4 onClick={redirecionar}>{post.user.username}</h4>
-                    {post.geolocation !== undefined ? <BsGeoAlt size="19px" color="fff" onClick = {() => setLocalizacaoOpen(true)}/> : ""}
+                    <img onClick={redirecionar} src={post.user.avatar} alt=""/>
+                    <div>
+                        <BsHeart size='20px' color="#fff"/>
+                    </div>
+                    <h3>{post.likes.length} likes</h3>
+                    <div>
+                        <AiOutlineComment size='20px' color="#fff"/>
+                    </div>
+                    <h3>{post.commentCount} comments</h3>
+                    <div onClick={() => setModalRepublish(true)}>
+                        <AiOutlineRetweet size='20px' color="#fff"/>
+                    </div>
+                    <h3>{post.repostCount} re-posts</h3>
+
+                    
+                </EsquerdaPost>
+                <DireitaPost>
+                    <div>
+                        <h4 onClick={redirecionar}>{post.user.username}</h4>
+                        {post.geolocation !== undefined ? <BsGeoAlt size="19px" color="fff" onClick = {() => setLocalizacaoOpen(true)}/> : ""}
+                        {
+                            localizacaoOpen ?
+                            (
+                                <ModalLocalizacao key={66666} setLocalizacaoOpen={setLocalizacaoOpen} post={post}/>
+                            )
+                            :
+                            (
+                                ""
+                            )
+                        }
+                    </div>
+                    <h5>
+                        {
+                            isInEdit ?
+                            (
+                                <input value={postTextValue} ref={inputRef} type='text' onChange={e => setPostTextValue(e.target.value)} onKeyDown={escOrEnter}></input>
+                            )
+                            :
+                            (
+                                <ReactHashtag onHashtagClick={val => directToHashtag(val)} >
+                                    {post.text}
+                                </ReactHashtag>
+                            )
+                        }
+                        
+                    </h5>
                     {
-                        localizacaoOpen ?
-                        (
-                            <ModalLocalizacao key={66666} setLocalizacaoOpen={setLocalizacaoOpen} post={post}/>
-                        )
-                        :
-                        (
-                            ""
-                        )
-                    }
-                </div>
-                <h5>
-                    {
-                        isInEdit ?
-                        (
-                            <input value={postTextValue} ref={inputRef} type='text' onChange={e => setPostTextValue(e.target.value)} onKeyDown={escOrEnter}></input>
-                        )
-                        :
-                        (
-                            <ReactHashtag onHashtagClick={val => directToHashtag(val)} >
-                                {post.text}
-                            </ReactHashtag>
-                        )
+                        (validationURL === null) ?
+                            <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
+
+                                <h4>{post.linkTitle}</h4>
+                                <h5> {post.linkDescription}</h5>
+                                <h6>{post.link}</h6>
+                                <img src ={post.linkImage} alt=""/>
+                            </ContainerLink>
+                            
+                            :
+                            <ContainerVideo>
+                                <ReactPlayer url={validationURL} controls={true} width="32vw" height="18vw" />
+                                <h6>{post.link}</h6>
+                            </ContainerVideo>
                     }
                     
-                </h5>
+                </DireitaPost>
                 {
-                    (validationURL === null) ?
-                        <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
+                    post.user.username === user.user.username ?
 
-                            <h4>{post.linkTitle}</h4>
-                            <h5> {post.linkDescription}</h5>
-                            <h6>{post.link}</h6>
-                            <img src ={post.linkImage} alt=""/>
-                        </ContainerLink>
-                        
-                        :
-                        <ContainerVideo>
-                            <ReactPlayer url={validationURL} controls={true} width="32vw" height="18vw" />
-                            <h6>{post.link}</h6>
-                        </ContainerVideo>
+                    (
+                        <ContainerIcons>
+                            <IconeEditar>
+                                <BsPencil size='20px' color="#fff" onClick = {editPost}/>
+                            </IconeEditar>
+                            <IconeDeletar onClick = {() => setIsOpen(true)}>
+                                <BsFillTrashFill size='20px' color="#fff" />
+                            </IconeDeletar>
+                            
+                        </ ContainerIcons>
+                    )
+                    :
+                    (
+                        ""
+                    )
+                }
+                {
+                    modalIsOpen ?
+                    (
+                        <ModalExcluir key = {23} setIsOpen={setIsOpen} post={post} />
+                    )
+                    :
+                    (
+                        ""
+                    )
+                }
+
+                {
+                    modalRepublish ? 
+                        (<ModalRepost name={post.user.username} cancelar={cancelar} republishPost={republishPost} />)
+                        : ""
                 }
                 
-            </DireitaPost>
-            {
-                post.user.username === user.user.username ?
-
-                (
-                    <ContainerIcons>
-                        <IconeEditar>
-                            <BsPencil size='20px' color="#fff" onClick = {editPost}/>
-                        </IconeEditar>
-                        <IconeDeletar onClick = {() => setIsOpen(true)}>
-                            <BsFillTrashFill size='20px' color="#fff" />
-                        </IconeDeletar>
-                        
-                    </ ContainerIcons>
-                )
-                :
-                (
-                    ""
-                )
-            }
-            {
-                modalIsOpen ?
-                (
-                    <ModalExcluir key = {23} setIsOpen={setIsOpen} post={post} />
-                )
-                :
-                (
-                    ""
-                )
-            }
-
-            {
-                modalRepublish ? 
-                    (<ModalRepost name={post.user.username} cancelar={cancelar} republishPost={republishPost} />)
-                    : ""
-            }
-            
-        </ContainerPost>
+            </ContainerPost>
+        </Container>
     );
 }
+
+const Container = styled.div `
+    position: relative;
+    margin-top: 60px;
+`;
+
+const Reposted = styled.div `
+    
+    width: 42vw;
+    height: 200px;
+    background-color: #1e1e1e;
+    border-radius: 16px;
+    position: absolute;
+    top: -33px;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    color: #fff;
+    padding: 10px 0 0 1vw;
+`;
 
 const ContainerPost = styled.div `
     background-color: #171717;

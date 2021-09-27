@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import ReactTooltip from "react-tooltip";
+import ReactPlayer from "react-player";
+
 import { getLikes, postDislike, postLike } from "../../service/linkr";
 import { Like, EsquerdaPost, ContainerPost, DireitaPost, ContainerLink, Liked } from "../../themes/PostsStyle";
 import ReactHashtag from "react-hashtag";
 import { LoginValidation } from "../../login";
+import styled from "styled-components";
+import { AiOutlineComment, AiOutlineRetweet } from "react-icons/ai";
 /*eslint-disable*/
 export default function Post({post}) {
     const userData = LoginValidation()
     const { user, token } = userData;
     
     const history = useHistory()
-
+    
     let { likes } = post
+
     const [list, setList] = useState("")
     let [like, setLike] = useState(0)
     const [quantLikes, setQuantLike] = useState(0)
@@ -22,7 +27,7 @@ export default function Post({post}) {
     let nomeList = "Outro nome"
 
     let text = "likes";
-
+    let validationURL = post.link.match(/(http(s)?:\/\/.)?(www\.)?(youtube\.)?(com\/watch)([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
     useEffect(() => {
         setList(text)
 
@@ -38,7 +43,7 @@ export default function Post({post}) {
         if (like === 1 && likesInPost.length > 0 && likesInPost.find((us) => us.userId === user.id) ) {
             let text = likesInPost.filter((nameUser) => nameUser.userId !== user.id)
             
-            nomeList = getNames(text[0].userId, text[1].userId)
+            nomeList = getNames(text[0].userId, ((likesInPost.length > 1) ? text[1].userId : text[0].userId))
             
             if (likesInPost.length > 2) {
                 setList(`Você, ${nomeList.name1}, ${nomeList.name2} e mais ${likesInPost.length - 3} pessoas curtiram`)
@@ -99,17 +104,28 @@ export default function Post({post}) {
 
     
     return (
-        <ContainerPost>
+        <ContainerPost video={validationURL}>
             {((user)) ?
                 <>
                     <EsquerdaPost>
                         <img src={post.user.avatar} alt="" />
-                        {(like === 1) ?
-                            <Liked onClick={() => dislikePost()} />
-                            : <Like onClick={() => likePost()} />
-                        }
+                        <div>
+                            {(like === 1) ?
+                                <Liked onClick={() => dislikePost()} />
+                                : <Like onClick={() => likePost()} />
+                            }
+                        </div>
                         <ReactTooltip />
                         <h3 data-tip={list}>{quantLikes} {text}</h3>
+
+                        <div>
+                            <AiOutlineComment size='20px' color="#ffffff"/>
+                        </div>
+                        <h3>{post.commentCount} comments</h3>
+                        <div onClick={() => setModalRepublish(true)}>
+                            <AiOutlineRetweet size='20px' color="#ffffff"/>
+                        </div>
+                        <h3>{post.repostCount} re-posts</h3>
                     </EsquerdaPost>
                     <DireitaPost>
                         <h4 onClick={redirecionar}>{post.user.username}</h4>
@@ -118,13 +134,24 @@ export default function Post({post}) {
                                 {post.text}
                             </ReactHashtag>
                         </h5>
-                        <ContainerLink onClick={() => window.open(`${post.link}`,"_blank")}>
-                            <h4>{post.linkTitle}</h4>
-                            <h5>{post.linkDescription}</h5>
-                            <a href={post.link}>{post.link}</a>
-                            <img src={post.linkImage} alt="" />
-                        </ContainerLink>
+                        {
+                            (validationURL === null) ?
+                                <ContainerLink onClick={() => window.open(`${post.link}`,"_blank")}>
+                                    <h4>{post.linkTitle}</h4>
+                                    <h5>{post.linkDescription}</h5>
+                                    <a href={post.link}>{post.link}</a>
+                                    <img src={post.linkImage} alt="" />
+                                </ContainerLink>
+                                
+                                : 
+                                <ContainerVideo>
+                                    <ReactPlayer url={validationURL} controls={true} width="32vw" height="18vw" />
+                                    <h6>{post.link}</h6>
+                                </ContainerVideo>
+                        }
+                        
                     </DireitaPost>
+                    
                 </>
                 : ""
             }
@@ -132,3 +159,74 @@ export default function Post({post}) {
         </ContainerPost>
     );
 }
+
+const ContainerVideo = styled.div `
+    width: 36vw;
+    height: 350px;
+    /* border: 1px solid #4d4d4d; */
+    border-radius: 11px;
+    position: relative;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; 
+    background-color: #171717;
+    z-index: 0;
+    /* margin-right: 13px; */
+
+    :hover{
+        cursor : pointer;
+    }
+
+
+    img{
+        width: 153.44px;
+        height: 155px;
+        border-radius: 0px 12px 13px 0px;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    h4 {
+        font-size: 16px;
+        font-weight: 400;
+        color: #cecece;
+        width: 25vw;
+        height: 40px;
+        line-height: 19px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+    }
+
+    h5 {
+        width: 24vw;
+        height: 39px;
+        font-size: 11px;
+        color: #9b9595;
+        line-height: 13px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    h6 {
+        color: #cecece;
+        font-size: 16px;
+        font-weight: 400;
+        width: 32vw;
+        line-height: 20px;
+        border: 1px solid #171717;
+        word-wrap: break-word;
+        white-space: pre-line;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+    }
+`;

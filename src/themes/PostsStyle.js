@@ -245,30 +245,35 @@ const Button = styled.button`
 
 
 const ContainerPost = styled.div `
-    background-color: #171717;
-    width: 611px;
-    height: 276px;
-    border-radius: 16px;
-    display: flex;
-    padding: 17px 0 20px 0;
-    font-family: 'Lato', sans-serif;
-    margin-top: 16px;
-   
+    width: 42vw;
+    height: ${(props) => props.video ? "450px" : "auto"};
 
+    font-family: 'Lato', sans-serif;
+
+    background-color: #171717;
+    border-radius: 16px;
+
+    padding: 17px 0 20px 8px;
+    margin-top: 16px;
+
+    display: flex;
+    position: relative;
 `;
 
 const EsquerdaPost = styled.div `
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 86px;
+    width: 25vw;
+    margin-right: 10px;
     
 
     img{
         width: 50px;
         height: 50px;
         border-radius: 26px;
-
+    }
+    img:hover{
         cursor: pointer;
     }
     div {
@@ -279,12 +284,15 @@ const EsquerdaPost = styled.div `
         font-size: 11px;
         font-weight: 400;
         color: #fff;
-        cursor: alias;
     }
+    div:hover{
+        cursor: pointer;
+    }
+    
 `;
 
 const DireitaPost = styled.div `
-    width: 502px;
+    width: 37vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -297,29 +305,38 @@ const DireitaPost = styled.div `
         font-weight: 400;
         color: #fff;
         height: 23px;
-        line-height: 23px;
+        line-height: 19px;
         border: 1px solid #171717;
-        width: 500px;
+        width: 32vw;
+        margin-bottom: 5px;
         word-wrap: break-word;
-        white-space: pre-line;
+        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+ 
+    }
+    h4:hover{
         cursor: pointer;
-        
     }
 
     h5 {
         font-size: 17px;
         font-weight: 400;
         color: #b7b7b7;
-        height: 40px;
+        max-height: 80px;
         line-height: 20px;
         border: 1px solid #171717;
-        width: 500px;
+        width: 35vw;
+        margin-bottom: 8px;
+        display: inline-block;
         word-wrap: break-word;
-        white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        input {
+            width: inherit;
+            height: inherit;
+        }
        
     } 
     
@@ -327,13 +344,17 @@ const DireitaPost = styled.div `
         color: #fff;
         font-weight: 700;
     }
+
+    span:hover{
+        cursor: pointer;
+    }
     
 `;
 
 
 
 const ContainerLink = styled.div `
-    width: 503px;
+    width: 36vw;
     height: 155px;
     border: 1px solid #4d4d4d;
     border-radius: 11px;
@@ -343,8 +364,13 @@ const ContainerLink = styled.div `
     flex-direction: column;
     justify-content: space-around; 
     background-color: #171717;
-    z-index: 1000;
-    cursor: pointer;
+    z-index: 0;
+    margin-right: 13px;
+
+    :hover{
+        cursor : pointer;
+    }
+
 
     img{
         width: 153.44px;
@@ -359,8 +385,8 @@ const ContainerLink = styled.div `
         font-size: 16px;
         font-weight: 400;
         color: #cecece;
-        width: 250px;
-        height: 38px;
+        width: 25vw;
+        height: 40px;
         line-height: 19px;
         border: 1px solid #171717;
         word-wrap: break-word;
@@ -371,7 +397,7 @@ const ContainerLink = styled.div `
     }
 
     h5 {
-        width: 302.82px;
+        width: 24vw;
         height: 39px;
         font-size: 11px;
         color: #9b9595;
@@ -381,15 +407,13 @@ const ContainerLink = styled.div `
         white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
-        
-        
     }
     
-    a {
+    h6 {
         color: #cecece;
         font-size: 11px;
         font-weight: 400;
-        width: 260px;
+        width: 24vw;
         height: 13px;
         line-height: 13px;
         border: 1px solid #171717;

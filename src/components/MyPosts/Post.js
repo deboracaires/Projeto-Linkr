@@ -8,7 +8,7 @@ import { Like, EsquerdaPost, ContainerPost, DireitaPost, ContainerLink, Liked } 
 import ReactHashtag from "react-hashtag";
 import { LoginValidation } from "../../login";
 import styled from "styled-components";
-import { AiOutlineComment, AiOutlineRetweet } from "react-icons/ai";
+import { AiOutlineComment } from "react-icons/ai";
 /*eslint-disable*/
 export default function Post({post}) {
     const userData = LoginValidation()
@@ -22,9 +22,8 @@ export default function Post({post}) {
     let [like, setLike] = useState(0)
     const [quantLikes, setQuantLike] = useState(0)
     const [likesInPost, setLikesInPost] = useState(likes)
-    let [name1, setName1] = useState("")
-    let [name2, setName2] = useState("")
-    let nomeList = "Outro nome"
+    let [name, setName] = useState("")
+    let nameList = "Outro nome"
 
     let text = "likes";
     let validationURL = post.link.match(/(http(s)?:\/\/.)?(www\.)?(youtube\.)?(com\/watch)([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
@@ -42,38 +41,38 @@ export default function Post({post}) {
 
         if (like === 1 && likesInPost.length > 0 && likesInPost.find((us) => us.userId === user.id) ) {
             let text = likesInPost.filter((nameUser) => nameUser.userId !== user.id)
-            
-            nomeList = getNames(text[0].userId, ((likesInPost.length > 1) ? text[1].userId : text[0].userId))
-            
-            if (likesInPost.length > 2) {
-                setList(`Você, ${nomeList.name1}, ${nomeList.name2} e mais ${likesInPost.length - 3} pessoas curtiram`)
+            nameList = text.map((name) => getNames(name.userId))
+            // nomeList = getNames(text[0].userId, ((text.length >= 2) ? text[1].userId : text[0].userId))
+            console.log(nameList)
+            if (likesInPost.length > 3) {
+                setList(`Você, ${nameList[0]}, ${nameList[1]} e mais ${likesInPost.length - 3} pessoas curtiram`)
+            } else if (likesInPost.length == 3) {
+                setList(`Você, ${nameList[0]}, ${nameList[1]} curtiram`)
             } else if (likesInPost.length == 2) {
-                setList(`Você e ${nomeList.name1} curtiram`)
+                setList(`Você e ${nameList[0]} curtiram`)
             } else if (likesInPost.length == 1) {
                 setList(`Você curtiu esse post`)
             }
-        } else if (like === 0 && likesInPost.length > 0) {
-            nomeList = getNames(likesInPost[0].userId, ((likesInPost.length > 1) ? likesInPost[1].userId : likesInPost[0].userId))
-            
+        } else if (like === 0 && likesInPost.length > 0) {  
+            nameList = likesInPost.map((name) => getNames(name.userId))          
             if (likesInPost.length > 2) {
-                setList(`${nomeList.name1}, ${nomeList.name2} e mais ${likesInPost.length - 2} pessoas curtiram`)
+                setList(`${nameList[0]}, ${nameList[1]} e mais ${likesInPost.length - 2} pessoas curtiram`)
             } else if (likesInPost.length == 2) {
-                setList(`${nomeList.name1} e ${nomeList.name2} curtiram`)
+                setList(`${nameList[0]} e ${nameList[1]} curtiram`)
             } else if (likesInPost.length == 1) {
-                setList(`${nomeList.name1} curtiu esse post`)
+                setList(`${nameList[0]} curtiu esse post`)
             } 
         } else {
             setList("Nenhuma curtida")
         }
 
-    }, [like, list, name1, name2])
+    }, [like, list, name])
 
-    function getNames(idUser, idUser2) {
+    function getNames(idUser) {
         
-        getLikes(idUser, token).then((res) => setName1(res.data.user.username));
-        getLikes(idUser2, token).then((res) => setName2(res.data.user.username));
+        getLikes(idUser, token).then((res) => setName(res.data.user.username));
         
-        let names = {name1, name2};
+        let names = name;
         return names;
     }
 
@@ -123,7 +122,7 @@ export default function Post({post}) {
                         </div>
                         <h3>{post.commentCount} comments</h3>
                         <div onClick={() => setModalRepublish(true)}>
-                            <AiOutlineRetweet size='20px' color="#ffffff"/>
+                            <AiOutlineRet weet size='20px' color="#ffffff"/>
                         </div>
                         <h3>{post.repostCount} re-posts</h3>
                     </EsquerdaPost>
@@ -139,7 +138,7 @@ export default function Post({post}) {
                                 <ContainerLink onClick={() => window.open(`${post.link}`,"_blank")}>
                                     <h4>{post.linkTitle}</h4>
                                     <h5>{post.linkDescription}</h5>
-                                    <a href={post.link}>{post.link}</a>
+                                    <h6 href={post.link}>{post.link}</h6>
                                     <img src={post.linkImage} alt="" />
                                 </ContainerLink>
                                 

@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 const Trends = styled.div`
     width: 20vw;
+    
     height: 620px;
+
 
     color: #ffffff;
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TimelinePost from "./TimelinePost";
 import axios from "axios";
+import useInterval from "react-useinterval";
+
 
 import Publish from "../Publish/Publish"
 import { LoginValidation } from "../../login";
@@ -16,17 +18,25 @@ export default function Timeline(){
     const user = LoginValidation()
     const { token } = user;
 
-    useEffect(()=> {
+    /*eslint-disable*/
+    useEffect( () => {
+        renderPosts();
+    }, []);
+    
+    function renderPosts(){
+
         const config = { headers: { "Authorization": `Bearer ${token}` } };
+    
+            const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts", config);
+    
+            requisicao
+                .then(res => {setPosts(res.data)
+                                loading()})
+                .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
+    }
 
-        const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts", config);
-
-        requisicao
-            .then(res => {setPosts(res.data)
-                            loading()})
-            .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
-
-    }, [token]);
+    useInterval(renderPosts, 15000, 5);
+    
 
     function loading(){
         setTexto("Nenhum post encontrado");
@@ -36,7 +46,10 @@ export default function Timeline(){
 
     return (
         <>
-        <Header/>
+        <Topo>
+            <Header/>
+        </Topo>
+        
         <ContainerTimeline>
             
             <Esquerda>
@@ -55,6 +68,7 @@ export default function Timeline(){
                             posts.posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>)
                         )
                     }
+                    
                 </ContainerPosts>
             </Esquerda>
             <Direita>
@@ -65,6 +79,11 @@ export default function Timeline(){
         </>
     );
 }
+
+const Topo = styled.div `
+    position: fixed;
+    z-index: 100;
+`;
 
 const ContainerTimeline = styled.div `
     box-sizing: border-box;
@@ -89,7 +108,7 @@ const Titulo = styled.h1 `
     
 `;
 const NewPost = styled.div `
-    width: 611px;
+    width: 42vw;
     height: 250px;
     border: 1px solid #fff;
     background: #FFFFFF;
@@ -114,5 +133,6 @@ const ContainerPosts = styled.div `
 const Direita = styled.div `
     
     margin: 205px 0 0 25px;
-   
+
+    
 `;

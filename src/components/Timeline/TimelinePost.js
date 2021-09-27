@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { BsHeart, BsFillTrashFill, BsPencil } from "react-icons/bs";
+import { AiOutlineComment, AiOutlineRetweet} from "react-icons/ai"
+import { BsHeart, BsFillTrashFill, BsPencil} from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import ModalExcluir from "./ModalExcluir";
@@ -17,7 +18,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
     }
-
+    
     function directToHashtag(val){
         const hash = val.replace(/#/, "");
         history.push(`/hashtag/${hash}`)
@@ -70,6 +71,15 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                     <BsHeart size='20px' color="#fff"/>
                 </div>
                 <h3>{post.likes.length} likes</h3>
+                <div>
+                    <AiOutlineComment size='20px' color="#fff"/>
+                </div>
+                <h3>{post.commentCount} comments</h3>
+                <div>
+                    <AiOutlineRetweet size='20px' color="#fff"/>
+                </div>
+                <h3>{post.repostCount} re-posts</h3>
+
                 
             </EsquerdaPost>
             <DireitaPost>
@@ -89,7 +99,9 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                     }
                     
                 </h5>
+
                 <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
+
                     <h4>{post.linkTitle}</h4>
                     <h5> {post.linkDescription}</h5>
                     <h6>{post.link}</h6>
@@ -132,11 +144,10 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
 
 const ContainerPost = styled.div `
     background-color: #171717;
-    width: 611px;
-    height: 276px;
+    width: 42vw;
     border-radius: 16px;
     display: flex;
-    padding: 17px 0 20px 0;
+    padding: 17px 0 20px 8px;
     font-family: 'Lato', sans-serif;
     margin-top: 16px;
     position: relative;
@@ -148,7 +159,8 @@ const EsquerdaPost = styled.div `
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 86px;
+    width: 25vw;
+    margin-right: 10px;
     
 
     img{
@@ -175,7 +187,7 @@ const EsquerdaPost = styled.div `
 `;
 
 const DireitaPost = styled.div `
-    width: 502px;
+    width: 37vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -188,15 +200,15 @@ const DireitaPost = styled.div `
         font-weight: 400;
         color: #fff;
         height: 23px;
-        line-height: 23px;
+        line-height: 19px;
         border: 1px solid #171717;
-        width: 500px;
+        width: 32vw;
+        margin-bottom: 5px;
         word-wrap: break-word;
-        white-space: pre-line;
+        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        
-        
+ 
     }
     h4:hover{
         cursor: pointer;
@@ -206,12 +218,13 @@ const DireitaPost = styled.div `
         font-size: 17px;
         font-weight: 400;
         color: #b7b7b7;
-        height: 40px;
+        max-height: 80px;
         line-height: 20px;
         border: 1px solid #171717;
-        width: 500px;
+        width: 35vw;
+        margin-bottom: 8px;
+        display: inline-block;
         word-wrap: break-word;
-        white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
 
@@ -236,7 +249,7 @@ const DireitaPost = styled.div `
 
 
 const ContainerLink = styled.div `
-    width: 503px;
+    width: 36vw;
     height: 155px;
     border: 1px solid #4d4d4d;
     border-radius: 11px;
@@ -247,6 +260,7 @@ const ContainerLink = styled.div `
     justify-content: space-around; 
     background-color: #171717;
     z-index: 0;
+    margin-right: 13px;
 
     :hover{
         cursor : pointer;
@@ -266,8 +280,8 @@ const ContainerLink = styled.div `
         font-size: 16px;
         font-weight: 400;
         color: #cecece;
-        width: 250px;
-        height: 38px;
+        width: 25vw;
+        height: 40px;
         line-height: 19px;
         border: 1px solid #171717;
         word-wrap: break-word;
@@ -278,7 +292,7 @@ const ContainerLink = styled.div `
     }
 
     h5 {
-        width: 302.82px;
+        width: 24vw;
         height: 39px;
         font-size: 11px;
         color: #9b9595;
@@ -288,15 +302,13 @@ const ContainerLink = styled.div `
         white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
-        
-        
     }
     
     h6 {
         color: #cecece;
         font-size: 11px;
         font-weight: 400;
-        width: 260px;
+        width: 24vw;
         height: 13px;
         line-height: 13px;
         border: 1px solid #171717;

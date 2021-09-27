@@ -55,7 +55,7 @@ const ModalBack = styled.div `
     top: 0;
     left: 0;
     z-index: 1000;
-    opacity: 0.7;
+    opacity: 0.5;
 `;
 const ModalContainer = styled.div `
     position: fixed;

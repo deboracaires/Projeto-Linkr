@@ -14,11 +14,10 @@ export default function Publish() {
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
     const [cor, setCor] = useState("#949494");
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
     const [localizacao, setLocalizacao] = useState(false);
-    let latitude = 0;
-    let longitude = 0;
     let body;
-    let geolocation = {latitude, longitude};
 
     function clearInputs() {
         setText("");
@@ -31,12 +30,12 @@ export default function Publish() {
 
         if(link) {
             if(localizacao){
+                const geolocation = {latitude, longitude};
                 body = {
                     text,
                     link,
                     geolocation
-                }
-                
+                }                
             }else {
                 body = {
                     text,
@@ -71,8 +70,9 @@ export default function Publish() {
     }
 
     function showPosition(position) {
-        latitude = position.coords.latitude;
-        longitude = position.coords.longitude;
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+        
     }
 
     return (

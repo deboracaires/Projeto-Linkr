@@ -2,9 +2,8 @@ import styled from "styled-components";
 import { FaHeart, FaRegHeart } from "react-icons/fa"
 
 const Title = styled.h2` 
-    width: 65vw;
-    line-height: 46px;
-    height: 46px;
+    width: 60vw;
+
     color: #ffffff;
     font-size: 46px;
     text-align: start;
@@ -15,7 +14,7 @@ const Title = styled.h2`
     overflow: hidden;
     text-overflow: ellipsis;
     
-    margin: 100px auto 0;
+    overflow: hidden;
 `
 
 const Page = styled.div`

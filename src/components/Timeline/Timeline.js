@@ -3,6 +3,7 @@ import styled from "styled-components";
 import TimelinePost from "./TimelinePost";
 import axios from "axios";
 import useInterval from "react-useinterval";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 import Publish from "../Publish/Publish"
@@ -23,21 +24,24 @@ export default function Timeline(){
     useEffect( () => {
         renderPosts();
     }, []);
+
+    let url = "https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/following/posts";
     
     function renderPosts(){
 
         const config = { headers: { "Authorization": `Bearer ${token}` } };
-    
-            const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/following/posts", config);
-    
-            requisicao
-                .then(res => {setPosts(res.data)
-                                verificaSeguir()})
-                .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
         
-                
-    }
+        const requisicao = axios.get(url, config);
+    
+        requisicao
+            .then(res => {setPosts(res.data.posts)
+                                verificaSeguir()})
+            .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")});
 
+        
+        
+    }
+    
     function verificaSeguir(){
         const config = { headers: { "Authorization": `Bearer ${token}` } };
     
@@ -48,6 +52,19 @@ export default function Timeline(){
                                 {res.data.users.length === 0 ? setTexto("Você não segue ninguém ainda, procure por perfis na busca."): ""}
                             })
                 .catch();
+        
+    }
+   
+    function loadOlderPosts(){
+        url = url + `?olderThan${posts[posts.length - 1].id}`;
+        const config = { headers: { "Authorization": `Bearer ${token}` } };
+        
+        const requisicao = axios.get(url, config);
+    
+        requisicao
+            .then(res => {  setPosts(res.data.posts)
+                                verificaSeguir()})
+            .catch(err => {console.log(err)});
         
     }
 
@@ -88,8 +105,16 @@ export default function Timeline(){
                             <h2>{texto}</h2>
                         )
                         :
-                        (
-                            verificaPost()
+                        (   
+                            <InfiniteScroll 
+                                dataLength={10}
+                                next={loadOlderPosts}
+                                hasMore={true }
+                                loader={<h1 key={3201}> Loading... </h1>}
+                                endMessage={<h1 key={320211}> Loading... </h1>}
+                            >
+                                {posts.map((post, index) => <TimelinePost key = {index} post={post} setLinkPreviewToggle = {setLinkPreviewToggle}/>)}
+                            </InfiniteScroll>
                         )
                     }
 

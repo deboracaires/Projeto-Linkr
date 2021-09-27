@@ -1,18 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import ReactTooltip from "react-tooltip";
 import { AiOutlineComment, AiOutlineRetweet} from "react-icons/ai"
-import { BsHeart, BsFillTrashFill, BsPencil, BsGeoAlt} from "react-icons/bs";
+import { BsFillTrashFill, BsPencil, BsGeoAlt} from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import ModalExcluir from "./ModalExcluir";
 import axios from "axios";
 import LinkPreview from "./LinkPreview";
-import { republish } from "../../service/linkr";
+import { getLikes, postDislike, postLike, republish } from "../../service/linkr";
 import ModalRepost from "../ModalAlert/ModalRepost";
 import ReactPlayer from "react-player";
 import ModalLocalizacao from "./ModalLocalizacao";
+import { Like, Liked } from "../../themes/PostsStyle";
 
-
+/*eslint-disable*/
 export default function TimelinePost({post, setLinkPreviewToggle}){
     
     const history = useHistory();
@@ -22,6 +24,18 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     let validationURL = post.link.match(/(http(s)?:\/\/.)?(www\.)?(youtube\.)?(com\/watch)([-a-zA-Z0-9@:%_.~#?&//=]*)/g)
     
     const [localizacaoOpen, setLocalizacaoOpen] = useState(false);
+
+    let { likes } = post
+
+    const [list, setList] = useState("")
+    let [like, setLike] = useState(0)
+    const [quantLikes, setQuantLike] = useState(0)
+    const [likesInPost, setLikesInPost] = useState(likes)
+    let [name1, setName1] = useState("")
+    let [name2, setName2] = useState("")
+    let nameList = "Outro nome"
+
+    let text = "likes";
 
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
@@ -49,8 +63,71 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
         if (isInEdit) {
           inputRef.current.focus();
         }
-      }, [isInEdit]);
 
+        setList(text)
+
+        setQuantLike(likes.length)
+
+        if(post && likesInPost !== [] && (likesInPost.find((us) => us.userId === user.id))) {
+            setLike(1)
+        }
+
+        setLike((likes.find((us) => us.userId == user.id)) ?
+        like = 1 : like = 0)
+
+        if (like === 1 && likesInPost.length > 0 && likesInPost.find((us) => us.userId === user.id) ) {
+            let text = likesInPost.filter((nameUser) => nameUser.userId !== user.id)
+            nameList = text.map((name) => getNames(name.userId))
+            // nomeList = getNames(text[0].userId, ((text.length >= 2) ? text[1].userId : text[0].userId))
+            console.log(nameList)
+            if (likesInPost.length > 3) {
+                setList(`Você, ${nameList[0]}, ${nameList[1]} e mais ${likesInPost.length - 3} pessoas curtiram`)
+            } else if (likesInPost.length == 3) {
+                setList(`Você, ${nameList[0]}, ${nameList[1]} curtiram`)
+            } else if (likesInPost.length == 2) {
+                setList(`Você e ${nameList[0]} curtiram`)
+            } else if (likesInPost.length == 1) {
+                setList(`Você curtiu esse post`)
+            }
+        } else if (like === 0 && likesInPost.length > 0) {
+            nameList = likesInPost.map((name) => getNames(name.userId))
+
+            if (likesInPost.length > 2) {
+                setList(`${nameList[0]}, ${nameList[1]} e mais ${likesInPost.length - 2} pessoas curtiram`)
+            } else if (likesInPost.length == 2) {
+                setList(`${nameList[0]} e ${nameList[1]} curtiram`)
+            } else if (likesInPost.length == 1) {
+                setList(`${nameList[0]} curtiu esse post`)
+            } 
+        } else {
+            setList("Nenhuma curtida")
+        }
+    }, [isInEdit, like, list, name1, name2]);
+
+    function getNames(idUser) {
+        
+        getLikes(idUser, user.token).then((res) => setName1(res.data.user.username));
+        // getLikes(idUser2, token).then((res) => setName2(res.data.user.username
+        
+        let names = name1;
+        return names;
+    }
+
+    function likePost() {
+        if(like === 0) {
+            setLike(1)
+            setQuantLike(quantLikes + 1)
+            postLike(post.id, user.token).then((res) => setLikesInPost(res.data)).catch((err) => console.error)
+        }
+    }
+
+    function dislikePost() {
+        if(like === 1) {
+            setLike(0);
+            postDislike(post.id, user.token).then((res) => setLikesInPost(res.data)).catch((err) => console.error);
+            setQuantLike(quantLikes - 1)
+        }
+    }
     function editPost() {   
         setIsInEdit(!isInEdit)
         
@@ -86,9 +163,13 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                 
                     <img onClick={redirecionar} src={post.user.avatar} alt=""/>
                     <div>
-                        <BsHeart size='20px' color="#fff"/>
+                        {(like === 1) ?
+                            <Liked onClick={() => dislikePost()} />
+                            : <Like onClick={() => likePost()} />
+                        }
                     </div>
-                    <h3>{post.likes.length} likes</h3>
+                    <ReactTooltip />
+                    <h3 data-tip={list}>{quantLikes} likes</h3>
                     <div>
                         <AiOutlineComment size='20px' color="#fff"/>
                     </div>

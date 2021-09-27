@@ -29,10 +29,18 @@ export default function Publish() {
     function publishPost(event) {
         event.preventDefault();
 
-        if((text || text === "") && link) {
+        if((text || text === "") && link && !localizacao) {
             body = {
                 text,
                 link
+            }
+            publish(body, token).then((res) => clearInputs()).catch((err) => console.error)
+        } else if((text || text === "") && link && localizacao){
+            const geolocation = {latitude, longitude};
+            body = {
+                text,
+                link,
+                geolocation
             }
             publish(body, token).then((res) => clearInputs()).catch((err) => console.error)
         } else {

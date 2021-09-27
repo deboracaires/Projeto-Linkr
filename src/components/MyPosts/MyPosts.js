@@ -12,9 +12,8 @@ import { LoginValidation } from "../../login";
 export default function MyPosts() {
 
     const [posts, setPosts] = useState([]);
-    const user = LoginValidation();
-    const { token } = user;
-
+    const userData = LoginValidation();
+    const { user, token } = userData;
     useEffect(() => {
         getUserPosts(user.id, token).then((res) => setPosts(res.data.posts)).catch((err) => console.error);
     }, [user, token]);

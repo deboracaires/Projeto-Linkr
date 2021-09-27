@@ -34,6 +34,16 @@ function publish(body, token) {
     return promise;
 }
 
+function republish(idPost, token) {
+    const config  = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const promise = axios.post(`${BASE_URL}/posts/${idPost}/share`, {post:true}, config);
+    return promise;
+}
+
 function getUserLiked(token) {
     const config  = {
         headers: {
@@ -127,5 +137,6 @@ export {
     postFollow,
     postUnfollow,
     getFollowing,
-    getUserInfo
+    getUserInfo,
+    republish
 }

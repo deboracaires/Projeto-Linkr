@@ -7,6 +7,8 @@ import ReactHashtag from "react-hashtag";
 import ModalExcluir from "./ModalExcluir";
 import axios from "axios";
 import LinkPreview from "./LinkPreview";
+import { republish } from "../../service/linkr";
+import ModalRepost from "../ModalAlert/ModalRepost";
 
 
 export default function TimelinePost({post, setLinkPreviewToggle}){
@@ -14,7 +16,8 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     const history = useHistory();
     const user = JSON.parse(sessionStorage.getItem("user"));
     const [modalIsOpen, setIsOpen] = useState(false);
-
+    const [modalRepublish, setModalRepublish] = useState(false);
+    
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
     }
@@ -24,6 +27,13 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
         history.push(`/hashtag/${hash}`)
     }
 
+    function republishPost() {
+        republish(post.id, user.token).then((res) => setModalRepublish(false))
+    }
+
+    function cancelar() {
+        setModalRepublish(false)
+    }
 
     const inputRef = useRef(null);
     const [isInEdit, setIsInEdit] = useState(false);
@@ -75,7 +85,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                     <AiOutlineComment size='20px' color="#fff"/>
                 </div>
                 <h3>{post.commentCount} comments</h3>
-                <div>
+                <div onClick={() => setModalRepublish(true)}>
                     <AiOutlineRetweet size='20px' color="#fff"/>
                 </div>
                 <h3>{post.repostCount} re-posts</h3>
@@ -136,6 +146,12 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                 (
                     ""
                 )
+            }
+
+            {
+                modalRepublish ? 
+                    (<ModalRepost name={post.user.username} cancelar={cancelar} republishPost={republishPost} />)
+                    : ""
             }
             
         </ContainerPost>

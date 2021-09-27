@@ -28,6 +28,8 @@ export default function Timeline(){
 
     }, [token]);
 
+    
+
     function loading(){
         setTexto("Nenhum post encontrado");
     }

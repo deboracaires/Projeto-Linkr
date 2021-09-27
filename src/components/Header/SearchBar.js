@@ -17,13 +17,9 @@ export default function SearchBar() {
     const [searchUsersList, setSearchUsersList] = useState([]);
     const requestURL = `https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/users/search?username=${searchValue}`;
 
-    console.log(requestURL)
-    console.log(searchUsersList)
-    
-
     useEffect(() => {
         const config = { headers: { "Authorization": `Bearer ${user.token}` } };
-        if (searchValue == '') {
+        if (searchValue === '') {
             setSearchUsersList([])
             return
         }
@@ -36,7 +32,7 @@ export default function SearchBar() {
             })
             .catch(err => console.log(err))
         
-    }, [requestURL, user.token]);
+    }, [requestURL, user.token, searchValue]);
     
      
 

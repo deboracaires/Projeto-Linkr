@@ -1,17 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { BsHeart, BsFillTrashFill, BsPencil } from "react-icons/bs";
+import { AiOutlineComment } from 'react-icons/ai'
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import ModalExcluir from "./ModalExcluir";
 import axios from "axios";
 import LinkPreview from "./LinkPreview";
 
+import Comment from "./Comment";
+
 
 export default function TimelinePost({post, setLinkPreviewToggle}){
     
     const history = useHistory();
     const user = JSON.parse(sessionStorage.getItem("user"));
+    const config = { headers: { "Authorization": `Bearer ${user.token}`}};
     const [modalIsOpen, setIsOpen] = useState(false);
 
     function redirecionar(){
@@ -40,7 +44,7 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     };
 
     function escOrEnter(event){
-        const config = { headers: { "Authorization": `Bearer ${user.token}` } };
+        
         const body = {
             "text": postTextValue
         }
@@ -60,75 +64,110 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                 })
 	    }
     }
-    
-    return (
-        <ContainerPost>
-            <EsquerdaPost>
-              
-                <img onClick={redirecionar} src={post.user.avatar} alt=""/>
-                <div>
-                    <BsHeart size='20px' color="#fff"/>
-                </div>
-                <h3>{post.likes.length} likes</h3>
-                
-            </EsquerdaPost>
-            <DireitaPost>
-                <h4 onClick={redirecionar}>{post.user.username}</h4>
-                <h5>
-                    {
-                        isInEdit ?
-                        (
-                            <input value={postTextValue} ref={inputRef} type='text' onChange={e => setPostTextValue(e.target.value)} onKeyDown={escOrEnter}></input>
-                        )
-                        :
-                        (
-                            <ReactHashtag onHashtagClick={val => directToHashtag(val)} >
-                                {post.text}
-                            </ReactHashtag>
-                        )
-                    }
-                    
-                </h5>
-                <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
-                    <h4>{post.linkTitle}</h4>
-                    <h5> {post.linkDescription}</h5>
-                    <h6>{post.link}</h6>
-                    <img src ={post.linkImage} alt=""/>
-                </ContainerLink>
-            </DireitaPost>
-            {
-                post.user.username === user.user.username ?
 
-                (
-                    <ContainerIcons>
-                        <IconeEditar>
-                            <BsPencil size='20px' color="#fff" onClick = {editPost}/>
-                        </IconeEditar>
-                        <IconeDeletar onClick = {() => setIsOpen(true)}>
-                            <BsFillTrashFill size='20px' color="#fff" />
-                        </IconeDeletar>
+    const [commentsList, setCommentsList] = useState({comments: []});
+    console.log(commentsList)
+
+    useEffect(()=> {
+        const requisicao = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr/posts/${post.id}/comments`, config);
+
+        requisicao
+            .then(res => {
+                setCommentsList(res.data);
+                
+            })
+            .catch(err => {alert("Houve uma falha ao carregar os posts, por favor atualize a pagina")})
+    }, []);
+
+    return (
+        <ContainerComments>
+            <ContainerPost>
+                <EsquerdaPost>
+                
+                    <img onClick={redirecionar} src={post.user.avatar} alt=""/>
+                    <div>
+                        <BsHeart size='20px' color="#fff"/>
+                    </div>
+                    <h3>{post.likes.length} likes</h3>
+                    <div>
+                        <AiOutlineComment size='20px' color="#fff"/>
+                    </div>
+                    <h3>{commentsList.comments.length} comments</h3>
+                    
+                </EsquerdaPost>
+                <DireitaPost>
+                    <h4 onClick={redirecionar}>{post.user.username}</h4>
+                    <h5>
+                        {
+                            isInEdit ?
+                            (
+                                <input value={postTextValue} ref={inputRef} type='text' onChange={e => setPostTextValue(e.target.value)} onKeyDown={escOrEnter}></input>
+                            )
+                            :
+                            (
+                                <ReactHashtag onHashtagClick={val => directToHashtag(val)} >
+                                    {post.text}
+                                </ReactHashtag>
+                            )
+                        }
                         
-                    </ ContainerIcons>
-                )
-                :
-                (
-                    ""
-                )
-            }
-            {
-                modalIsOpen ?
-                (
-                    <ModalExcluir key = {23} setIsOpen={setIsOpen} post={post} />
-                )
-                :
-                (
-                    ""
-                )
-            }
+                    </h5>
+                    <ContainerLink onClick={() => setLinkPreviewToggle(<LinkPreview link={post.link} setLinkPreviewToggle={setLinkPreviewToggle}/>)}>
+                        <h4>{post.linkTitle}</h4>
+                        <h5> {post.linkDescription}</h5>
+                        <h6>{post.link}</h6>
+                        <img src ={post.linkImage} alt=""/>
+                    </ContainerLink>
+                </DireitaPost>
+                {
+                    post.user.username === user.user.username ?
+
+                    (
+                        <ContainerIcons>
+                            <IconeEditar>
+                                <BsPencil size='20px' color="#fff" onClick = {editPost}/>
+                            </IconeEditar>
+                            <IconeDeletar onClick = {() => setIsOpen(true)}>
+                                <BsFillTrashFill size='20px' color="#fff" />
+                            </IconeDeletar>
+                            
+                        </ ContainerIcons>
+                    )
+                    :
+                    (
+                        ""
+                    )
+                }
+                {
+                    modalIsOpen ?
+                    (
+                        <ModalExcluir key = {23} setIsOpen={setIsOpen} post={post} />
+                    )
+                    :
+                    (
+                        ""
+                    )
+                }
+                
+            </ContainerPost>
+            {commentsList.comments.map(comment => <Comment />)}
             
-        </ContainerPost>
+        </ContainerComments>
     );
 }
+
+const ContainerComments = styled.div `
+
+    margin-top: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 16px;
+
+    background-color: #1E1E1E;
+`;
 
 const ContainerPost = styled.div `
     background-color: #171717;
@@ -138,7 +177,7 @@ const ContainerPost = styled.div `
     display: flex;
     padding: 17px 0 20px 0;
     font-family: 'Lato', sans-serif;
-    margin-top: 16px;
+    
     position: relative;
    
 

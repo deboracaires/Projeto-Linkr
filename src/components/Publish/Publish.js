@@ -13,7 +13,10 @@ export default function Publish() {
 
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
-
+    const [cor, setCor] = useState("#949494");
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
+    const [localizacao, setLocalizacao] = useState(false);
     let body;
 
 
@@ -31,11 +34,37 @@ export default function Publish() {
                 text,
                 link
             }
-
             publish(body, token).then((res) => clearInputs()).catch((err) => console.error)
         } else {
             alert("The link field is mandatory")
         }
+    }
+
+    function ativarLocalizacao(){
+        if(cor === "#949494"){
+            setCor("#238700");
+            setLocalizacao(true);
+        }else if(cor === "#238700"){
+            setCor("#949494");
+            setLocalizacao(false);
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                showPosition, 
+                null, 
+                );
+        } else { 
+            alert("Geolocation is not supported by this browser.");
+            setCor("#949494");
+            setLocalizacao(false);
+        }
+    }
+
+    function showPosition(position) {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+        
     }
 
     return (
@@ -54,9 +83,9 @@ export default function Publish() {
                         <input type="text" placeholder="Muito irado esse link falando de #javascript" value={text} onChange={(event) => setText(event.target.value)} />
                         <Button type="submit" >Publish</Button>
                     </form>
-                    <Location>
-                        <BsGeoAlt size='15px' color="#238700"/>
-                        <h1>Localização ativada</h1>
+                    <Location onClick = {ativarLocalizacao}>
+                        <BsGeoAlt size='15px' color={cor}/>
+                        <h1 style={{color: cor}}>Localização ativada</h1>
                     </Location>
                 </DescriptionLink>
                 
@@ -71,12 +100,15 @@ const Location = styled.div `
     display: flex;
     
     h1 {
-        color: #238700;
         font-family: 'Lato', sans-serif;
         font-weight: 300;
         font-size: 13px;
         line-height: 16px;
         margin-left: 3px;
+    }
+
+    :hover {
+        cursor: pointer;
     }
     
 `;

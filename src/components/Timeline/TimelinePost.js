@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlineComment, AiOutlineRetweet} from "react-icons/ai"
-import { BsHeart, BsFillTrashFill, BsPencil} from "react-icons/bs";
+import { BsHeart, BsFillTrashFill, BsPencil, BsGeoAlt} from "react-icons/bs";
 import { useHistory } from "react-router";
 import ReactHashtag from "react-hashtag";
 import ModalExcluir from "./ModalExcluir";
@@ -10,6 +10,7 @@ import LinkPreview from "./LinkPreview";
 import { republish } from "../../service/linkr";
 import ModalRepost from "../ModalAlert/ModalRepost";
 import ReactPlayer from "react-player";
+import ModalLocalizacao from "./ModalLocalizacao";
 
 
 export default function TimelinePost({post, setLinkPreviewToggle}){
@@ -20,6 +21,8 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
     const [modalRepublish, setModalRepublish] = useState(false);
     let validationURL = post.link.match(/(http(s)?:\/\/.)?(www\.)?(youtube\.)?(com\/watch)([-a-zA-Z0-9@:%_.~#?&//=]*)/g)
     
+    const [localizacaoOpen, setLocalizacaoOpen] = useState(false);
+
     function redirecionar(){
         history.push(`/user/${post.user.id}`)
     }
@@ -95,7 +98,20 @@ export default function TimelinePost({post, setLinkPreviewToggle}){
                 
             </EsquerdaPost>
             <DireitaPost>
-                <h4 onClick={redirecionar}>{post.user.username}</h4>
+                <div>
+                    <h4 onClick={redirecionar}>{post.user.username}</h4>
+                    {post.geolocation !== undefined ? <BsGeoAlt size="19px" color="fff" onClick = {() => setLocalizacaoOpen(true)}/> : ""}
+                    {
+                        localizacaoOpen ?
+                        (
+                            <ModalLocalizacao key={66666} setLocalizacaoOpen={setLocalizacaoOpen} post={post}/>
+                        )
+                        :
+                        (
+                            ""
+                        )
+                    }
+                </div>
                 <h5>
                     {
                         isInEdit ?
@@ -219,8 +235,12 @@ const DireitaPost = styled.div `
     flex-direction: column;
     justify-content: space-between;
    
-    
-
+    div {
+        display: flex;
+    }
+    div:hover{
+        cursor: pointer;
+    }
 
     h4{
         font-size: 19px;
@@ -229,8 +249,7 @@ const DireitaPost = styled.div `
         height: 23px;
         line-height: 19px;
         border: 1px solid #171717;
-        width: 32vw;
-        margin-bottom: 5px;
+        margin: 0 5px 5px 0;
         word-wrap: break-word;
         white-space: nowrap;
         overflow: hidden;

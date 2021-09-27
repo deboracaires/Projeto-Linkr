@@ -33,22 +33,32 @@ export default function MyPosts() {
 
                         : (<h4>Você ainda não fez nenhuma  publicação</h4>)
                     }
-                    <Trending />
                 </Esquerda>
+                <Direita>
+                    <Trending />
+                </Direita>
             </ContainerMyPosts>
         </> 
     );
 }
 
 const ContainerMyPosts = styled.div `
-    box-sizing: border-box;
     width: 100vw;
+
+    box-sizing: border-box;
     
     display: flex;
-    justify-content: center;    
+    justify-content: center;
+
+    margin-bottom: 70px;
+    margin-top: 100px;
 `;
 
 const Esquerda = styled.div `
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
+`;
+
+const Direita = styled.div `
+    margin: 205px 0 0 25px;
 `;
